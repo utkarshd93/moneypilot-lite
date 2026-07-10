@@ -1,48 +1,22 @@
-/* ==========================================
-   MoneyPilot Storage
-========================================== */
+/* ===========================================
+   MoneyPilot Lite
+   Storage Manager
+=========================================== */
 
-const STORAGE_KEY = "moneypilot_transactions";
+const TRANSACTION_KEY = "moneypilot_transactions";
+const BILL_KEY = "moneypilot_bills";
 
-/* ==========================================
-   Save
-========================================== */
-
-function saveStorage(){
-
-    localStorage.setItem(
-
-        STORAGE_KEY,
-
-        JSON.stringify(transactions)
-
-    );
-
-}
-
-/* ==========================================
-   Load
-========================================== */
+/* ===========================================
+   Load Transactions
+=========================================== */
 
 function loadStorage(){
 
-    const data =
-
-    localStorage.getItem(STORAGE_KEY);
-
-    if(!data){
-
-        transactions=[];
-
-        return;
-
-    }
-
     try{
 
-        transactions=
+        const data = localStorage.getItem(TRANSACTION_KEY);
 
-        JSON.parse(data);
+        transactions = data ? JSON.parse(data) : [];
 
     }
 
@@ -54,103 +28,90 @@ function loadStorage(){
 
 }
 
-/* ==========================================
-   Reset
-========================================== */
 
-function resetAllData(){
+/* ===========================================
+   Save Transactions
+=========================================== */
 
-    const ok=
+function saveStorage(){
 
-    confirm(
+    localStorage.setItem(
 
-    "Delete all transactions?"
+        TRANSACTION_KEY,
+
+        JSON.stringify(transactions)
 
     );
-
-    if(!ok)
-
-        return;
-
-    transactions=[];
-
-    saveStorage();
-
-    renderTransactions();
 
 }
 
-/* ==========================================
-   Export JSON
-========================================== */
+
+/* ===========================================
+   Export Backup
+=========================================== */
 
 function exportBackup(){
 
-    const json=
+    const backup={
 
-    JSON.stringify(
+        version:"1.2",
 
-        transactions,
+        exportedAt:new Date().toISOString(),
 
-        null,
+        transactions:transactions,
 
-        2
+        bills:bills
 
-    );
+    };
 
-    const blob=
+    const blob=new Blob(
 
-    new Blob(
+        [
 
-        [json],
+            JSON.stringify(
+
+                backup,
+
+                null,
+
+                2
+
+            )
+
+        ],
 
         {
 
-            type:
-
-            "application/json"
+            type:"application/json"
 
         }
 
     );
 
-    const url=
+    const a=document.createElement("a");
 
-    URL.createObjectURL(blob);
+    a.href=URL.createObjectURL(blob);
 
-    const a=
-
-    document.createElement("a");
-
-    a.href=url;
-
-    a.download=
-
-    "MoneyPilot_Backup.json";
+    a.download="MoneyPilot_Backup.json";
 
     a.click();
 
-    URL.revokeObjectURL(url);
-
 }
 
-/* ==========================================
-   Import JSON
-========================================== */
+
+/* ===========================================
+   Import Backup
+=========================================== */
 
 function importBackup(file){
 
-    const reader=
+    const reader=new FileReader();
 
-    new FileReader();
-
-    reader.onload=
-
-    function(e){
+    reader.onload=function(e){
 
         try{
 
-            transactions=
+            const backup=
 
             JSON.parse(
 
@@ -158,25 +119,29 @@ function importBackup(file){
 
             );
 
+            transactions=
+
+            backup.transactions || [];
+
+            bills=
+
+            backup.bills || [];
+
             saveStorage();
+
+            saveBills();
 
             renderTransactions();
 
-            alert(
+            renderBills();
 
-            "Backup Imported"
-
-            );
+            alert("Backup Imported");
 
         }
 
         catch(err){
 
-            alert(
-
-            "Invalid Backup"
-
-            );
+            alert("Invalid Backup");
 
         }
 
@@ -186,8 +151,42 @@ function importBackup(file){
 
 }
 
-/* ==========================================
+
+/* ===========================================
+   Reset App
+=========================================== */
+
+function resetAllData(){
+
+    if(
+
+        !confirm(
+
+        "Delete all data?"
+
+        )
+
+    )
+
+    return;
+
+    transactions=[];
+
+    bills=[];
+
+    saveStorage();
+
+    saveBills();
+
+    renderTransactions();
+
+    renderBills();
+
+}
+
+
+/* ===========================================
    Auto Load
-========================================== */
+=========================================== */
 
 loadStorage();
