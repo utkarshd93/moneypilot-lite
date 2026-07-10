@@ -188,22 +188,6 @@ function saveTransaction(){
 
     }
 
-    if(note===""){
-
-        alert("Enter description");
-
-        return;
-
-    }
-
-    if(date===""){
-
-        alert("Select date");
-
-        return;
-
-    }
-
     const transaction={
 
         id:
@@ -296,7 +280,8 @@ function clearTransactionForm(){
 
     document.getElementById("note").value="";
 
-    document.getElementById("date").value="";
+    document.getElementById("date").value =
+    new Date().toISOString().split("T")[0];
 
     document.getElementById("type").value="expense";
 
@@ -704,6 +689,8 @@ function initializeTransactions(){
     }
 
 }
+document.getElementById("date").value =
+new Date().toISOString().split("T")[0];
 
 initializeTransactions();
 
