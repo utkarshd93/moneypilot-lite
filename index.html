@@ -1,74 +1,425 @@
-<!doctype html><html><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MoneyPilot Lite v3</title>
-<link rel="manifest" href="manifest.json">
-<style>
-body{font-family:-apple-system,Arial;background:#f4f4f4;max-width:700px;margin:auto;padding:16px}
-.card{background:#fff;padding:14px;border-radius:12px;margin:10px 0}
-input,select,button{width:100%;padding:10px;margin:5px 0}
-pre{background:#eee;padding:10px;white-space:pre-wrap;max-height:180px;overflow:auto}
-li{background:#fff;margin:8px 0;padding:10px;border-radius:10px;list-style:none}
-</style></head><body>
-<h2>💰 MoneyPilot Lite v3</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyPilot Lite</title>
 
-<div class=card>
-<h3>Balance ₹<span id=bal>0</span></h3>
-Income ₹<span id=inc>0</span> | Expense ₹<span id=exp>0</span>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="app">
+
+<header class="topHeader">
+
+<div class="profile">
+
+<img src="assets/profile.jpg" class="profileImage">
+
+<div>
+
+<div class="hello" id="greeting">
+Good Morning 👋
 </div>
 
-<div class=card>
-<h3>Manual Entry</h3>
-<input id=amt type=number placeholder=Amount>
-<select id=type><option value=income>Income</option><option value=expense>Expense</option></select>
-<input id=cat placeholder=Category>
-<input id=note placeholder=Note>
-<button onclick="addTx()">Save Transaction</button>
+<div class="username">
+Utkarsh
 </div>
 
-<div class=card>
-<h3>📄 PDF Import (Extract Text)</h3>
-<input id=pdf type=file accept=.pdf>
-<button onclick="alert('PDF extraction placeholder. Add PDF.js to enable parsing.')">Read PDF</button>
-
-<h3>🖼️ Image OCR (Extract Text)</h3>
-<input id=img type=file accept=image/*>
-<button onclick="ocr()">Read Image</button>
-
-<pre id=out>No imported text.</pre>
 </div>
 
-<div class=card><h3>Transactions</h3><ul id=list></ul></div>
+</div>
 
-<script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
-<script>
-let tx=JSON.parse(localStorage.mp||"[]");
-function save(){localStorage.mp=JSON.stringify(tx);render();}
-function addTx(){
- let a=parseFloat(amt.value); if(!a)return;
- tx.unshift({a:a,t:type.value,c:cat.value||"Other",n:note.value,d:new Date().toLocaleDateString()});
- amt.value="";cat.value="";note.value="";
- save();
-}
-function del(i){tx.splice(i,1);save();}
-function render(){
- let I=0,E=0,h="";
- tx.forEach((x,i)=>{
-   if(x.t=="income")I+=x.a; else E+=x.a;
-   h+=`<li>${x.t=="income"?"🟢":"🔴"} ₹${x.a} - ${x.c}<br>${x.n}<br><small>${x.d}</small>
-   <button onclick="del(${i})">Delete</button></li>`;
- });
- list.innerHTML=h;
- inc.innerText=I.toFixed(0);
- exp.innerText=E.toFixed(0);
- bal.innerText=(I-E).toFixed(0);
-}
-async function ocr(){
- let f=img.files[0];
- if(!f){alert("Select image");return;}
- out.textContent="Reading...";
- const r=await Tesseract.recognize(f,"eng");
- out.textContent=r.data.text;
-}
-render();
-</script>
-</body></html>
+<div class="monthBox">
+
+<input
+type="month"
+id="monthFilter">
+
+</div>
+
+</header>
+
+
+<section class="balanceCard">
+
+<div class="balanceTitle">
+
+Current Balance
+
+</div>
+
+<div class="balanceValue" id="balance">
+
+₹0
+
+</div>
+
+<div class="summaryRow">
+
+<div class="summaryCard income">
+
+<div class="icon">
+
+📈
+
+</div>
+
+<div>
+
+<div class="label">
+Income
+</div>
+
+<div id="incomeValue">
+
+₹0
+
+</div>
+
+</div>
+
+</div>
+
+<div class="summaryCard expense">
+
+<div class="icon">
+
+📉
+
+</div>
+
+<div>
+
+<div class="label">
+Expense
+</div>
+
+<div id="expenseValue">
+
+₹0
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="glassCard">
+
+<h4>
+
+Fixed Expenses
+
+</h4>
+
+<h2 id="fixedTotal">
+
+₹0
+
+</h2>
+
+</div>
+
+<div class="glassCard">
+
+<h4>
+
+Variable Expenses
+
+</h4>
+
+<h2 id="variableTotal">
+
+₹0
+
+</h2>
+
+</div>
+
+<div class="glassCard">
+
+<h4>
+
+Savings
+
+</h4>
+
+<h2 id="savingTotal">
+
+₹0
+
+</h2>
+
+</div>
+
+</section>
+
+
+<section class="addCard">
+
+<h2>
+
+Add Transaction
+
+</h2>
+
+<input
+id="amount"
+type="number"
+placeholder="Amount">
+
+<input
+id="note"
+placeholder="Note">
+
+<input
+id="date"
+type="date">
+
+<select id="type">
+
+<option value="income">
+
+Income
+
+</option>
+
+<option value="expense">
+
+Expense
+
+</option>
+
+</select>
+
+<select id="category">
+
+<option>Food</option>
+
+<option>Fuel</option>
+
+<option>Shopping</option>
+
+<option>Rent</option>
+
+<option>EMI</option>
+
+<option>Insurance</option>
+
+<option>Salary</option>
+
+<option>Investment</option>
+
+<option>Other</option>
+
+</select>
+
+<label class="checkRow">
+
+<input
+type="checkbox"
+id="fixedExpense">
+
+Fixed Monthly Expense
+
+</label>
+
+<label class="checkRow">
+
+<input
+type="checkbox"
+id="repeatMonthly">
+
+Repeat Every Month
+
+</label>
+
+<button id="saveButton">
+
+Save Transaction
+
+</button>
+
+</section>
+<!-- Bills Section -->
+
+<section class="billsCard">
+
+    <div class="sectionHeader">
+
+        <h2>Monthly Bills</h2>
+
+        <button id="addBillBtn">
+            + Add Bill
+        </button>
+
+    </div>
+
+    <div id="billsContainer">
+
+        <!-- Bills JS se load honge -->
+
+    </div>
+
+</section>
+
+
+<!-- Recent Transactions -->
+
+<section class="transactionCard">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            Recent Transactions
+
+        </h2>
+
+    </div>
+
+    <div class="tableContainer">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Date</th>
+
+                <th>Category</th>
+
+                <th>Note</th>
+
+                <th>Amount</th>
+
+                <th></th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="transactionTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- Charts -->
+
+<section class="chartCard">
+
+    <h2>
+
+        Monthly Overview
+
+    </h2>
+
+    <canvas id="expenseChart"></canvas>
+
+</section>
+
+
+<footer class="bottomNav">
+
+    <button class="navItem active">
+
+        🏠
+
+        <span>
+
+            Home
+
+        </span>
+
+    </button>
+
+    <button class="navItem">
+
+        📊
+
+        <span>
+
+            Reports
+
+        </span>
+
+    </button>
+
+    <button class="navItem">
+
+        ➕
+
+        <span>
+
+            Add
+
+        </span>
+
+    </button>
+
+    <button class="navItem">
+
+        💳
+
+        <span>
+
+            Bills
+
+        </span>
+
+    </button>
+
+    <button class="navItem">
+
+        ⚙️
+
+        <span>
+
+            Settings
+
+        </span>
+
+    </button>
+
+</footer>
+
+
+</div>
+
+<script src="storage.js"></script>
+
+<script src="dashboard.js"></script>
+
+<script src="transactions.js"></script>
+
+<script src="bills.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
