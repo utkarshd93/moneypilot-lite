@@ -1,15 +1,64 @@
 /* ==========================================
    MoneyPilot Lite
-   transactions.js (Part 1)
+   Transactions Engine
 ========================================== */
 
-let transactions =
-JSON.parse(
-localStorage.getItem("moneypilot_transactions")
-) || [];
+let transactions = [];
+let editingId = null;
 
-let editingIndex = -1;
+const STORAGE_KEY = "moneypilot_transactions";
 
+/* ==========================================
+   Load Data
+========================================== */
+
+function loadTransactions(){
+
+    const data = localStorage.getItem(STORAGE_KEY);
+
+    if(data){
+
+        try{
+
+            transactions = JSON.parse(data);
+
+        }
+
+        catch(e){
+
+            transactions = [];
+
+        }
+
+    }
+
+}
+
+/* ==========================================
+   Save Data
+========================================== */
+
+function saveTransactions(){
+
+    localStorage.setItem(
+
+        STORAGE_KEY,
+
+        JSON.stringify(transactions)
+
+    );
+
+}
+
+/* ==========================================
+   Generate ID
+========================================== */
+
+function generateId(){
+
+    return Date.now() + "_" + Math.random();
+
+}
 
 /* ==========================================
    Save Button
@@ -20,7 +69,6 @@ document
 .addEventListener("click", saveTransaction);
 
 
-
 /* ==========================================
    Save Transaction
 ========================================== */
@@ -28,9 +76,7 @@ document
 function saveTransaction(){
 
     const amount =
-    parseFloat(
-        document.getElementById("amount").value
-    );
+    Number(document.getElementById("amount").value);
 
     const note =
     document.getElementById("note").value.trim();
@@ -50,89 +96,92 @@ function saveTransaction(){
     const repeat =
     document.getElementById("repeatMonthly").checked;
 
+    if(amount<=0){
 
-    if(isNaN(amount) || amount<=0){
-
-        alert("Please enter valid amount.");
-
-        return;
-
-    }
-
-    if(date==""){
-
-        alert("Please select date.");
+        alert("Enter valid amount");
 
         return;
 
     }
 
+    if(date===""){
 
-    const transaction={
+        alert("Select date");
 
-        id:Date.now(),
+        return;
 
-        amount:amount,
+    }
 
-        note:note,
+    const obj={
 
-        date:date,
+        id:
 
-        type:type,
+        editingId
 
-        category:category,
+        ?
 
-        fixed:fixed,
+        editingId
 
-        repeat:repeat
+        :
+
+        generateId(),
+
+        amount,
+
+        note,
+
+        date,
+
+        type,
+
+        category,
+
+        fixed,
+
+        repeat,
+
+        createdAt:
+
+        new Date().toISOString()
 
     };
 
 
-    if(editingIndex==-1){
+    if(editingId){
 
-        transactions.unshift(transaction);
+        const index=
+
+        transactions.findIndex(
+
+        x=>x.id===editingId
+
+        );
+
+        if(index!=-1){
+
+            transactions[index]=obj;
+
+        }
+
+        editingId=null;
 
     }
 
     else{
 
-        transaction.id=
-        transactions[editingIndex].id;
-
-        transactions[editingIndex]=transaction;
-
-        editingIndex=-1;
+        transactions.unshift(obj);
 
     }
 
-
-    saveStorage();
+    saveTransactions();
 
     clearForm();
 
     renderTransactions();
 
-}
-
-
-
-/* ==========================================
-   Save Storage
-========================================== */
-
-function saveStorage(){
-
-    localStorage.setItem(
-
-        "moneypilot_transactions",
-
-        JSON.stringify(transactions)
-
-    );
+    showToast("Transaction Saved");
 
 }
-
 
 
 /* ==========================================
@@ -141,69 +190,54 @@ function saveStorage(){
 
 function clearForm(){
 
-    document.getElementById("amount").value="";
+    amount.value="";
 
-    document.getElementById("note").value="";
+    note.value="";
 
-    document.getElementById("date").valueAsDate=
+    date.valueAsDate=new Date();
 
-    new Date();
+    type.value="expense";
 
-    document.getElementById("type").value="expense";
+    category.selectedIndex=0;
 
-    document.getElementById("category").selectedIndex=0;
+    fixedExpense.checked=false;
 
-    document.getElementById("fixedExpense").checked=false;
-
-    document.getElementById("repeatMonthly").checked=false;
+    repeatMonthly.checked=false;
 
 }
 
 
-
 /* ==========================================
-   Delete Transaction
+   Edit
 ========================================== */
 
-function deleteTransaction(index){
+function editTransaction(id){
 
-    if(!confirm("Delete Transaction ?"))
+    const t=
 
-        return;
+    transactions.find(
 
-    transactions.splice(index,1);
+    x=>x.id===id
 
-    saveStorage();
+    );
 
-    renderTransactions();
+    if(!t) return;
 
-}
+    editingId=id;
 
+    amount.value=t.amount;
 
+    note.value=t.note;
 
-/* ==========================================
-   Edit Transaction
-========================================== */
+    date.value=t.date;
 
-function editTransaction(index){
+    type.value=t.type;
 
-    const t=transactions[index];
+    category.value=t.category;
 
-    editingIndex=index;
+    fixedExpense.checked=t.fixed;
 
-    document.getElementById("amount").value=t.amount;
-
-    document.getElementById("note").value=t.note;
-
-    document.getElementById("date").value=t.date;
-
-    document.getElementById("type").value=t.type;
-
-    document.getElementById("category").value=t.category;
-
-    document.getElementById("fixedExpense").checked=t.fixed;
-
-    document.getElementById("repeatMonthly").checked=t.repeat;
+    repeatMonthly.checked=t.repeat;
 
     window.scrollTo({
 
@@ -216,50 +250,82 @@ function editTransaction(index){
 }
 
 
-
 /* ==========================================
-   Initial Date
+   Delete
 ========================================== */
 
-document
-.getElementById("date")
-.valueAsDate=new Date();
+function deleteTransaction(id){
+
+    if(
+
+    !confirm(
+
+    "Delete transaction?"
+
+    )
+
+    )
+
+    return;
+
+    transactions=
+
+    transactions.filter(
+
+    x=>x.id!==id
+
+    );
+
+    saveTransactions();
+
+    renderTransactions();
+
+    showToast("Deleted");
+
+}
 /* ==========================================
    Render Transactions
 ========================================== */
 
 function renderTransactions(){
 
-    const tbody =
-    document.getElementById("transactionTable");
+    const tbody = document.getElementById("transactionTable");
+    const emptyState = document.getElementById("emptyState");
 
     tbody.innerHTML = "";
 
-    let balanceAmount = 0;
-    let incomeAmount = 0;
-    let expenseAmount = 0;
-    let fixedExpense = 0;
-    let variableExpense = 0;
+    let income = 0;
+    let expense = 0;
+    let fixed = 0;
+    let variable = 0;
 
-    transactions.forEach((item,index)=>{
+    if(transactions.length === 0){
+
+        if(emptyState) emptyState.style.display = "block";
+
+    }else{
+
+        if(emptyState) emptyState.style.display = "none";
+
+    }
+
+    transactions.forEach(item=>{
 
         if(item.type==="income"){
 
-            incomeAmount += item.amount;
-            balanceAmount += item.amount;
+            income += item.amount;
 
         }else{
 
-            expenseAmount += item.amount;
-            balanceAmount -= item.amount;
+            expense += item.amount;
 
             if(item.fixed){
 
-                fixedExpense += item.amount;
+                fixed += item.amount;
 
             }else{
 
-                variableExpense += item.amount;
+                variable += item.amount;
 
             }
 
@@ -273,15 +339,11 @@ function renderTransactions(){
 
 <td>${item.category}</td>
 
-<td>${item.note}</td>
+<td>${item.note || "-"}</td>
 
-<td class="${item.type==="income"
-?
-"incomeText"
-:
-"expenseText"}">
+<td class="${item.type==="income"?"incomeText":"expenseText"}">
 
-${item.type==="income" ? "+" : "-"}
+${item.type==="income"?"+":"-"}
 
 ₹${item.amount.toLocaleString()}
 
@@ -289,15 +351,13 @@ ${item.type==="income" ? "+" : "-"}
 
 <td>
 
-<button
-onclick="editTransaction(${index})">
+<button onclick="editTransaction('${item.id}')">
 
 ✏️
 
 </button>
 
-<button
-onclick="deleteTransaction(${index})">
+<button onclick="deleteTransaction('${item.id}')">
 
 🗑️
 
@@ -313,15 +373,13 @@ onclick="deleteTransaction(${index})">
 
     updateDashboard(
 
-        balanceAmount,
+        income,
 
-        incomeAmount,
+        expense,
 
-        expenseAmount,
+        fixed,
 
-        fixedExpense,
-
-        variableExpense
+        variable
 
     );
 
@@ -330,12 +388,10 @@ onclick="deleteTransaction(${index})">
 
 
 /* ==========================================
-   Dashboard Update
+   Dashboard
 ========================================== */
 
 function updateDashboard(
-
-balance,
 
 income,
 
@@ -347,114 +403,25 @@ variable
 
 ){
 
-    document
-    .getElementById("balance")
-    .innerHTML =
-    "₹"+balance.toLocaleString();
+    const balance = income-expense;
 
-    document
-    .getElementById("incomeValue")
-    .innerHTML =
-    "₹"+income.toLocaleString();
+    document.getElementById("balance").innerHTML =
+        "₹"+balance.toLocaleString();
 
-    document
-    .getElementById("expenseValue")
-    .innerHTML =
-    "₹"+expense.toLocaleString();
+    document.getElementById("incomeValue").innerHTML =
+        "₹"+income.toLocaleString();
 
-    document
-    .getElementById("fixedTotal")
-    .innerHTML =
-    "₹"+fixed.toLocaleString();
+    document.getElementById("expenseValue").innerHTML =
+        "₹"+expense.toLocaleString();
 
-    document
-    .getElementById("variableTotal")
-    .innerHTML =
-    "₹"+variable.toLocaleString();
+    document.getElementById("fixedTotal").innerHTML =
+        "₹"+fixed.toLocaleString();
 
-    document
-    .getElementById("savingTotal")
-    .innerHTML =
-    "₹"+(income-expense).toLocaleString();
+    document.getElementById("variableTotal").innerHTML =
+        "₹"+variable.toLocaleString();
 
-}
-
-
-
-/* ==========================================
-   Search By Month
-========================================== */
-
-function filterByMonth(month){
-
-    if(month===""){
-
-        renderTransactions();
-
-        return;
-
-    }
-
-    const tbody =
-    document.getElementById("transactionTable");
-
-    tbody.innerHTML="";
-
-    transactions.forEach((item,index)=>{
-
-        if(!item.date.startsWith(month))
-
-            return;
-
-        tbody.innerHTML += `
-
-<tr>
-
-<td>${item.date}</td>
-
-<td>${item.category}</td>
-
-<td>${item.note}</td>
-
-<td class="${item.type==="income"
-?
-"incomeText"
-:
-"expenseText"}">
-
-${item.type==="income"
-?
-"+"
-:
-"-"}
-
-₹${item.amount}
-
-</td>
-
-<td>
-
-<button
-onclick="editTransaction(${index})">
-
-✏️
-
-</button>
-
-<button
-onclick="deleteTransaction(${index})">
-
-🗑️
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-    });
+    document.getElementById("savingTotal").innerHTML =
+        "₹"+balance.toLocaleString();
 
 }
 
@@ -464,38 +431,45 @@ onclick="deleteTransaction(${index})">
    Month Filter
 ========================================== */
 
-const monthFilter =
-document.getElementById("monthFilter");
+const monthFilter = document.getElementById("monthFilter");
 
 if(monthFilter){
 
-    monthFilter.value =
-    new Date()
-    .toISOString()
-    .substring(0,7);
+    monthFilter.value = new Date().toISOString().substring(0,7);
 
-    monthFilter.addEventListener(
+    monthFilter.addEventListener("change",()=>{
 
-        "change",
+        const selected = monthFilter.value;
 
-        ()=>{
+        if(selected===""){
 
-            filterByMonth(
+            renderTransactions();
 
-                monthFilter.value
-
-            );
+            return;
 
         }
 
-    );
+        const old = [...transactions];
+
+        transactions = old.filter(t=>t.date.startsWith(selected));
+
+        renderTransactions();
+
+        transactions = old;
+
+    });
 
 }
 
 
 
 /* ==========================================
-   First Load
+   Initial Load
 ========================================== */
 
+loadTransactions();
+
 renderTransactions();
+
+document.getElementById("date").valueAsDate =
+new Date();
