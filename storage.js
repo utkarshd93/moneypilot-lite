@@ -4,7 +4,6 @@
 =========================================== */
 
 const TRANSACTION_KEY = "moneypilot_transactions";
-const BILL_KEY = "moneypilot_bills";
 
 /* ===========================================
    Load Transactions
