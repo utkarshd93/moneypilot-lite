@@ -1,41 +1,46 @@
-/* =====================================
-   MoneyPilot Bills
-===================================== */
-
-const BILL_STORAGE = "moneypilot_bills";
+/* ==========================================
+   MoneyPilot Bills Engine
+========================================== */
 
 let bills = [];
 
-loadBills();
+const BILL_KEY = "moneypilot_bills";
 
-/* =====================================
-   Load
-===================================== */
+/* ==========================================
+   Load Bills
+========================================== */
 
 function loadBills(){
 
-    const data = localStorage.getItem(BILL_STORAGE);
+    const data = localStorage.getItem(BILL_KEY);
 
     if(data){
 
-        bills = JSON.parse(data);
+        try{
+
+            bills = JSON.parse(data);
+
+        }
+
+        catch(e){
+
+            bills=[];
+
+        }
 
     }
 
-    renderBills();
-
 }
 
-
-/* =====================================
-   Save
-===================================== */
+/* ==========================================
+   Save Bills
+========================================== */
 
 function saveBills(){
 
     localStorage.setItem(
 
-        BILL_STORAGE,
+        BILL_KEY,
 
         JSON.stringify(bills)
 
@@ -43,113 +48,157 @@ function saveBills(){
 
 }
 
-
-/* =====================================
-   Add Button
-===================================== */
+/* ==========================================
+   Add Bill Button
+========================================== */
 
 document
+
 .getElementById("addBillBtn")
-.onclick = function(){
 
-    const form =
-    document.getElementById("billForm");
+.addEventListener(
 
-    form.style.display =
-    form.style.display=="block"
+"click",
 
-    ?
+()=>{
 
-    "none"
+const form=document.getElementById("billForm");
 
-    :
+form.style.display=
 
-    "block";
+form.style.display=="block"
 
-};
+?
+
+"none"
+
+:
+
+"block";
+
+}
+
+);
 
 
-/* =====================================
+/* ==========================================
    Save Bill
-===================================== */
+========================================== */
 
 document
+
 .getElementById("saveBillBtn")
-.onclick = function(){
 
-    const name =
-    document.getElementById("billName").value;
+.addEventListener(
 
-    const amount =
-    Number(
+"click",
 
-    document.getElementById("billAmount").value
+saveBill
 
-    );
+);
 
-    const due =
-    document.getElementById("billDueDate").value;
+function saveBill(){
 
-    if(name=="" || amount<=0){
+const name=
 
-        alert("Enter Bill Details");
+document.getElementById(
 
-        return;
+"billName"
 
-    }
+).value.trim();
 
-    bills.push({
+const amount=
 
-        id:Date.now(),
+Number(
 
-        name,
+document.getElementById(
 
-        amount,
+"billAmount"
 
-        due,
+).value
 
-        paid:false
+);
 
-    });
+const due=
 
-    saveBills();
+Number(
 
-    renderBills();
+document.getElementById(
 
-    document.getElementById("billName").value="";
-    document.getElementById("billAmount").value="";
-    document.getElementById("billDueDate").value="";
+"billDueDate"
 
-    document.getElementById("billForm").style.display="none";
+).value
 
-};
+);
 
+if(name==""||amount<=0){
 
-/* =====================================
-   Render
-===================================== */
+alert("Enter Bill Details");
+
+return;
+
+}
+
+bills.push({
+
+id:Date.now(),
+
+name,
+
+amount,
+
+due,
+
+paid:false,
+
+createdAt:new Date().toISOString()
+
+});
+
+saveBills();
+
+renderBills();
+
+clearBillForm();
+
+showToast("Bill Added");
+
+}
+/* ==========================================
+   Render Bills
+========================================== */
 
 function renderBills(){
 
     const container =
     document.getElementById("billsContainer");
 
+    if(!container) return;
+
     container.innerHTML="";
 
-    let paid=0;
-    let pending=0;
+    let paidAmount=0;
+    let pendingAmount=0;
+
+    if(bills.length===0){
+
+        container.innerHTML=
+
+        `<p style="text-align:center;opacity:.7;">
+            No Bills Added
+        </p>`;
+
+    }
 
     bills.forEach(bill=>{
 
         if(bill.paid){
 
-            paid+=bill.amount;
+            paidAmount+=Number(bill.amount);
 
-        }
+        }else{
 
-        else{
-
-            pending+=bill.amount;
+            pendingAmount+=Number(bill.amount);
 
         }
 
@@ -157,49 +206,45 @@ function renderBills(){
 
 <div class="billItem">
 
-<div class="billLeft">
+    <div class="billLeft">
 
-<h3>
+        <h3>
 
-${bill.name}
+            ${bill.name}
 
-</h3>
+        </h3>
 
-<p>
+        <p>
 
-Due :
+            Due : ${bill.due}
 
-${bill.due}
+        </p>
 
-</p>
+    </div>
 
-</div>
+    <div class="billRight">
 
-<div class="billRight">
+        <div class="billAmount">
 
-<div class="billAmount">
+            ₹${Number(bill.amount).toLocaleString()}
 
-₹${bill.amount.toLocaleString()}
+        </div>
 
-</div>
+        <button
+        onclick="toggleBill(${bill.id})">
 
-<button
+        ${bill.paid ? "✅ Paid" : "💰 Pay"}
 
-onclick="toggleBill(${bill.id})">
+        </button>
 
-${bill.paid?"✅ Paid":"Pay"}
+        <button
+        onclick="deleteBill(${bill.id})">
 
-</button>
+        🗑
 
-<button
+        </button>
 
-onclick="deleteBill(${bill.id})">
-
-❌
-
-</button>
-
-</div>
+    </div>
 
 </div>
 
@@ -211,22 +256,27 @@ onclick="deleteBill(${bill.id})">
     bills.length;
 
     document.getElementById("paidBills").innerHTML =
-    "₹"+paid.toLocaleString();
+    "₹"+paidAmount.toLocaleString();
 
     document.getElementById("pendingBills").innerHTML =
-    "₹"+pending.toLocaleString();
+    "₹"+pendingAmount.toLocaleString();
 
 }
 
 
-/* =====================================
-   Toggle
-===================================== */
+/* ==========================================
+   Toggle Paid
+========================================== */
 
 function toggleBill(id){
 
-    const bill =
-    bills.find(x=>x.id==id);
+    const bill=
+
+    bills.find(
+
+        x=>x.id==id
+
+    );
 
     if(!bill) return;
 
@@ -236,16 +286,42 @@ function toggleBill(id){
 
     renderBills();
 
+    showToast(
+
+        bill.paid
+
+        ?
+
+        "Bill Paid"
+
+        :
+
+        "Bill Pending"
+
+    );
+
 }
 
 
-/* =====================================
-   Delete
-===================================== */
+/* ==========================================
+   Delete Bill
+========================================== */
 
 function deleteBill(id){
 
-    bills = bills.filter(
+    if(
+
+        !confirm(
+
+        "Delete Bill?"
+
+        )
+
+    )
+
+    return;
+
+    bills=bills.filter(
 
         x=>x.id!=id
 
@@ -258,18 +334,34 @@ function deleteBill(id){
 }
 
 
-/* =====================================
+/* ==========================================
    Clear Bills
-===================================== */
+========================================== */
 
-const clearBtn =
-document.getElementById("clearBillsBtn");
+const clearBillsBtn=
+document.getElementById(
 
-if(clearBtn){
+"clearBillsBtn"
 
-clearBtn.onclick=function(){
+);
 
-if(confirm("Delete All Bills?")){
+if(clearBillsBtn){
+
+clearBillsBtn.addEventListener(
+
+"click",
+
+()=>{
+
+if(
+
+confirm(
+
+"Delete All Bills?"
+
+)
+
+){
 
 bills=[];
 
@@ -277,8 +369,58 @@ saveBills();
 
 renderBills();
 
+showToast(
+
+"All Bills Deleted"
+
+);
+
 }
 
-};
+}
+
+);
 
 }
+
+
+/* ==========================================
+   Clear Form
+========================================== */
+
+function clearBillForm(){
+
+document.getElementById(
+
+"billName"
+
+).value="";
+
+document.getElementById(
+
+"billAmount"
+
+).value="";
+
+document.getElementById(
+
+"billDueDate"
+
+).value="";
+
+document.getElementById(
+
+"billForm"
+
+).style.display="none";
+
+}
+
+
+/* ==========================================
+   Initial Load
+========================================== */
+
+loadBills();
+
+renderBills();
