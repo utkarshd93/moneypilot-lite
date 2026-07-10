@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+MoneyPilot Lite
+
+</title>
+
+<link
+rel="manifest"
+href="manifest.json">
+
+<link
+rel="stylesheet"
+href="style.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="app">
+
+<!-- ======================
+      Header
+======================= -->
+
+<header class="topHeader">
+
+<div class="profile">
+
+<img
+
+src="assets/profile.jpg"
+
+class="profileImage"
+
+alt="Profile">
+
+<div>
+
+<div id="greeting"
+
+class="hello">
+
+Good Morning 👋
+
+</div>
+
+<div class="username">
+
+Utkarsh
+
+</div>
+
+</div>
+
+</div>
+
+<div class="monthBox">
+
+<input
+
+type="month"
+
+id="monthFilter">
+
+</div>
+
+</header>
+
+<!-- ======================
+      Balance Card
+======================= -->
+
+<section class="balanceCard">
+
+<div class="balanceTitle">
+
+Current Balance
+
+</div>
+
+<div
+
+id="balance"
+
+class="balanceValue">
+
+₹0
+
+</div>
+
+<div class="summaryRow">
+
+<div class="summaryCard income">
+
+<div class="icon">
+
+📈
+
+</div>
+
+<div>
+
+<div class="label">
+
+Income
+
+</div>
+
+<div id="incomeValue">
+
+₹0
+
+</div>
+
+</div>
+
+</div>
+
+<div class="summaryCard expense">
+
+<div class="icon">
+
+📉
+
+</div>
+
+<div>
+
+<div class="label">
+
+Expense
+
+</div>
+
+<div id="expenseValue">
+
+₹0
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ======================
+      Dashboard Cards
+======================= -->
+
+<section class="stats">
+
+<div class="glassCard">
+
+<h4>
+
+Fixed
+
+</h4>
+
+<h2 id="fixedTotal">
+
+₹0
+
+</h2>
+
+</div>
+
+<div class="glassCard">
+
+<h4>
+
+Variable
+
+</h4>
+
+<h2 id="variableTotal">
+
+₹0
+
+</h2>
+
+</div>
+
+<div class="glassCard">
+
+<h4>
+
+Savings
+
+</h4>
+
+<h2 id="savingTotal">
+
+₹0
+
+</h2>
+
+</div>
+
+</section>
+<!-- ======================
+      Add Transaction
+======================= -->
+
+<section class="addCard">
+
+    <h2>
+
+        Add Transaction
+
+    </h2>
+
+    <input
+
+        id="amount"
+
+        type="number"
+
+        placeholder="Enter Amount">
+
+    <input
+
+        id="note"
+
+        type="text"
+
+        placeholder="Description">
+
+    <input
+
+        id="date"
+
+        type="date">
+
+    <select id="type">
+
+        <option value="income">
+
+            Income
+
+        </option>
+
+        <option value="expense">
+
+            Expense
+
+        </option>
+
+    </select>
+
+    <select id="category">
+
+        <option value="Food">🍔 Food</option>
+
+        <option value="Fuel">⛽ Fuel</option>
+
+        <option value="Shopping">🛍 Shopping</option>
+
+        <option value="Rent">🏠 Rent</option>
+
+        <option value="EMI">💳 EMI</option>
+
+        <option value="Insurance">🛡 Insurance</option>
+
+        <option value="Salary">💼 Salary</option>
+
+        <option value="Investment">📈 Investment</option>
+
+        <option value="Other">📦 Other</option>
+
+    </select>
+
+    <div class="checkRow">
+
+        <label>
+
+            <input
+
+                id="fixedExpense"
+
+                type="checkbox">
+
+            Fixed Expense
+
+        </label>
+
+    </div>
+
+    <div class="checkRow">
+
+        <label>
+
+            <input
+
+                id="repeatMonthly"
+
+                type="checkbox">
+
+            Repeat Every Month
+
+        </label>
+
+    </div>
+
+    <button
+
+        id="saveButton">
+
+        Save Transaction
+
+    </button>
+
+</section>
+
+
+<!-- ======================
+      Quick Actions
+======================= -->
+
+<section class="quickActions">
+
+    <button id="incomeBtn">
+
+        ➕ Income
+
+    </button>
+
+    <button id="expenseBtn">
+
+        ➖ Expense
+
+    </button>
+
+    <button id="billShortcutBtn">
+
+        🧾 Bills
+
+    </button>
+
+</section>
+<!-- ======================
+        Bills Section
+======================= -->
+
+<section class="billsCard">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            Monthly Bills
+
+        </h2>
+
+        <button id="addBillBtn">
+
+            + Add Bill
+
+        </button>
+
+    </div>
+
+
+
+    <!-- Bill Form -->
+
+    <div
+
+        id="billForm"
+
+        style="display:none;">
+
+        <input
+
+            id="billName"
+
+            placeholder="Bill Name">
+
+        <input
+
+            id="billAmount"
+
+            type="number"
+
+            placeholder="Amount">
+
+        <input
+
+            id="billDueDate"
+
+            type="number"
+
+            min="1"
+
+            max="31"
+
+            placeholder="Due Date">
+
+        <button
+
+            id="saveBillBtn">
+
+            Save Bill
+
+        </button>
+
+    </div>
+
+
+
+    <!-- Bills List -->
+
+    <div
+
+        id="billsContainer">
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================
+        Summary
+======================= -->
+
+<section class="glassCard">
+
+    <h3>
+
+        Monthly Summary
+
+    </h3>
+
+    <div class="summaryGrid">
+
+        <div>
+
+            <small>Total Bills</small>
+
+            <h2 id="billCount">
+
+                0
+
+            </h2>
+
+        </div>
+
+        <div>
+
+            <small>Pending</small>
+
+            <h2 id="pendingBills">
+
+                ₹0
+
+            </h2>
+
+        </div>
+
+        <div>
+
+            <small>Paid</small>
+
+            <h2 id="paidBills">
+
+                ₹0
+
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ======================
+        Recent Transactions
+======================= -->
+
+<section class="transactionCard">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            Recent Transactions
+
+        </h2>
+
+    </div>
+
+    <div class="tableContainer">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Category</th>
+
+                    <th>Note</th>
+
+                    <th>Amount</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="transactionTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================
+          Charts
+======================= -->
+
+<section class="chartCard">
+
+    <h2>
+
+        Monthly Expense Chart
+
+    </h2>
+
+    <canvas id="expenseChart"></canvas>
+
+</section>
+
+
+
+<!-- ======================
+          Settings
+======================= -->
+
+<section class="settingsCard">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            Settings
+
+        </h2>
+
+    </div>
+
+    <div class="settingsGrid">
+
+        <button id="exportBtn">
+
+            📤 Export Backup
+
+        </button>
+
+        <button id="importBtn">
+
+            📥 Import Backup
+
+        </button>
+
+        <button id="resetBtn">
+
+            🗑 Reset Data
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- Hidden Import -->
+
+<input
+
+id="backupFile"
+
+type="file"
+
+accept=".json"
+
+style="display:none;">
+
+
+
+<!-- Empty State -->
+
+<div
+
+id="emptyState"
+
+style="display:none;">
+
+<h2>
+
+📭
+
+</h2>
+
+<p>
+
+No Transactions Yet
+
+</p>
+
+</div>
+
+
+
+<!-- Toast -->
+
+<div id="toast">
+
+Saved Successfully
+
+</div>
+
+
+
+<footer class="version">
+
+MoneyPilot Lite
+
+v1.2
+
+</footer>
+
+
+
+<script src="storage.js"></script>
+
+<script src="transactions.js"></script>
+
+<script src="dashboard.js"></script>
+
+<script src="bills.js"></script>
+
+<script src="app.js"></script>
+
+</div>
+
+</body>
+
+</html>
