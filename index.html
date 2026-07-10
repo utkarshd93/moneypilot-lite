@@ -272,6 +272,30 @@ Save Transaction
 
     </div>
 
+    <div id="billForm" style="display:none;margin-top:15px;">
+
+        <input
+        id="billName"
+        placeholder="Bill Name (EMI / Rent / Insurance)">
+
+        <input
+        id="billAmount"
+        type="number"
+        placeholder="Amount">
+
+        <input
+        id="billDueDate"
+        type="number"
+        min="1"
+        max="31"
+        placeholder="Due Date">
+
+        <button id="saveBillBtn">
+            Save Bill
+        </button>
+
+    </div>
+
     <div id="billsContainer">
 
         <!-- Bills JS se load honge -->
