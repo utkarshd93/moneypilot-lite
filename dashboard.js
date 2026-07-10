@@ -1,31 +1,34 @@
-/* ======================================
-   MoneyPilot Dashboard
-====================================== */
+/* ===========================================
+   MoneyPilot Lite
+   Dashboard.js
+=========================================== */
 
-function refreshDashboard(){
+function calculateDashboard() {
 
-    let income=0;
-    let expense=0;
-    let fixed=0;
-    let variable=0;
+    let income = 0;
+    let expense = 0;
+    let fixed = 0;
+    let variable = 0;
 
-    transactions.forEach(t=>{
+    transactions.forEach(t => {
 
-        if(t.type==="income"){
+        const amount = Number(t.amount) || 0;
 
-            income+=Number(t.amount);
+        if (t.type === "income") {
 
-        }else{
+            income += amount;
 
-            expense+=Number(t.amount);
+        } else {
 
-            if(t.fixed){
+            expense += amount;
 
-                fixed+=Number(t.amount);
+            if (t.fixed) {
 
-            }else{
+                fixed += amount;
 
-                variable+=Number(t.amount);
+            } else {
+
+                variable += amount;
 
             }
 
@@ -33,26 +36,96 @@ function refreshDashboard(){
 
     });
 
-    document.getElementById("balance").innerHTML =
-        "₹"+(income-expense).toLocaleString();
+    const balance = income - expense;
 
-    document.getElementById("incomeValue").innerHTML =
-        "₹"+income.toLocaleString();
-
-    document.getElementById("expenseValue").innerHTML =
-        "₹"+expense.toLocaleString();
-
-    document.getElementById("fixedTotal").innerHTML =
-        "₹"+fixed.toLocaleString();
-
-    document.getElementById("variableTotal").innerHTML =
-        "₹"+variable.toLocaleString();
-
-    document.getElementById("savingTotal").innerHTML =
-        "₹"+(income-expense).toLocaleString();
+    setValue("balance", balance);
+    setValue("incomeValue", income);
+    setValue("expenseValue", expense);
+    setValue("fixedTotal", fixed);
+    setValue("variableTotal", variable);
+    setValue("savingTotal", balance);
 
 }
 
-setInterval(refreshDashboard,1000);
+function setValue(id, value) {
+
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    el.innerHTML = "₹" + Number(value).toLocaleString();
+
+}
+
+
+/* ===========================================
+   Greeting
+=========================================== */
+
+function updateGreeting() {
+
+    const greeting = document.getElementById("greeting");
+
+    if (!greeting) return;
+
+    const hour = new Date().getHours();
+
+    if (hour < 12) {
+
+        greeting.innerHTML = "Good Morning ☀️";
+
+    }
+
+    else if (hour < 17) {
+
+        greeting.innerHTML = "Good Afternoon 🌤";
+
+    }
+
+    else {
+
+        greeting.innerHTML = "Good Evening 🌙";
+
+    }
+
+}
+
+
+/* ===========================================
+   Month Filter
+=========================================== */
+
+const monthInput = document.getElementById("monthFilter");
+
+if (monthInput) {
+
+    monthInput.value = new Date().toISOString().substring(0, 7);
+
+    monthInput.addEventListener("change", () => {
+
+        if (typeof renderTransactions === "function") {
+
+            renderTransactions();
+
+        }
+
+    });
+
+}
+
+
+/* ===========================================
+   Dashboard Refresh
+=========================================== */
+
+function refreshDashboard() {
+
+    calculateDashboard();
+
+    updateGreeting();
+
+}
 
 refreshDashboard();
+
+setInterval(refreshDashboard, 30000);
