@@ -1,92 +1,127 @@
-/* ==========================
-   MoneyPilot Transactions
-========================== */
+/* ==========================================
+   MoneyPilot Lite
+   transactions.js (Part 1)
+========================================== */
 
 let transactions =
-    JSON.parse(localStorage.getItem("moneypilot_transactions")) || [];
+JSON.parse(
+localStorage.getItem("moneypilot_transactions")
+) || [];
 
 let editingIndex = -1;
 
-/* --------------------------
-   Save Transaction
--------------------------- */
+
+/* ==========================================
+   Save Button
+========================================== */
 
 document
 .getElementById("saveButton")
 .addEventListener("click", saveTransaction);
 
+
+
+/* ==========================================
+   Save Transaction
+========================================== */
+
 function saveTransaction(){
 
     const amount =
-        Number(document.getElementById("amount").value);
+    parseFloat(
+        document.getElementById("amount").value
+    );
 
     const note =
-        document.getElementById("note").value.trim();
+    document.getElementById("note").value.trim();
 
     const date =
-        document.getElementById("date").value;
+    document.getElementById("date").value;
 
     const type =
-        document.getElementById("type").value;
+    document.getElementById("type").value;
 
     const category =
-        document.getElementById("category").value;
+    document.getElementById("category").value;
 
     const fixed =
-        document.getElementById("fixedExpense").checked;
+    document.getElementById("fixedExpense").checked;
 
     const repeat =
-        document.getElementById("repeatMonthly").checked;
+    document.getElementById("repeatMonthly").checked;
 
-    if(amount<=0){
 
-        alert("Enter Amount");
+    if(isNaN(amount) || amount<=0){
+
+        alert("Please enter valid amount.");
+
+        return;
+
+    }
+
+    if(date==""){
+
+        alert("Please select date.");
 
         return;
 
     }
 
-    if(date===""){
-
-        alert("Select Date");
-
-        return;
-
-    }
 
     const transaction={
 
         id:Date.now(),
 
-        amount,
+        amount:amount,
 
-        note,
+        note:note,
 
-        date,
+        date:date,
 
-        type,
+        type:type,
 
-        category,
+        category:category,
 
-        fixed,
+        fixed:fixed,
 
-        repeat
+        repeat:repeat
 
     };
+
 
     if(editingIndex==-1){
 
         transactions.unshift(transaction);
 
-    }else{
+    }
 
-        transaction.id=transactions[editingIndex].id;
+    else{
+
+        transaction.id=
+        transactions[editingIndex].id;
 
         transactions[editingIndex]=transaction;
 
         editingIndex=-1;
 
     }
+
+
+    saveStorage();
+
+    clearForm();
+
+    renderTransactions();
+
+}
+
+
+
+/* ==========================================
+   Save Storage
+========================================== */
+
+function saveStorage(){
 
     localStorage.setItem(
 
@@ -96,79 +131,141 @@ function saveTransaction(){
 
     );
 
-    clearForm();
+}
+
+
+
+/* ==========================================
+   Clear Form
+========================================== */
+
+function clearForm(){
+
+    document.getElementById("amount").value="";
+
+    document.getElementById("note").value="";
+
+    document.getElementById("date").valueAsDate=
+
+    new Date();
+
+    document.getElementById("type").value="expense";
+
+    document.getElementById("category").selectedIndex=0;
+
+    document.getElementById("fixedExpense").checked=false;
+
+    document.getElementById("repeatMonthly").checked=false;
+
+}
+
+
+
+/* ==========================================
+   Delete Transaction
+========================================== */
+
+function deleteTransaction(index){
+
+    if(!confirm("Delete Transaction ?"))
+
+        return;
+
+    transactions.splice(index,1);
+
+    saveStorage();
 
     renderTransactions();
 
 }
 
-/* --------------------------
-     Clear Form
--------------------------- */
 
-function clearForm(){
 
-    amount.value="";
+/* ==========================================
+   Edit Transaction
+========================================== */
 
-    note.value="";
+function editTransaction(index){
 
-    fixedExpense.checked=false;
+    const t=transactions[index];
 
-    repeatMonthly.checked=false;
+    editingIndex=index;
 
-    type.value="expense";
+    document.getElementById("amount").value=t.amount;
 
-    category.selectedIndex=0;
+    document.getElementById("note").value=t.note;
 
-    date.valueAsDate=new Date();
+    document.getElementById("date").value=t.date;
+
+    document.getElementById("type").value=t.type;
+
+    document.getElementById("category").value=t.category;
+
+    document.getElementById("fixedExpense").checked=t.fixed;
+
+    document.getElementById("repeatMonthly").checked=t.repeat;
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
 
 }
 
-/* --------------------------
-      Render Table
--------------------------- */
+
+
+/* ==========================================
+   Initial Date
+========================================== */
+
+document
+.getElementById("date")
+.valueAsDate=new Date();
+/* ==========================================
+   Render Transactions
+========================================== */
 
 function renderTransactions(){
 
-    const tbody=document.getElementById("transactionTable");
+    const tbody =
+    document.getElementById("transactionTable");
 
-    tbody.innerHTML="";
+    tbody.innerHTML = "";
 
-    let balance=0;
-
-    let income=0;
-
-    let expense=0;
-
-    let fixedTotal=0;
-
-    let variableTotal=0;
+    let balanceAmount = 0;
+    let incomeAmount = 0;
+    let expenseAmount = 0;
+    let fixedExpense = 0;
+    let variableExpense = 0;
 
     transactions.forEach((item,index)=>{
 
         if(item.type==="income"){
 
-            income+=item.amount;
-
-            balance+=item.amount;
+            incomeAmount += item.amount;
+            balanceAmount += item.amount;
 
         }else{
 
-            expense+=item.amount;
+            expenseAmount += item.amount;
+            balanceAmount -= item.amount;
 
-            balance-=item.amount;
+            if(item.fixed){
 
-            if(item.fixed)
+                fixedExpense += item.amount;
 
-                fixedTotal+=item.amount;
+            }else{
 
-            else
+                variableExpense += item.amount;
 
-                variableTotal+=item.amount;
+            }
 
         }
 
-        tbody.innerHTML+=`
+        tbody.innerHTML += `
 
 <tr>
 
@@ -178,29 +275,29 @@ function renderTransactions(){
 
 <td>${item.note}</td>
 
-<td class="${
-item.type==="income"
+<td class="${item.type==="income"
 ?
 "incomeText"
 :
-"expenseText"
-}">
+"expenseText"}">
 
-${item.type==="income"?"+":"-"}
+${item.type==="income" ? "+" : "-"}
 
-₹${item.amount}
+₹${item.amount.toLocaleString()}
 
 </td>
 
 <td>
 
-<button onclick="editTransaction(${index})">
+<button
+onclick="editTransaction(${index})">
 
 ✏️
 
 </button>
 
-<button onclick="deleteTransaction(${index})">
+<button
+onclick="deleteTransaction(${index})">
 
 🗑️
 
@@ -214,74 +311,191 @@ ${item.type==="income"?"+":"-"}
 
     });
 
-    balance.innerHTML="₹"+balance.toLocaleString();
+    updateDashboard(
 
-    incomeValue.innerHTML="₹"+income.toLocaleString();
+        balanceAmount,
 
-    expenseValue.innerHTML="₹"+expense.toLocaleString();
+        incomeAmount,
 
-    fixedTotal.innerHTML="₹"+fixedTotal.toLocaleString();
+        expenseAmount,
 
-    variableTotal.innerHTML="₹"+variableTotal.toLocaleString();
+        fixedExpense,
 
-    savingTotal.innerHTML="₹"+(income-expense).toLocaleString();
+        variableExpense
+
+    );
 
 }
 
-/* --------------------------
-      Delete
--------------------------- */
 
-function deleteTransaction(index){
 
-    if(confirm("Delete Transaction?")){
+/* ==========================================
+   Dashboard Update
+========================================== */
 
-        transactions.splice(index,1);
+function updateDashboard(
 
-        localStorage.setItem(
+balance,
 
-            "moneypilot_transactions",
+income,
 
-            JSON.stringify(transactions)
+expense,
 
-        );
+fixed,
+
+variable
+
+){
+
+    document
+    .getElementById("balance")
+    .innerHTML =
+    "₹"+balance.toLocaleString();
+
+    document
+    .getElementById("incomeValue")
+    .innerHTML =
+    "₹"+income.toLocaleString();
+
+    document
+    .getElementById("expenseValue")
+    .innerHTML =
+    "₹"+expense.toLocaleString();
+
+    document
+    .getElementById("fixedTotal")
+    .innerHTML =
+    "₹"+fixed.toLocaleString();
+
+    document
+    .getElementById("variableTotal")
+    .innerHTML =
+    "₹"+variable.toLocaleString();
+
+    document
+    .getElementById("savingTotal")
+    .innerHTML =
+    "₹"+(income-expense).toLocaleString();
+
+}
+
+
+
+/* ==========================================
+   Search By Month
+========================================== */
+
+function filterByMonth(month){
+
+    if(month===""){
 
         renderTransactions();
 
+        return;
+
     }
 
+    const tbody =
+    document.getElementById("transactionTable");
+
+    tbody.innerHTML="";
+
+    transactions.forEach((item,index)=>{
+
+        if(!item.date.startsWith(month))
+
+            return;
+
+        tbody.innerHTML += `
+
+<tr>
+
+<td>${item.date}</td>
+
+<td>${item.category}</td>
+
+<td>${item.note}</td>
+
+<td class="${item.type==="income"
+?
+"incomeText"
+:
+"expenseText"}">
+
+${item.type==="income"
+?
+"+"
+:
+"-"}
+
+₹${item.amount}
+
+</td>
+
+<td>
+
+<button
+onclick="editTransaction(${index})">
+
+✏️
+
+</button>
+
+<button
+onclick="deleteTransaction(${index})">
+
+🗑️
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
 }
 
-/* --------------------------
-        Edit
--------------------------- */
 
-function editTransaction(index){
 
-    const t=transactions[index];
+/* ==========================================
+   Month Filter
+========================================== */
 
-    editingIndex=index;
+const monthFilter =
+document.getElementById("monthFilter");
 
-    amount.value=t.amount;
+if(monthFilter){
 
-    note.value=t.note;
+    monthFilter.value =
+    new Date()
+    .toISOString()
+    .substring(0,7);
 
-    date.value=t.date;
+    monthFilter.addEventListener(
 
-    type.value=t.type;
+        "change",
 
-    category.value=t.category;
+        ()=>{
 
-    fixedExpense.checked=t.fixed;
+            filterByMonth(
 
-    repeatMonthly.checked=t.repeat;
+                monthFilter.value
+
+            );
+
+        }
+
+    );
 
 }
 
-/* --------------------------
-     Initial Load
--------------------------- */
 
-clearForm();
+
+/* ==========================================
+   First Load
+========================================== */
 
 renderTransactions();
