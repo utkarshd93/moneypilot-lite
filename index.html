@@ -11,7 +11,7 @@ content="width=device-width, initial-scale=1.0">
 
 <title>
 
-MoneyPilot Lite
+MoneyPilot AI
 
 </title>
 
@@ -37,9 +37,9 @@ rel="stylesheet">
 
 <div class="app">
 
-<!-- ======================
-      Header
-======================= -->
+<!-- ==========================================
+            Header
+========================================== -->
 
 <header class="topHeader">
 
@@ -55,8 +55,8 @@ alt="Profile">
 
 <div>
 
-<div id="greeting"
-
+<div
+id="greeting"
 class="hello">
 
 Good Morning 👋
@@ -85,9 +85,9 @@ id="monthFilter">
 
 </header>
 
-<!-- ======================
-      Balance Card
-======================= -->
+<!-- ==========================================
+            Balance
+========================================== -->
 
 <section class="balanceCard">
 
@@ -98,9 +98,7 @@ Current Balance
 </div>
 
 <div
-
 id="balance"
-
 class="balanceValue">
 
 ₹0
@@ -109,7 +107,7 @@ class="balanceValue">
 
 <div class="summaryRow">
 
-<div class="summaryCard income">
+<div class="summaryCard">
 
 <div class="icon">
 
@@ -125,17 +123,18 @@ Income
 
 </div>
 
-<div id="incomeValue">
+<h3
+id="incomeValue">
 
 ₹0
 
-</div>
+</h3>
 
 </div>
 
 </div>
 
-<div class="summaryCard expense">
+<div class="summaryCard">
 
 <div class="icon">
 
@@ -151,11 +150,12 @@ Expense
 
 </div>
 
-<div id="expenseValue">
+<h3
+id="expenseValue">
 
 ₹0
 
-</div>
+</h3>
 
 </div>
 
@@ -165,9 +165,9 @@ Expense
 
 </section>
 
-<!-- ======================
-      Dashboard Cards
-======================= -->
+<!-- ==========================================
+        Dashboard
+========================================== -->
 
 <section class="stats">
 
@@ -179,7 +179,8 @@ Fixed
 
 </h4>
 
-<h2 id="fixedTotal">
+<h2
+id="fixedTotal">
 
 ₹0
 
@@ -195,7 +196,8 @@ Variable
 
 </h4>
 
-<h2 id="variableTotal">
+<h2
+id="variableTotal">
 
 ₹0
 
@@ -211,7 +213,8 @@ Savings
 
 </h4>
 
-<h2 id="savingTotal">
+<h2
+id="savingTotal">
 
 ₹0
 
@@ -220,396 +223,261 @@ Savings
 </div>
 
 </section>
-<!-- ======================
-      Add Transaction
-======================= -->
 
-<section class="addCard">
-
-    <h2>
-
-        Add Transaction
-
-    </h2>
-
-    <input
-
-        id="amount"
-
-        type="number"
-
-        placeholder="Enter Amount">
-
-    <input
-
-        id="note"
-
-        type="text"
-
-        placeholder="Description">
-
-    <input
-
-        id="date"
-
-        type="date">
-
-    <select id="type">
-
-        <option value="income">
-
-            Income
-
-        </option>
-
-        <option value="expense">
-
-            Expense
-
-        </option>
-
-    </select>
-
-    <select id="category">
-
-        <option value="Food">🍔 Food</option>
-
-        <option value="Fuel">⛽ Fuel</option>
-
-        <option value="Shopping">🛍 Shopping</option>
-
-        <option value="Rent">🏠 Rent</option>
-
-        <option value="EMI">💳 EMI</option>
-
-        <option value="Insurance">🛡 Insurance</option>
-
-        <option value="Salary">💼 Salary</option>
-
-        <option value="Investment">📈 Investment</option>
-
-        <option value="Other">📦 Other</option>
-
-    </select>
-
-    <div class="checkRow">
-
-        <label>
-
-            <input
-
-                id="fixedExpense"
-
-                type="checkbox">
-
-            Fixed Expense
-
-        </label>
-
-    </div>
-
-    <div class="checkRow">
-
-        <label>
-
-            <input
-
-                id="repeatMonthly"
-
-                type="checkbox">
-
-            Repeat Every Month
-
-        </label>
-
-    </div>
-
-    <button
-
-        id="saveButton">
-
-        Save Transaction
-
-    </button>
-
-</section>
-
-
-<!-- ======================
-      Quick Actions
-======================= -->
+<!-- ==========================================
+        Quick Actions
+========================================== -->
 
 <section class="quickActions">
 
-    <button id="incomeBtn">
+<button
+id="incomeBtn">
 
-        ➕ Income
+💰 Income
 
-    </button>
+</button>
 
-    <button id="expenseBtn">
+<button
+id="expenseBtn">
 
-        ➖ Expense
+💸 Expense
 
-    </button>
+</button>
 
-    <button id="billShortcutBtn">
+<button
+id="scanBtn">
 
-        🧾 Bills
+📷 Scan
 
-    </button>
-
-</section>
-<!-- ======================
-        Bills Section
-======================= -->
-
-<section class="billsCard">
-
-    <div class="sectionHeader">
-
-        <h2>
-
-            Monthly Bills
-
-        </h2>
-
-        <button id="addBillBtn">
-
-            + Add Bill
-
-        </button>
-
-    </div>
-
-
-
-    <!-- Bill Form -->
-
-    <div
-
-        id="billForm"
-
-        style="display:none;">
-
-        <input
-
-            id="billName"
-
-            placeholder="Bill Name">
-
-        <input
-
-            id="billAmount"
-
-            type="number"
-
-            placeholder="Amount">
-
-        <input
-
-            id="billDueDate"
-
-            type="number"
-
-            min="1"
-
-            max="31"
-
-            placeholder="Due Date">
-
-        <button
-
-            id="saveBillBtn">
-
-            Save Bill
-
-        </button>
-
-    </div>
-
-
-
-    <!-- Bills List -->
-
-    <div
-
-        id="billsContainer">
-
-    </div>
-      <button id="clearBillsBtn">
-
-        🗑 Clear Bills
-
-    </button>
-
+</button>
 
 </section>
+<!-- ==========================================
+            Add Transaction
+========================================== -->
 
+<section class="addCard">
 
+<div class="sectionHeader">
 
-<!-- ======================
-        Summary
-======================= -->
+<h2>
 
-<section class="glassCard">
+Add Transaction
 
-    <h3>
+</h2>
 
-        Monthly Summary
+</div>
 
-    </h3>
+<input
 
-    <div class="summaryGrid">
+id="amount"
 
-        <div>
+type="number"
 
-            <small>Total Bills</small>
+placeholder="₹ Enter Amount">
 
-            <h2 id="billCount">
+<input
 
-                0
+id="note"
 
-            </h2>
+type="text"
 
-        </div>
+placeholder="Description">
 
-        <div>
+<input
 
-            <small>Pending</small>
+id="date"
 
-            <h2 id="pendingBills">
+type="date">
 
-                ₹0
+<select id="type">
 
-            </h2>
+<option value="income">
 
-        </div>
+💰 Income
 
-        <div>
+</option>
 
-            <small>Paid</small>
+<option value="expense">
 
-            <h2 id="paidBills">
+💸 Expense
 
-                ₹0
+</option>
 
-            </h2>
+</select>
 
-        </div>
+<select id="category">
 
-    </div>
+<option value="Food">
+
+🍔 Food
+
+</option>
+
+<option value="Fuel">
+
+⛽ Fuel
+
+</option>
+
+<option value="Shopping">
+
+🛍 Shopping
+
+</option>
+
+<option value="Salary">
+
+💼 Salary
+
+</option>
+
+<option value="Investment">
+
+📈 Investment
+
+</option>
+
+<option value="Travel">
+
+✈️ Travel
+
+</option>
+
+<option value="Health">
+
+🏥 Health
+
+</option>
+
+<option value="Recharge">
+
+📱 Recharge
+
+</option>
+
+<option value="Entertainment">
+
+🎬 Entertainment
+
+</option>
+
+<option value="Other">
+
+📦 Other
+
+</option>
+
+</select>
+
+<div class="checkRow">
+
+<label>
+
+<input
+
+type="checkbox"
+
+id="fixedExpense">
+
+Fixed Expense
+
+</label>
+
+</div>
+
+<div class="checkRow">
+
+<label>
+
+<input
+
+type="checkbox"
+
+id="repeatMonthly">
+
+Repeat Every Month
+
+</label>
+
+</div>
+
+<button
+
+id="saveButton">
+
+💾 Save Transaction
+
+</button>
 
 </section>
-<!-- ======================
+
+<!-- ==========================================
         Recent Transactions
-======================= -->
+========================================== -->
 
 <section class="transactionCard">
 
-    <div class="sectionHeader">
+<div class="sectionHeader">
 
-        <h2>
+<h2>
 
-            Recent Transactions
+Recent Transactions
 
-        </h2>
+</h2>
 
-    </div>
+</div>
 
-    <div class="tableContainer">
+<div
 
-        <table>
+id="transactionList"
 
-            <thead>
+class="transactionList">
 
-                <tr>
+<!-- Cards will come here -->
 
-                    <th>Date</th>
-
-                    <th>Category</th>
-
-                    <th>Note</th>
-
-                    <th>Amount</th>
-
-                    <th>Action</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="transactionTable">
-
-            </tbody>
-
-        </table>
-
-    </div>
+</div>
 
 </section>
-
-
-
-<!-- ======================
-          Charts
-======================= -->
-
-<section class="chartCard">
-
-    <h2>
-
-        Monthly Expense Chart
-
-    </h2>
-
-    <canvas id="expenseChart"></canvas>
-
-</section>
-
-
-
-<!-- ======================
-          Settings
-======================= -->
+<!-- ==========================================
+                Settings
+========================================== -->
 
 <section class="settingsCard">
 
-    <div class="sectionHeader">
+<div class="sectionHeader">
 
-        <h2>
+<h2>
 
-            Settings
+Settings
 
-        </h2>
+</h2>
 
-    </div>
+</div>
 
-    <div class="settingsGrid">
+<div class="settingsGrid">
 
-        <button id="exportBtn">
+<button id="exportBtn">
 
-            📤 Export Backup
+📤 Export Backup
 
-        </button>
+</button>
 
-        <button id="importBtn">
+<button id="importBtn">
 
-            📥 Import Backup
+📥 Import Backup
 
-        </button>
+</button>
 
-        <button id="resetBtn">
+<button id="resetBtn">
 
-            🗑 Reset Data
+🗑 Reset Data
 
-        </button>
+</button>
 
-    </div>
+</div>
 
 </section>
-
-
 
 <!-- Hidden Import -->
 
@@ -623,9 +491,9 @@ accept=".json"
 
 style="display:none;">
 
-
-
-<!-- Empty State -->
+<!-- ==========================================
+            Empty State
+========================================== -->
 
 <div
 
@@ -633,23 +501,29 @@ id="emptyState"
 
 style="display:none;">
 
+<div style="font-size:70px;">
+
+💸
+
+</div>
+
 <h2>
 
-📭
+No Transactions Yet
 
 </h2>
 
 <p>
 
-No Transactions Yet
+Start by adding your first income or expense.
 
 </p>
 
 </div>
 
-
-
-<!-- Toast -->
+<!-- ==========================================
+                Toast
+========================================== -->
 
 <div id="toast">
 
@@ -657,25 +531,108 @@ Saved Successfully
 
 </div>
 
+<!-- ==========================================
+            Floating Action Button
+========================================== -->
 
+<div
+
+class="fab"
+
+id="fabButton">
+
+➕
+
+</div>
+
+<!-- ==========================================
+            Bottom Navigation
+========================================== -->
+
+<nav class="bottomNav">
+
+<button
+
+class="navItem active"
+
+id="navHome">
+
+🏠
+
+<span>
+
+Home
+
+</span>
+
+</button>
+
+<button
+
+class="navItem"
+
+id="navTransactions">
+
+📋
+
+<span>
+
+History
+
+</span>
+
+</button>
+
+<button
+
+class="navItem"
+
+id="navReports">
+
+📈
+
+<span>
+
+Reports
+
+</span>
+
+</button>
+
+<button
+
+class="navItem"
+
+id="navSettings">
+
+⚙️
+
+<span>
+
+Settings
+
+</span>
+
+</button>
+
+</nav>
 
 <footer class="version">
 
-MoneyPilot Lite
+MoneyPilot AI
 
-v1.2
+v2.0
 
 </footer>
-
-
+<!-- ==========================================
+        JavaScript Files
+========================================== -->
 
 <script src="storage.js"></script>
 
 <script src="transactions.js"></script>
 
 <script src="dashboard.js"></script>
-
-<script src="bills.js"></script>
 
 <script src="app.js"></script>
 
