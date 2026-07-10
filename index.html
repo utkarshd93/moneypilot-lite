@@ -1,64 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MoneyPilot Lite v2</title>
+<!doctype html><html><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MoneyPilot Lite v3</title>
 <link rel="manifest" href="manifest.json">
 <style>
 body{font-family:-apple-system,Arial;background:#f4f4f4;max-width:700px;margin:auto;padding:16px}
-.card{background:#fff;border-radius:12px;padding:16px;margin:12px 0}
-button,input{width:100%;padding:10px;margin:6px 0}
-pre{white-space:pre-wrap;background:#eee;padding:10px;border-radius:8px;max-height:250px;overflow:auto}
-</style>
-</head>
-<body>
-<h2>💰 MoneyPilot Lite v2</h2>
+.card{background:#fff;padding:14px;border-radius:12px;margin:10px 0}
+input,select,button{width:100%;padding:10px;margin:5px 0}
+pre{background:#eee;padding:10px;white-space:pre-wrap;max-height:180px;overflow:auto}
+li{background:#fff;margin:8px 0;padding:10px;border-radius:10px;list-style:none}
+</style></head><body>
+<h2>💰 MoneyPilot Lite v3</h2>
 
-<div class="card">
-<h3>📄 Import PDF</h3>
-<input type="file" id="pdf" accept=".pdf">
-<button onclick="readPdf()">Read PDF</button>
+<div class=card>
+<h3>Balance ₹<span id=bal>0</span></h3>
+Income ₹<span id=inc>0</span> | Expense ₹<span id=exp>0</span>
 </div>
 
-<div class="card">
-<h3>🖼️ Import Image (OCR)</h3>
-<input type="file" id="img" accept="image/*">
-<button onclick="readImage()">Read Image</button>
+<div class=card>
+<h3>Manual Entry</h3>
+<input id=amt type=number placeholder=Amount>
+<select id=type><option value=income>Income</option><option value=expense>Expense</option></select>
+<input id=cat placeholder=Category>
+<input id=note placeholder=Note>
+<button onclick="addTx()">Save Transaction</button>
 </div>
 
-<div class="card">
-<h3>Extracted Text</h3>
-<pre id="out">Nothing imported yet.</pre>
+<div class=card>
+<h3>📄 PDF Import (Extract Text)</h3>
+<input id=pdf type=file accept=.pdf>
+<button onclick="alert('PDF extraction placeholder. Add PDF.js to enable parsing.')">Read PDF</button>
+
+<h3>🖼️ Image OCR (Extract Text)</h3>
+<input id=img type=file accept=image/*>
+<button onclick="ocr()">Read Image</button>
+
+<pre id=out>No imported text.</pre>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+<div class=card><h3>Transactions</h3><ul id=list></ul></div>
+
 <script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
-
-<script type="module">
-import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
-
-window.readPdf=async()=>{
- const f=document.getElementById("pdf").files[0];
- if(!f){alert("Select PDF");return;}
- const buf=await f.arrayBuffer();
- const pdf=await pdfjsLib.getDocument({data:buf}).promise;
- let txt="";
- for(let i=1;i<=pdf.numPages;i++){
-   const p=await pdf.getPage(i);
-   const c=await p.getTextContent();
-   txt+=c.items.map(x=>x.str).join(" ")+"\n";
- }
- out.textContent=txt;
-};
-
-window.readImage=async()=>{
- const f=document.getElementById("img").files[0];
+<script>
+let tx=JSON.parse(localStorage.mp||"[]");
+function save(){localStorage.mp=JSON.stringify(tx);render();}
+function addTx(){
+ let a=parseFloat(amt.value); if(!a)return;
+ tx.unshift({a:a,t:type.value,c:cat.value||"Other",n:note.value,d:new Date().toLocaleDateString()});
+ amt.value="";cat.value="";note.value="";
+ save();
+}
+function del(i){tx.splice(i,1);save();}
+function render(){
+ let I=0,E=0,h="";
+ tx.forEach((x,i)=>{
+   if(x.t=="income")I+=x.a; else E+=x.a;
+   h+=`<li>${x.t=="income"?"🟢":"🔴"} ₹${x.a} - ${x.c}<br>${x.n}<br><small>${x.d}</small>
+   <button onclick="del(${i})">Delete</button></li>`;
+ });
+ list.innerHTML=h;
+ inc.innerText=I.toFixed(0);
+ exp.innerText=E.toFixed(0);
+ bal.innerText=(I-E).toFixed(0);
+}
+async function ocr(){
+ let f=img.files[0];
  if(!f){alert("Select image");return;}
- out.textContent="Reading image...";
+ out.textContent="Reading...";
  const r=await Tesseract.recognize(f,"eng");
  out.textContent=r.data.text;
-};
+}
+render();
 </script>
-</body>
-</html>
+</body></html>
