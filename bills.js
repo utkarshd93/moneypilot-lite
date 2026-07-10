@@ -52,33 +52,31 @@ function saveBills(){
    Add Bill Button
 ========================================== */
 
-document
+const addBillBtn = document.getElementById("addBillBtn");
 
-.getElementById("addBillBtn")
+if (addBillBtn) {
 
-.addEventListener(
+    addBillBtn.addEventListener("click", function () {
 
-"click",
+        const form = document.getElementById("billForm");
 
-()=>{
+        if (form.style.display === "none" || form.style.display === "") {
 
-const form=document.getElementById("billForm");
+            form.style.display = "block";
 
-form.style.display=
+            addBillBtn.innerHTML = "✖ Close";
 
-form.style.display=="block"
+        } else {
 
-?
+            form.style.display = "none";
 
-"none"
+            addBillBtn.innerHTML = "+ Add Bill";
 
-:
+        }
 
-"block";
+    });
 
 }
-
-);
 
 
 /* ==========================================
@@ -160,6 +158,9 @@ saveBills();
 renderBills();
 
 clearBillForm();
+   
+   document.getElementById("billForm").style.display = "none";
+    document.getElementById("addBillBtn").innerHTML = "+ Add Bill";
 
 showToast("Bill Added");
 
