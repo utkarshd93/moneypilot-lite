@@ -123,13 +123,19 @@ if (monthInput) {
 
     monthInput.addEventListener("change", () => {
 
-        if (typeof renderTransactions === "function") {
+    if (typeof renderTransactions === "function") {
 
-            renderTransactions();
+        renderTransactions();
 
-        }
+    }
 
-    });
+    if (typeof refreshDashboard === "function") {
+
+        refreshDashboard();
+
+    }
+
+});
 
 }
 
