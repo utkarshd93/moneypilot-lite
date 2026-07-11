@@ -156,12 +156,25 @@ function openBottomSheet(){
 
     if(bottomSheet){
 
+        const month =
+
+        document.getElementById("monthFilter")?.value;
+
+        const dateInput =
+
+        document.getElementById("date");
+
+        if(month && dateInput){
+
+            dateInput.value = month + "-01";
+
+        }
+
         bottomSheet.classList.add("show");
 
     }
 
 }
-
 function closeBottomSheet(){
 
     if(bottomSheet){
