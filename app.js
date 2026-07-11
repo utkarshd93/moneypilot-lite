@@ -47,6 +47,43 @@ function initializeApp() {
     initializeMonth();
 
 }
+/* =====================================================
+        Sync Transaction Date With Month
+===================================================== */
+
+function syncTransactionDate(){
+
+    const monthFilter =
+    document.getElementById("monthFilter");
+
+    const dateInput =
+    document.getElementById("date");
+
+    if(!monthFilter || !dateInput) return;
+
+    const selectedMonth = monthFilter.value;
+
+    if(!selectedMonth) return;
+
+    const today = new Date();
+
+    const currentMonth = today.toISOString().substring(0,7);
+
+    if(selectedMonth === currentMonth){
+
+        dateInput.value =
+        today.toISOString().substring(0,10);
+
+    }
+
+    else{
+
+        dateInput.value =
+        selectedMonth + "-01";
+
+    }
+
+}
 function initializeMonth() {
 
     const monthFilter =
