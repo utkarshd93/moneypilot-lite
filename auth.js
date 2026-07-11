@@ -58,3 +58,68 @@ function logout(){
     showLockScreen();
 
 }
+function showLockScreen(){
+
+    $("lockScreen").style.display="flex";
+
+}
+
+function hideLockScreen(){
+
+    $("lockScreen").style.display="none";
+
+}
+document.addEventListener(
+
+"DOMContentLoaded",
+
+initializeAuthentication
+
+);
+function initializeAuthentication(){
+
+    if(!hasPin()){
+
+        setupMode();
+
+        return;
+
+    }
+
+    if(isLoggedIn()){
+
+        hideLockScreen();
+
+        return;
+
+    }
+
+    loginMode();
+
+}
+function setupMode(){
+
+    showLockScreen();
+
+    $("lockHeading").innerHTML="Welcome 👋";
+
+    $("lockSubHeading").innerHTML=
+
+    "Create a 6-digit PIN";
+
+    $("confirmPinInput").style.display="block";
+
+}
+function loginMode(){
+
+    showLockScreen();
+
+    $("lockHeading").innerHTML="Welcome Back";
+
+    $("lockSubHeading").innerHTML=
+
+    "Enter your PIN";
+
+    $("confirmPinInput").style.display="none";
+
+}
