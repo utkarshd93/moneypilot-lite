@@ -1,2343 +1,568 @@
-/* ===================================================
-        MoneyPilot Premium UI V2
-        Part 1
-=================================================== */
+/* =====================================================
+            MoneyPilot Lite V3
+            Mobile First UI
+===================================================== */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
-html{
-    scroll-behavior:smooth;
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
 }
 
 :root{
 
-    --primary:#4FACFE;
-    --secondary:#0061FF;
+--primary:#5B6CFF;
 
-    --glass:rgba(255,255,255,.12);
+--secondary:#7B61FF;
 
-    --glass2:rgba(255,255,255,.08);
+--success:#1EC97F;
 
-    --white:#ffffff;
+--danger:#FF5A6E;
 
-    --danger:#ff6b6b;
+--warning:#FFB020;
 
-    --success:#2ecc71;
+--glass:rgba(255,255,255,.10);
 
-    --warning:#ffc107;
+--glass-border:rgba(255,255,255,.18);
 
-    --shadow:
-    0 20px 45px rgba(0,0,0,.35);
+--text:#FFFFFF;
 
-    --radius:28px;
+--subText:rgba(255,255,255,.70);
+
+--radius:22px;
+
+--shadow:0 20px 40px rgba(0,0,0,.25);
 
 }
 
-/* ===================================================
-        Body
-=================================================== */
+html{
+
+scroll-behavior:smooth;
+
+}
 
 body{
 
-    margin:0;
+font-family:'Poppins',sans-serif;
 
-    min-height:100vh;
+background:#0F172A;
 
-    overflow-x:hidden;
+color:var(--text);
 
-    font-family:'Poppins',sans-serif;
+overflow:hidden;
 
-    color:white;
+height:100vh;
 
-    background:
+}
+/* =====================================================
+                Background
+===================================================== */
 
-    linear-gradient(
+.backgroundOverlay{
 
-    rgba(8,18,28,.35),
+position:fixed;
 
-    rgba(8,18,28,.78)
+top:0;
 
-    ),
+left:0;
 
-    url("assets/background.jpg");
+width:100%;
 
-    background-size:cover;
+height:100%;
 
-    background-position:center;
+background:
 
-    background-repeat:no-repeat;
+linear-gradient(
 
-    background-attachment:fixed;
+160deg,
+
+#182848,
+
+#4B6CB7
+
+);
+
+z-index:-2;
 
 }
 
-/* ===================================================
-        Blur Layer
-=================================================== */
+.backgroundOverlay::after{
 
-.background-overlay{
+content:"";
 
-    position:fixed;
+position:absolute;
 
-    inset:0;
+width:320px;
 
-    backdrop-filter:blur(10px);
+height:320px;
 
-    -webkit-backdrop-filter:blur(10px);
+border-radius:50%;
 
-    background:
+background:
 
-    radial-gradient(
+rgba(255,255,255,.08);
 
-    circle at top,
+top:-80px;
 
-    rgba(255,255,255,.10),
+right:-100px;
 
-    rgba(0,0,0,.25)
-
-    );
-
-    z-index:-1;
+filter:blur(50px);
 
 }
-
-/* ===================================================
-        Main App
-=================================================== */
+/* =====================================================
+                App Container
+===================================================== */
 
 .app{
 
-    width:100%;
+max-width:480px;
 
-    max-width:430px;
+margin:auto;
 
-    margin:auto;
+height:100vh;
 
-    padding:22px;
+overflow:hidden;
 
-    padding-bottom:120px;
+position:relative;
 
-}
-
-/* ===================================================
-        Header
-=================================================== */
-
-.topHeader{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:30px;
-
-}
-
-.profile{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
-
-}
-
-.profileImage{
-
-    width:72px;
-
-    height:72px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    border:3px solid rgba(255,255,255,.95);
-
-    box-shadow:
-
-    0 15px 40px rgba(0,0,0,.45);
-
-}
-
-.hello{
-
-    font-size:14px;
-
-    opacity:.75;
-
-}
-
-.username{
-
-    font-size:24px;
-
-    font-weight:700;
-
-    letter-spacing:.3px;
-
-}
-
-/* ===================================================
-        Month Filter
-=================================================== */
-
-.monthBox input{
-
-    border:none;
-
-    outline:none;
-
-    width:130px;
-
-    padding:12px;
-
-    border-radius:18px;
-
-    color:white;
-
-    background:rgba(255,255,255,.12);
-
-    backdrop-filter:blur(18px);
-
-    -webkit-backdrop-filter:blur(18px);
-
-    box-shadow:var(--shadow);
-
-}
-
-.monthBox input::-webkit-calendar-picker-indicator{
-
-    filter:invert(1);
-
-}
-/* ===================================================
-        Premium Balance Card
-=================================================== */
-
-.balanceCard{
-
-    position:relative;
-
-    overflow:hidden;
-
-    background:
-
-    linear-gradient(
-
-        145deg,
-
-        rgba(255,255,255,.18),
-
-        rgba(255,255,255,.08)
-
-    );
-
-    backdrop-filter:blur(28px);
-
-    -webkit-backdrop-filter:blur(28px);
-
-    border:1px solid rgba(255,255,255,.15);
-
-    border-radius:32px;
-
-    padding:30px;
-
-    margin-bottom:24px;
-
-    box-shadow:
-
-        0 25px 60px rgba(0,0,0,.35);
-
-}
-
-/* Light Reflection */
-
-.balanceCard::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:220px;
-
-    height:220px;
-
-    background:
-
-    radial-gradient(
-
-        rgba(255,255,255,.28),
-
-        transparent 70%
-
-    );
-
-    top:-110px;
-
-    right:-80px;
-
-    border-radius:50%;
-
-}
-
-/* Glow */
-
-.balanceCard::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    border-radius:32px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    pointer-events:none;
-
-}
-
-.balanceTitle{
-
-    font-size:14px;
-
-    opacity:.75;
-
-    margin-bottom:8px;
-
-}
-
-.balanceValue{
-
-    font-size:48px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-
-    margin-bottom:28px;
-
-}
-
-/* ===================================================
-        Income Expense Row
-=================================================== */
-
-.summaryRow{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:14px;
-
-}
-
-.summaryCard{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:16px;
-
-    border-radius:22px;
-
-    background:rgba(255,255,255,.10);
-
-    backdrop-filter:blur(18px);
-
-    transition:.30s;
-
-}
-
-.summaryCard:hover{
-
-    transform:translateY(-4px);
-
-    background:rgba(255,255,255,.15);
-
-}
-
-.summaryCard .icon{
-
-    font-size:28px;
-
-}
-
-.summaryCard .label{
-
-    font-size:13px;
-
-    opacity:.75;
-
-}
-
-/* ===================================================
-        Dashboard Cards
-=================================================== */
-
-.stats{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:14px;
-
-    margin-bottom:25px;
-
-}
-
-.glassCard{
-
-    background:
-
-    linear-gradient(
-
-        rgba(255,255,255,.14),
-
-        rgba(255,255,255,.08)
-
-    );
-
-    backdrop-filter:blur(24px);
-
-    -webkit-backdrop-filter:blur(24px);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:24px;
-
-    padding:22px;
-
-    text-align:center;
-
-    box-shadow:
-
-        0 18px 35px rgba(0,0,0,.25);
-
-    transition:.30s;
-
-}
-
-.glassCard:hover{
-
-    transform:translateY(-5px);
-
-}
-
-.glassCard h4{
-
-    font-size:14px;
-
-    opacity:.70;
-
-    margin-bottom:12px;
-
-}
-
-.glassCard h2{
-
-    font-size:26px;
-
-    font-weight:700;
-
-}
-
-/* ===================================================
-        Shared Cards
-=================================================== */
-
-.addCard,
-.billsCard,
-.transactionCard,
-.chartCard,
-.settingsCard{
-
-    background:
-
-    linear-gradient(
-
-        rgba(255,255,255,.12),
-
-        rgba(255,255,255,.06)
-
-    );
-
-    backdrop-filter:blur(24px);
-
-    -webkit-backdrop-filter:blur(24px);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:28px;
-
-    padding:22px;
-
-    margin-bottom:24px;
-
-    box-shadow:
-
-        0 20px 45px rgba(0,0,0,.25);
-
-}
-
-.addCard h2,
-.billsCard h2,
-.transactionCard h2,
-.chartCard h2,
-.settingsCard h2{
-
-    font-size:22px;
-
-    margin-bottom:18px;
-
-}
-/* ===================================================
-        Premium Inputs
-=================================================== */
-
-input,
-select{
-
-    width:100%;
-
-    padding:16px 18px;
-
-    margin-bottom:15px;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:18px;
-
-    background:rgba(255,255,255,.10);
-
-    border:1px solid rgba(255,255,255,.10);
-
-    backdrop-filter:blur(18px);
-
-    -webkit-backdrop-filter:blur(18px);
-
-    color:white;
-
-    font-size:15px;
-
-    transition:.30s;
-
-}
-
-input::placeholder{
-
-    color:rgba(255,255,255,.70);
-
-}
-
-input:focus,
-select:focus{
-
-    border:1px solid rgba(79,172,254,.80);
-
-    background:rgba(255,255,255,.16);
-
-    box-shadow:
-
-    0 0 0 4px rgba(79,172,254,.18);
-
-}
-
-select{
-
-    cursor:pointer;
-
-}
-
-select option{
-
-    background:#16212E;
-
-    color:white;
-
-}
-
-/* ===================================================
-        Checkbox
-=================================================== */
-
-.checkRow{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin:12px 0;
-
-    padding:8px 0;
-
-}
-
-.checkRow label{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-}
-
-.checkRow input{
-
-    width:20px;
-
-    height:20px;
-
-    margin:0;
-
-    accent-color:#4FACFE;
-
-}
-
-/* ===================================================
-        Buttons
-=================================================== */
-
-button{
-
-    width:100%;
-
-    padding:16px;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:18px;
-
-    cursor:pointer;
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    background:
-
-    linear-gradient(
-
-        135deg,
-
-        #4FACFE,
-
-        #0061FF
-
-    );
-
-    box-shadow:
-
-        0 15px 30px rgba(0,97,255,.35);
-
-    transition:.30s;
-
-}
-
-button:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:
-
-        0 20px 35px rgba(0,97,255,.45);
-
-}
-
-button:active{
-
-    transform:scale(.97);
-
-}
-
-/* ===================================================
-        Section Header
-=================================================== */
-
-.sectionHeader{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-
-}
-
-.sectionHeader button{
-
-    width:auto;
-
-    padding:10px 18px;
-
-    border-radius:14px;
-
-}
-
-/* ===================================================
-        Quick Actions
-=================================================== */
-
-.quickActions{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:14px;
-
-    margin-bottom:25px;
-
-}
-
-.quickActions button{
-
-    padding:18px 10px;
-
-    border-radius:22px;
-
-    background:
-
-    rgba(255,255,255,.12);
-
-    backdrop-filter:blur(18px);
-
-    -webkit-backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.10);
-
-    box-shadow:
-
-        0 15px 35px rgba(0,0,0,.25);
-
-}
-
-.quickActions button:hover{
-
-    background:
-
-    rgba(255,255,255,.20);
-
-}
-
-/* ===================================================
-        Small Labels
-=================================================== */
-
-small{
-
-    opacity:.75;
-
-    font-size:13px;
-
-}
-/* ===================================================
-        Bills Section
-=================================================== */
-
-#billsContainer{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:16px;
-
-    margin-top:20px;
-
-}
-
-.billItem{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:20px;
-
-    border-radius:24px;
-
-    background:
-
-    linear-gradient(
-
-        rgba(255,255,255,.12),
-
-        rgba(255,255,255,.06)
-
-    );
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(20px);
-
-    -webkit-backdrop-filter:blur(20px);
-
-    transition:.30s;
-
-}
-
-.billItem:hover{
-
-    transform:translateY(-4px);
-
-    background:
-
-    rgba(255,255,255,.16);
-
-}
-
-.billLeft{
-
-    flex:1;
-
-}
-
-.billLeft h3{
-
-    font-size:18px;
-
-    font-weight:600;
-
-    margin-bottom:6px;
-
-}
-
-.billLeft p{
-
-    font-size:13px;
-
-    opacity:.70;
-
-}
-
-.billRight{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-end;
-
-    gap:10px;
-
-}
-
-.billAmount{
-
-    font-size:22px;
-
-    font-weight:700;
-
-}
-
-.billRight button{
-
-    width:auto;
-
-    padding:8px 14px;
-
-    font-size:13px;
-
-    border-radius:12px;
-
-}
-
-/* ===================================================
-        Monthly Summary
-=================================================== */
-
-.summaryGrid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:14px;
-
-    margin-top:18px;
-
-}
-
-.summaryGrid>div{
-
-    padding:18px;
-
-    text-align:center;
-
-    border-radius:20px;
-
-    background:
-
-    rgba(255,255,255,.10);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-}
-
-.summaryGrid h2{
-
-    margin-top:8px;
-
-    font-size:22px;
-
-}
-
-.summaryGrid small{
-
-    display:block;
-
-    opacity:.70;
-
-}
-
-/* ===================================================
-        Transactions
-=================================================== */
-
-.tableContainer{
-
-    overflow-x:auto;
-
-    border-radius:22px;
-
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-thead{
-
-    background:
-
-    rgba(255,255,255,.08);
-
-}
-
-thead th{
-
-    padding:18px;
-
-    text-align:left;
-
-    font-size:14px;
-
-    font-weight:600;
-
-}
-
-tbody tr{
-
-    transition:.25s;
-
-}
-
-tbody tr:hover{
-
-    background:
-
-    rgba(255,255,255,.08);
-
-}
-
-td{
-
-    padding:18px;
-
-    border-bottom:
-
-    1px solid rgba(255,255,255,.08);
-
-    font-size:14px;
-
-}
-
-.incomeText{
-
-    color:#00E676;
-
-    font-weight:700;
-
-}
-
-.expenseText{
-
-    color:#FF6B6B;
-
-    font-weight:700;
-
-}
-
-td button{
+background:transparent;
 
-    width:38px;
-
-    height:38px;
-
-    padding:0;
-
-    border-radius:12px;
-
-    margin-right:6px;
-
-    background:
-
-    rgba(255,255,255,.12);
-
-    box-shadow:none;
-
-}
-
-td button:hover{
-
-    background:
-
-    rgba(255,255,255,.22);
-
-}
-/* ===================================================
-                Premium Chart
-=================================================== */
-
-.chartCard{
-
-    overflow:hidden;
-
-}
-
-.chartCard canvas{
-
-    margin-top:20px;
-
-    width:100%!important;
-
-    height:280px!important;
-
-}
-
-/* ===================================================
-                Settings
-=================================================== */
-
-.settingsGrid{
-
-    display:grid;
-
-    gap:15px;
-
-    margin-top:15px;
-
-}
-
-.settingsGrid button{
-
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    rgba(255,255,255,.14),
-
-    rgba(255,255,255,.08)
-
-    );
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(20px);
-
-    -webkit-backdrop-filter:blur(20px);
-
-}
-
-.settingsGrid button:hover{
-
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    #4FACFE,
-
-    #0061FF
-
-    );
-
-}
-
-/* ===================================================
-                Empty State
-=================================================== */
-
-#emptyState{
-
-    margin-top:30px;
-
-    padding:40px 20px;
-
-    border-radius:28px;
-
-    background:
-
-    rgba(255,255,255,.08);
-
-    backdrop-filter:blur(20px);
-
-    text-align:center;
-
-}
-
-#emptyState h2{
-
-    font-size:65px;
-
-    margin-bottom:15px;
-
-}
-
-#emptyState p{
-
-    opacity:.75;
-
-    font-size:15px;
-
-}
-
-/* ===================================================
-                Toast
-=================================================== */
-
-#toast{
-
-    position:fixed;
-
-    left:50%;
-
-    bottom:30px;
-
-    transform:translateX(-50%) translateY(80px);
-
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    #4FACFE,
-
-    #0061FF
-
-    );
-
-    color:white;
-
-    padding:16px 28px;
-
-    border-radius:18px;
-
-    font-weight:600;
-
-    box-shadow:
-
-    0 20px 40px rgba(0,0,0,.35);
-
-    opacity:0;
-
-    transition:.35s;
-
-    z-index:9999;
-
-}
-
-#toast.show{
-
-    opacity:1;
-
-    transform:translateX(-50%) translateY(0);
-
-}
-
-/* ===================================================
-                Loading
-=================================================== */
-
-#loadingScreen{
-
-    position:fixed;
-
-    inset:0;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:
-
-    rgba(5,10,20,.85);
-
-    backdrop-filter:blur(15px);
-
-    z-index:99999;
-
-}
-
-.loader{
-
-    width:65px;
-
-    height:65px;
-
-    border-radius:50%;
-
-    border:6px solid rgba(255,255,255,.2);
-
-    border-top:6px solid white;
-
-    animation:spin 1s linear infinite;
-
-}
-
-#loadingScreen p{
-
-    margin-top:20px;
-
-    font-size:18px;
-
-    font-weight:600;
-
-}
-
-/* ===================================================
-                Animations
-=================================================== */
-
-@keyframes spin{
-
-    from{
-
-        transform:rotate(0deg);
-
-    }
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-}
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(35px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-.balanceCard{
-
-    animation:fadeUp .45s ease;
-
-}
-
-.glassCard{
-
-    animation:fadeUp .55s ease;
-
-}
-
-.addCard{
-
-    animation:fadeUp .65s ease;
-
-}
-
-.transactionCard{
-
-    animation:fadeUp .75s ease;
-
-}
-
-.billsCard{
-
-    animation:fadeUp .85s ease;
-
-}
-
-.chartCard{
-
-    animation:fadeUp .95s ease;
-
-}
-
-/* ===================================================
-                Hover Effects
-=================================================== */
-
-.balanceCard:hover,
-.glassCard:hover,
-.addCard:hover,
-.transactionCard:hover,
-.billsCard:hover,
-.chartCard:hover{
-
-    transform:translateY(-4px);
-
-    transition:.25s;
-
-}
-/* ===================================================
-            Apple Bottom Navigation
-=================================================== */
-
-.bottomNav{
-
-    position:fixed;
-
-    left:50%;
-
-    bottom:20px;
-
-    transform:translateX(-50%);
-
-    width:calc(100% - 30px);
-
-    max-width:430px;
-
-    height:75px;
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-    background:
-
-    rgba(255,255,255,.12);
-
-    backdrop-filter:blur(30px);
-
-    -webkit-backdrop-filter:blur(30px);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:28px;
-
-    box-shadow:
-
-    0 20px 45px rgba(0,0,0,.35);
-
-    z-index:999;
-
-}
-
-/* ===============================================
-                Navigation Items
-================================================ */
-
-.navItem{
-
-    width:auto;
-
-    background:none;
-
-    border:none;
-
-    box-shadow:none;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:6px;
-
-    color:white;
-
-    cursor:pointer;
-
-    transition:.30s;
-
-}
-
-.navItem:hover{
-
-    transform:translateY(-4px);
-
-}
-
-.navItem.active{
-
-    color:#4FACFE;
-
-}
-
-.navItem i{
-
-    font-size:22px;
-
-}
-
-.navItem span{
-
-    font-size:12px;
-
-    font-weight:500;
-
 }
-
-/* ===============================================
-            Floating Action Button
-================================================ */
-
-.fab{
-
-    position:fixed;
-
-    right:22px;
-
-    bottom:110px;
+/* =====================================================
+                Pages
+===================================================== */
 
-    width:65px;
+.page{
 
-    height:65px;
+display:none;
 
-    border-radius:50%;
+height:100vh;
 
-    display:flex;
+overflow-y:auto;
 
-    justify-content:center;
+padding:22px;
 
-    align-items:center;
+padding-bottom:110px;
 
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    #4FACFE,
-
-    #0061FF
-
-    );
-
-    box-shadow:
-
-    0 18px 35px rgba(0,97,255,.45);
-
-    cursor:pointer;
-
-    z-index:999;
-
-    transition:.30s;
-
-}
-
-.fab:hover{
-
-    transform:scale(1.08);
-
 }
 
-.fab i{
+.page.active{
 
-    font-size:28px;
+display:block;
 
-    color:white;
-
 }
-
-/* ===============================================
+/* =====================================================
                 Scrollbar
-================================================ */
+===================================================== */
 
-::-webkit-scrollbar{
+.page::-webkit-scrollbar{
 
-    width:8px;
-
-}
-
-::-webkit-scrollbar-track{
-
-    background:transparent;
+width:6px;
 
 }
 
-::-webkit-scrollbar-thumb{
+.page::-webkit-scrollbar-thumb{
 
-    background:
+background:rgba(255,255,255,.20);
 
-    linear-gradient(
+border-radius:20px;
 
-    #4FACFE,
+}
+/* =====================================================
+                    HEADER
+===================================================== */
 
-    #0061FF
+.header{
 
-    );
+display:flex;
 
-    border-radius:20px;
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:24px;
 
 }
 
-/* ===============================================
-            Selection Color
-================================================ */
+.profileSection{
 
-::selection{
+display:flex;
 
-    background:#4FACFE;
+align-items:center;
 
-    color:white;
-
-}
-
-/* ===============================================
-            Card Shine Effect
-================================================ */
-
-.balanceCard::before,
-.glassCard::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:-150px;
-
-    left:-120px;
-
-    width:220px;
-
-    height:220px;
-
-    background:
-
-    radial-gradient(
-
-    rgba(255,255,255,.20),
-
-    transparent
-
-    );
-
-    transform:rotate(25deg);
-
-    pointer-events:none;
-
-}
-
-/* ===============================================
-                Card Border Glow
-================================================ */
-
-.balanceCard,
-.glassCard,
-.addCard,
-.transactionCard,
-.chartCard,
-.settingsCard,
-.billsCard{
-
-    position:relative;
-
-    overflow:hidden;
-
-}
-
-/* ===============================================
-            Soft Divider
-================================================ */
-
-hr{
-
-    border:none;
-
-    height:1px;
-
-    background:
-
-    rgba(255,255,255,.10);
-
-    margin:18px 0;
-
-}
-
-/* ===============================================
-            Better Text
-================================================ */
-
-h1,h2,h3,h4{
-
-    letter-spacing:.4px;
-
-}
-
-p{
-
-    line-height:1.6;
-
-}
-
-/* ===============================================
-            Safe Area
-================================================ */
-
-@supports(padding:max(0px)){
-
-body{
-
-padding-bottom:
-
-max(120px,env(safe-area-inset-bottom));
-
-}
-
-.bottomNav{
-
-bottom:
-
-max(18px,env(safe-area-inset-bottom));
-
-}
-
-.fab{
-
-bottom:
-
-max(105px,env(safe-area-inset-bottom));
-
-}
-
-}
-/* ===================================================
-            Luxury Animated Background
-=================================================== */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-
-    radial-gradient(
-
-        circle at 15% 15%,
-
-        rgba(79,172,254,.22),
-
-        transparent 30%
-
-    ),
-
-    radial-gradient(
-
-        circle at 85% 20%,
-
-        rgba(0,97,255,.18),
-
-        transparent 28%
-
-    ),
-
-    radial-gradient(
-
-        circle at 50% 100%,
-
-        rgba(255,255,255,.08),
-
-        transparent 35%
-
-    );
-
-    animation:moveLights 18s linear infinite;
-
-    z-index:-2;
-
-}
-
-@keyframes moveLights{
-
-    0%{
-
-        transform:translate(0,0);
-
-    }
-
-    50%{
-
-        transform:translate(-30px,-25px);
-
-    }
-
-    100%{
-
-        transform:translate(0,0);
-
-    }
-
-}
-
-/* ===================================================
-            Glass Reflection
-=================================================== */
-
-.balanceCard::after,
-.glassCard::after,
-.addCard::after,
-.transactionCard::after,
-.chartCard::after,
-.billsCard::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:-140%;
-
-    left:-60%;
-
-    width:55%;
-
-    height:320%;
-
-    transform:rotate(28deg);
-
-    background:
-
-    linear-gradient(
-
-        rgba(255,255,255,.22),
-
-        transparent
-
-    );
-
-    pointer-events:none;
-
-}
-
-/* ===================================================
-            Balance Number
-=================================================== */
-
-.balanceValue{
-
-    text-shadow:
-
-    0 5px 20px rgba(255,255,255,.15);
-
-}
-
-/* ===================================================
-            Dashboard Numbers
-=================================================== */
-
-.glassCard h2{
-
-    color:white;
-
-    font-weight:700;
-
-    text-shadow:
-
-    0 2px 15px rgba(255,255,255,.12);
-
-}
-
-/* ===================================================
-            Card Hover Animation
-=================================================== */
-
-.balanceCard,
-.glassCard,
-.addCard,
-.transactionCard,
-.chartCard,
-.settingsCard,
-.billsCard{
-
-    transition:
-
-    transform .35s,
-
-    box-shadow .35s,
-
-    background .35s;
-
-}
-
-.balanceCard:hover{
-
-    transform:
-
-    translateY(-6px);
-
-}
-
-.glassCard:hover{
-
-    transform:
-
-    translateY(-5px);
-
-}
-
-.addCard:hover,
-.transactionCard:hover,
-.chartCard:hover,
-.settingsCard:hover,
-.billsCard:hover{
-
-    transform:
-
-    translateY(-4px);
-
-}
-
-/* ===================================================
-            Button Ripple Feeling
-=================================================== */
-
-button{
-
-    position:relative;
-
-    overflow:hidden;
-
-}
-
-button::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:-100%;
-
-    top:0;
-
-    width:100%;
-
-    height:100%;
-
-    background:
-
-    linear-gradient(
-
-        90deg,
-
-        transparent,
-
-        rgba(255,255,255,.25),
-
-        transparent
-
-    );
-
-    transition:.5s;
-
-}
-
-button:hover::after{
-
-    left:120%;
-
-}
-
-/* ===================================================
-            Better Summary Cards
-=================================================== */
-
-.summaryCard{
-
-    border:
-
-    1px solid rgba(255,255,255,.08);
-
-}
-
-.summaryCard:hover{
-
-    box-shadow:
-
-    0 15px 35px rgba(0,0,0,.30);
-
-}
-
-/* ===================================================
-            Bills
-=================================================== */
-
-.billItem{
-
-    border:
-
-    1px solid rgba(255,255,255,.08);
-
-}
-
-.billItem:hover{
-
-    box-shadow:
-
-    0 18px 35px rgba(0,0,0,.28);
-
-}
-
-/* ===================================================
-            Transactions
-=================================================== */
-
-tbody tr{
-
-    transition:.25s;
-
-}
-
-tbody tr:hover{
-
-    transform:scale(1.01);
-
-}
-
-/* ===================================================
-            iPhone Responsive
-=================================================== */
-
-@media(max-width:480px){
-
-.app{
-
-    padding:18px;
-
-}
-
-.balanceValue{
-
-    font-size:38px;
-
-}
-
-.balanceTitle{
-
-    font-size:13px;
+gap:14px;
 
 }
 
 .profileImage{
 
-    width:60px;
+width:64px;
 
-    height:60px;
+height:64px;
 
-}
+border-radius:50%;
 
-.username{
+object-fit:cover;
 
-    font-size:20px;
+border:3px solid rgba(255,255,255,.35);
 
-}
-
-.summaryRow{
-
-    grid-template-columns:1fr;
+box-shadow:0 10px 25px rgba(0,0,0,.30);
 
 }
 
-.stats{
+.greeting{
 
-    grid-template-columns:1fr;
+font-size:13px;
 
-}
+color:var(--subText);
 
-.quickActions{
-
-    grid-template-columns:1fr;
+margin-bottom:4px;
 
 }
 
-.summaryGrid{
+#userName{
 
-    grid-template-columns:1fr;
+font-size:24px;
+
+font-weight:700;
+
+color:white;
+
+}
+/* =====================================================
+                MONTH SWITCHER
+===================================================== */
+
+.monthCard{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:10px 14px;
+
+border-radius:18px;
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+border:1px solid var(--glass-border);
 
 }
 
-.billItem{
+.monthButton{
 
-    flex-direction:column;
+width:38px;
 
-    align-items:flex-start;
+height:38px;
 
-    gap:14px;
+border:none;
 
-}
+border-radius:50%;
 
-.billRight{
+background:rgba(255,255,255,.14);
 
-    width:100%;
+color:white;
 
-    align-items:flex-start;
+cursor:pointer;
 
-}
+font-size:16px;
 
-.tableContainer{
+transition:.25s;
 
-    overflow-x:auto;
+display:flex;
 
-}
+align-items:center;
 
-}
-/* ===================================================
-        MoneyPilot Premium UI V2
-        FINAL POLISH
-=================================================== */
-
-/* ---------- Text Glow ---------- */
-
-.balanceValue,
-.glassCard h2{
-
-    text-shadow:
-    0 3px 12px rgba(255,255,255,.18);
+justify-content:center;
 
 }
 
-/* ---------- Premium Borders ---------- */
+.monthButton:hover{
 
-.balanceCard,
-.glassCard,
-.addCard,
-.transactionCard,
-.chartCard,
-.billsCard,
-.settingsCard{
+transform:scale(1.08);
 
-    border:
-
-    1px solid rgba(255,255,255,.15);
+background:rgba(255,255,255,.22);
 
 }
 
-/* ---------- Premium Gradient ---------- */
+#monthFilter{
 
-.balanceCard{
+width:135px;
 
-    background:
+border:none;
 
-    linear-gradient(
+outline:none;
 
-        160deg,
+background:transparent;
 
-        rgba(255,255,255,.20),
-
-        rgba(255,255,255,.08)
-
-    );
-
-}
-
-.glassCard{
-
-    background:
-
-    linear-gradient(
-
-        180deg,
-
-        rgba(255,255,255,.14),
-
-        rgba(255,255,255,.06)
-
-    );
-
-}
-
-/* ---------- Buttons ---------- */
-
-button{
-
-    letter-spacing:.4px;
-
-}
-
-button:disabled{
-
-    opacity:.55;
-
-    cursor:not-allowed;
-
-}
-
-/* ---------- Inputs ---------- */
-
-input,
-select{
-
-    transition:
-
-    .25s;
-
-}
-
-input:hover,
-select:hover{
-
-    background:
-
-    rgba(255,255,255,.16);
-
-}
-
-/* ---------- Balance Card Shine ---------- */
-
-.balanceCard::before{
-
-    animation:
-
-    shineMove 12s infinite linear;
-
-}
-
-@keyframes shineMove{
-
-    0%{
-
-        transform:
-
-        translateX(-40px);
-
-    }
-
-    50%{
-
-        transform:
-
-        translateX(30px);
-
-    }
-
-    100%{
-
-        transform:
-
-        translateX(-40px);
-
-    }
-
-}
-
-/* ---------- Card Animation ---------- */
-
-@keyframes floatCard{
-
-    0%{
-
-        transform:
-
-        translateY(0);
-
-    }
-
-    50%{
-
-        transform:
-
-        translateY(-2px);
-
-    }
-
-    100%{
-
-        transform:
-
-        translateY(0);
-
-    }
-
-}
-
-.balanceCard{
-
-    animation:
-
-    floatCard 6s ease-in-out infinite;
-
-}
-
-/* ---------- Better Links ---------- */
-
-a{
-
-    color:#7fd5ff;
-
-    text-decoration:none;
-
-}
-
-a:hover{
-
-    color:white;
-
-}
-
-/* ---------- Footer ---------- */
-
-.version{
-
-    text-align:center;
-
-    margin-top:30px;
-
-    opacity:.70;
-
-    font-size:13px;
-
-    padding-bottom:25px;
-
-}
-
-/* ---------- Mobile ---------- */
-
-@media(max-width:420px){
-
-.balanceValue{
-
-font-size:34px;
-
-}
-
-button{
-
-padding:15px;
+color:white;
 
 font-size:15px;
 
-}
-
-.profileImage{
-
-width:56px;
-
-height:56px;
+font-weight:600;
 
 }
+/* =====================================================
+                BALANCE CARD
+===================================================== */
 
-.username{
+.balanceCard{
 
-font-size:18px;
+background:linear-gradient(
 
-}
+135deg,
 
-}
+rgba(255,255,255,.18),
 
-/* ---------- Tablet ---------- */
+rgba(255,255,255,.08)
 
-@media(min-width:768px){
+);
 
-.app{
+backdrop-filter:blur(25px);
 
-max-width:520px;
+border:1px solid rgba(255,255,255,.18);
 
-}
+border-radius:28px;
 
-}
+padding:26px;
 
-/* ---------- Desktop ---------- */
+box-shadow:var(--shadow);
 
-@media(min-width:1200px){
-
-.app{
-
-max-width:560px;
+margin-bottom:22px;
 
 }
 
-}
+.balanceCard p{
 
-/* ---------- Smooth ---------- */
+color:var(--subText);
 
-*{
+margin-bottom:8px;
 
-    transition:
-
-    background .25s,
-
-    color .25s,
-
-    border-color .25s;
+font-size:14px;
 
 }
-/* ===========================================
-        Transaction Cards
-=========================================== */
+
+.balanceCard h1{
+
+font-size:42px;
+
+font-weight:700;
+
+margin-bottom:24px;
+
+color:white;
+
+}
+/* =====================================================
+            INCOME EXPENSE ROW
+===================================================== */
+
+.incomeExpense{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:16px;
+
+}
+
+.smallCard{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:16px;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.10);
+
+}
+
+.emoji{
+
+font-size:28px;
+
+}
+
+.smallCard p{
+
+font-size:13px;
+
+margin-bottom:4px;
+
+}
+
+.smallCard h3{
+
+font-size:20px;
+
+font-weight:700;
+
+color:white;
+
+}
+/* =====================================================
+                    STATS GRID
+===================================================== */
+
+.statsGrid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:14px;
+
+margin-bottom:24px;
+
+}
+
+.statCard{
+
+padding:18px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.12);
+
+text-align:center;
+
+transition:.25s;
+
+box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+}
+
+.statCard:hover{
+
+transform:translateY(-4px);
+
+}
+
+.statCard p{
+
+font-size:13px;
+
+color:rgba(255,255,255,.70);
+
+margin-bottom:8px;
+
+}
+
+.statCard h2{
+
+font-size:22px;
+
+font-weight:700;
+
+color:white;
+
+}
+/* =====================================================
+                RECENT CARD
+===================================================== */
+
+.recentCard{
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:26px;
+
+padding:22px;
+
+margin-bottom:30px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.18);
+
+}
+/* =====================================================
+                CARD HEADER
+===================================================== */
+
+.cardHeader{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:18px;
+
+}
+
+.cardHeader h2{
+
+font-size:20px;
+
+font-weight:600;
+
+}
+
+.cardHeader button{
+
+width:auto;
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.12);
+
+color:white;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.cardHeader button:hover{
+
+background:rgba(255,255,255,.22);
+
+}
+/* =====================================================
+            RECENT TRANSACTION LIST
+===================================================== */
+
+#recentTransactionList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:14px;
+
+min-height:80px;
+
+}
+/* =====================================================
+            TRANSACTION CARD
+===================================================== */
 
 .transactionItem{
 
@@ -2347,15 +572,11 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:18px;
+padding:16px;
 
-margin-bottom:16px;
+border-radius:20px;
 
-border-radius:22px;
-
-background:rgba(255,255,255,.10);
-
-backdrop-filter:blur(20px);
+background:rgba(255,255,255,.08);
 
 border:1px solid rgba(255,255,255,.10);
 
@@ -2367,33 +588,34 @@ transition:.25s;
 
 transform:translateY(-3px);
 
-}
+background:rgba(255,255,255,.12);
 
+}
 .transactionLeft{
 
 display:flex;
 
 align-items:center;
 
-gap:15px;
+gap:14px;
 
 }
 
 .transactionIcon{
 
-width:56px;
+width:52px;
 
-height:56px;
+height:52px;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
 
-font-size:28px;
+justify-content:center;
 
-border-radius:18px;
+border-radius:16px;
+
+font-size:26px;
 
 background:rgba(255,255,255,.12);
 
@@ -2401,55 +623,1649 @@ background:rgba(255,255,255,.12);
 
 .transactionInfo h3{
 
-font-size:17px;
+font-size:16px;
 
-margin-bottom:4px;
+font-weight:600;
+
+margin-bottom:3px;
 
 }
 
 .transactionInfo p{
 
-font-size:14px;
+font-size:13px;
 
-opacity:.75;
+color:rgba(255,255,255,.72);
 
-margin-bottom:4px;
+margin-bottom:3px;
 
 }
 
 .transactionInfo small{
 
-opacity:.65;
+font-size:12px;
+
+color:rgba(255,255,255,.55);
+
+}
+.transactionRight{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:flex-end;
+
+gap:10px;
 
 }
 
-.transactionRight{
+.incomeText{
+
+color:#39D98A;
+
+font-weight:700;
+
+}
+
+.expenseText{
+
+color:#FF6B6B;
+
+font-weight:700;
+
+}
+/* =====================================================
+                FLOATING ACTION BUTTON
+===================================================== */
+
+.fab{
+
+position:fixed;
+
+right:24px;
+
+bottom:95px;
+
+width:65px;
+
+height:65px;
+
+border:none;
+
+border-radius:50%;
+
+background:linear-gradient(
+
+135deg,
+
+#5B6CFF,
+
+#7B61FF
+
+);
+
+color:white;
+
+font-size:34px;
+
+font-weight:300;
+
+cursor:pointer;
+
+box-shadow:
+
+0 20px 40px rgba(91,108,255,.45);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+transition:.25s;
+
+z-index:999;
+
+}
+
+.fab:hover{
+
+transform:scale(1.08);
+
+}
+
+.fab:active{
+
+transform:scale(.94);
+
+}
+/* =====================================================
+                BOTTOM SHEET
+===================================================== */
+
+.bottomSheet{
+
+position:fixed;
+
+left:0;
+
+right:0;
+
+bottom:-100%;
+
+background:#17213A;
+
+border-radius:30px 30px 0 0;
+
+padding:22px;
+
+transition:.35s ease;
+
+z-index:9999;
+
+box-shadow:
+
+0 -20px 50px rgba(0,0,0,.35);
+
+max-height:88vh;
+
+overflow:auto;
+
+}
+
+.bottomSheet.show{
+
+bottom:0;
+
+}
+.sheetHandle{
+
+width:60px;
+
+height:6px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.30);
+
+margin:0 auto 18px;
+
+}
+
+.sheetHeader{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.sheetHeader h2{
+
+font-size:22px;
+
+font-weight:600;
+
+}
+
+.sheetHeader button{
+
+width:42px;
+
+height:42px;
+
+border:none;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.12);
+
+color:white;
+
+cursor:pointer;
+
+}
+.sheetContent{
+
+display:flex;
+
+flex-direction:column;
+
+gap:16px;
+
+}
+.sheetContent input,
+
+.sheetContent select{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+outline:none;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.10);
+
+color:white;
+
+font-size:15px;
+
+backdrop-filter:blur(20px);
+
+}
+
+.sheetContent input::placeholder{
+
+color:rgba(255,255,255,.55);
+
+}
+
+.sheetContent select option{
+
+color:#111;
+
+}
+.checkboxRow{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:15px;
+
+cursor:pointer;
+
+}
+
+.checkboxRow input{
+
+width:20px;
+
+height:20px;
+
+}
+#saveButton{
+
+margin-top:12px;
+
+padding:16px;
+
+border:none;
+
+border-radius:18px;
+
+background:linear-gradient(
+
+135deg,
+
+#5B6CFF,
+
+#7B61FF
+
+);
+
+color:white;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:
+
+0 15px 35px rgba(91,108,255,.35);
+
+}
+
+#saveButton:hover{
+
+transform:translateY(-2px);
+
+}
+/* =====================================================
+                BOTTOM NAVIGATION
+===================================================== */
+
+.bottomNav{
+
+position:fixed;
+
+left:50%;
+
+bottom:18px;
+
+transform:translateX(-50%);
+
+width:92%;
+
+max-width:470px;
+
+height:72px;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+background:rgba(20,28,48,.90);
+
+backdrop-filter:blur(30px);
+
+border:1px solid rgba(255,255,255,.12);
+
+border-radius:28px;
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,.35);
+
+z-index:999;
+
+}
+
+.navItem{
+
+flex:1;
+
+height:100%;
+
+border:none;
+
+background:transparent;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:4px;
+
+cursor:pointer;
+
+color:rgba(255,255,255,.55);
+
+transition:.25s;
+
+}
+
+.navItem span{
+
+font-size:11px;
+
+font-weight:500;
+
+}
+
+.navIcon{
+
+font-size:23px;
+
+}
+
+.navItem.active{
+
+color:white;
+
+}
+
+.navItem.active .navIcon{
+
+transform:translateY(-2px);
+
+}
+
+.navItem:hover{
+
+color:white;
+
+}
+/* =====================================================
+                PAGE HEADER
+===================================================== */
+
+.pageHeader{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:24px;
+
+}
+
+.pageHeader h2{
+
+font-size:28px;
+
+font-weight:700;
+
+}
+/* =====================================================
+                SEARCH BAR
+===================================================== */
+
+.searchBox{
+
+margin-bottom:18px;
+
+}
+
+.searchBox input{
+
+width:100%;
+
+padding:15px 18px;
+
+border:none;
+
+outline:none;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.10);
+
+color:white;
+
+font-size:15px;
+
+}
+
+.searchBox input::placeholder{
+
+color:rgba(255,255,255,.55);
+
+}
+/* =====================================================
+                FILTER ROW
+===================================================== */
+
+.filterRow{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:14px;
+
+margin-bottom:20px;
+
+}
+
+.filterRow select{
+
+padding:14px;
+
+border:none;
+
+outline:none;
+
+border-radius:16px;
+
+background:rgba(255,255,255,.10);
+
+color:white;
+
+font-size:14px;
+
+}
+
+.filterRow option{
+
+color:black;
+
+}
+/* =====================================================
+                TRANSACTION PAGE
+===================================================== */
+
+.transactionList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:14px;
+
+padding-bottom:120px;
+
+}
+/* =====================================================
+                ANALYTICS CARD
+===================================================== */
+
+.analyticsCard{
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(20px);
+
+border-radius:24px;
+
+padding:22px;
+
+margin-bottom:22px;
+
+border:1px solid rgba(255,255,255,.12);
+
+}
+
+.analyticsCard h3{
+
+margin-bottom:18px;
+
+font-size:20px;
+
+font-weight:600;
+
+}
+
+.analyticsCard canvas{
+
+width:100%!important;
+
+height:260px!important;
+
+}
+/* =====================================================
+                    SETTINGS
+===================================================== */
+
+.settingsList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:16px;
+
+padding-bottom:120px;
+
+}
+
+.settingsList button{
+
+width:100%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:flex-start;
+
+padding:18px;
+
+border:none;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.10);
+
+color:white;
+
+font-size:16px;
+
+font-weight:500;
+
+cursor:pointer;
+
+transition:.25s;
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.10);
+
+}
+
+.settingsList button:hover{
+
+transform:translateY(-3px);
+
+background:rgba(255,255,255,.16);
+
+}
+/* =====================================================
+                    EMPTY STATE
+===================================================== */
+
+.emptyState{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+padding:70px 20px;
+
+text-align:center;
+
+color:rgba(255,255,255,.75);
+
+}
+
+.emptyIcon{
+
+font-size:72px;
+
+margin-bottom:20px;
+
+}
+
+.emptyState h2{
+
+font-size:28px;
+
+margin-bottom:10px;
+
+}
+
+.emptyState p{
+
+font-size:15px;
+
+line-height:24px;
+
+max-width:260px;
+
+}
+/* =====================================================
+                    TOAST
+===================================================== */
+
+#toast{
+
+position:fixed;
+
+left:50%;
+
+bottom:110px;
+
+transform:translateX(-50%);
+
+padding:14px 22px;
+
+border-radius:18px;
+
+background:#111827;
+
+color:white;
+
+font-size:14px;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:.30s;
+
+z-index:99999;
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.35);
+
+}
+
+#toast.show{
+
+opacity:1;
+
+bottom:125px;
+
+}
+/* =====================================================
+                PAGE ANIMATION
+===================================================== */
+
+@keyframes fadePage{
+
+from{
+
+opacity:0;
+
+transform:translateY(18px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+.page.active{
+
+animation:fadePage .35s ease;
+
+}
+/* =====================================================
+                    CARD HOVER
+===================================================== */
+
+.balanceCard,
+
+.statCard,
+
+.analyticsCard,
+
+.recentCard,
+
+.transactionItem,
+
+.settingsList button{
+
+transition:.30s;
+
+}
+
+.balanceCard:hover,
+
+.statCard:hover,
+
+.analyticsCard:hover,
+
+.recentCard:hover{
+
+transform:translateY(-4px);
+
+}
+/* =====================================================
+                MOBILE OPTIMIZATION
+===================================================== */
+
+@media(max-width:480px){
+
+.header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:18px;
+
+}
+
+.monthCard{
+
+width:100%;
+
+justify-content:space-between;
+
+}
+
+.statsGrid{
+
+grid-template-columns:1fr;
+
+}
+
+.incomeExpense{
+
+grid-template-columns:1fr;
+
+}
+
+.balanceCard h1{
+
+font-size:34px;
+
+}
+
+.page{
+
+padding:18px;
+
+padding-bottom:110px;
+
+}
+
+}
+/* =====================================================
+            PREMIUM GLASS EFFECTS
+===================================================== */
+
+.balanceCard,
+.statCard,
+.recentCard,
+.analyticsCard,
+.settingsList button,
+.transactionItem,
+.bottomSheet{
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,255,255,.18),
+
+rgba(255,255,255,.08)
+
+);
+
+backdrop-filter:blur(25px);
+
+-webkit-backdrop-filter:blur(25px);
+
+border:
+
+1px solid rgba(255,255,255,.15);
+
+box-shadow:
+
+0 15px 40px rgba(0,0,0,.22);
+
+}
+/* =====================================================
+            INPUT FOCUS EFFECT
+===================================================== */
+
+input:focus,
+select:focus{
+
+outline:none;
+
+border:1px solid rgba(255,255,255,.30);
+
+box-shadow:
+
+0 0 0 4px rgba(91,108,255,.25);
+
+transition:.25s;
+
+}
+/* =====================================================
+            BUTTON ANIMATION
+===================================================== */
+
+button{
+
+transition:
+
+transform .20s,
+
+box-shadow .20s,
+
+background .20s;
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+}
+
+button:active{
+
+transform:scale(.96);
+
+}
+/* =====================================================
+            PREMIUM SCROLL
+===================================================== */
+
+::-webkit-scrollbar{
+
+width:7px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:
+
+rgba(255,255,255,.25);
+
+border-radius:30px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:transparent;
+
+}
+/* =====================================================
+            SAFE AREA SUPPORT
+===================================================== */
+
+.bottomNav{
+
+padding-bottom:
+
+env(safe-area-inset-bottom);
+
+}
+
+.fab{
+
+bottom:
+
+calc(
+
+90px +
+
+env(safe-area-inset-bottom)
+
+);
+
+}
+/* =====================================================
+            SMOOTH TRANSITIONS
+===================================================== */
+
+*{
+
+transition:
+
+background-color .25s,
+
+color .25s,
+
+border-color .25s;
+
+}
+/* =====================================================
+            VERSION LABEL
+===================================================== */
+
+.appVersion{
+
+position:fixed;
+
+bottom:100px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:11px;
+
+color:
+
+rgba(255,255,255,.45);
+
+pointer-events:none;
+
+}
+/* =====================================================
+                THEME COLORS
+===================================================== */
+
+.incomeCard{
+
+border-left:5px solid #22C55E;
+
+}
+
+.expenseCard{
+
+border-left:5px solid #EF4444;
+
+}
+
+.incomeText{
+
+color:#22C55E;
+
+font-weight:700;
+
+}
+
+.expenseText{
+
+color:#EF4444;
+
+font-weight:700;
+
+}
+
+.investmentText{
+
+color:#F59E0B;
+
+font-weight:700;
+
+}
+/* =====================================================
+                CATEGORY ICONS
+===================================================== */
+
+.transactionIcon{
+
+flex-shrink:0;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,255,255,.18),
+
+rgba(255,255,255,.08)
+
+);
+
+box-shadow:
+
+0 8px 18px rgba(0,0,0,.18);
+
+}
+/* =====================================================
+                ANALYTICS COLORS
+===================================================== */
+
+.analyticsPositive{
+
+color:#22C55E;
+
+font-weight:600;
+
+}
+
+.analyticsNegative{
+
+color:#EF4444;
+
+font-weight:600;
+
+}
+
+.analyticsNeutral{
+
+color:#FBBF24;
+
+font-weight:600;
+
+}
+/* =====================================================
+                LOADING
+===================================================== */
+
+.loading{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:40px;
+
+}
+
+.loading::after{
+
+content:"";
+
+width:34px;
+
+height:34px;
+
+border-radius:50%;
+
+border:4px solid rgba(255,255,255,.20);
+
+border-top-color:white;
+
+animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+/* =====================================================
+                BADGES
+===================================================== */
+
+.badge{
+
+display:inline-flex;
+
+align-items:center;
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-size:12px;
+
+font-weight:600;
+
+}
+
+.badgeIncome{
+
+background:rgba(34,197,94,.18);
+
+color:#22C55E;
+
+}
+
+.badgeExpense{
+
+background:rgba(239,68,68,.18);
+
+color:#EF4444;
+
+}
+
+.badgeInvestment{
+
+background:rgba(245,158,11,.18);
+
+color:#F59E0B;
+
+}
+/* =====================================================
+                DIVIDERS
+===================================================== */
+
+.divider{
+
+height:1px;
+
+background:
+
+rgba(255,255,255,.08);
+
+margin:18px 0;
+
+}
+/* =====================================================
+                HIDE ELEMENTS
+===================================================== */
+
+.hidden{
+
+display:none !important;
+
+}
+
+.visible{
+
+display:block;
+
+}
+/* =====================================================
+                RESPONSIVE
+===================================================== */
+
+@media (max-width:420px){
+
+.header{
+
+gap:18px;
+
+}
+
+.profileImage{
+
+width:58px;
+
+height:58px;
+
+}
+
+#userName{
+
+font-size:22px;
+
+}
+
+.balanceCard{
+
+padding:20px;
+
+}
+
+.balanceCard h1{
+
+font-size:34px;
+
+}
+
+.statCard h2{
+
+font-size:18px;
+
+}
+
+.transactionIcon{
+
+width:46px;
+
+height:46px;
+
+font-size:22px;
+
+}
+
+.fab{
+
+width:58px;
+
+height:58px;
+
+font-size:30px;
+
+right:20px;
+
+}
+
+.bottomNav{
+
+height:66px;
+
+}
+
+}
+/* =====================================================
+            LARGE MOBILE
+===================================================== */
+
+@media (min-width:421px) and (max-width:768px){
+
+.app{
+
+max-width:520px;
+
+margin:auto;
+
+}
+
+}
+/* =====================================================
+                TABLET
+===================================================== */
+
+@media (min-width:769px){
+
+.app{
+
+max-width:700px;
+
+margin:auto;
+
+}
+
+.page{
+
+padding:28px;
+
+}
+
+.balanceCard h1{
+
+font-size:48px;
+
+}
+
+}
+/* =====================================================
+            LANDSCAPE MODE
+===================================================== */
+
+@media (orientation:landscape){
+
+.page{
+
+padding-bottom:90px;
+
+}
+
+.bottomSheet{
+
+max-width:650px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+border-radius:30px;
+
+}
+
+}
+/* =====================================================
+                ACCESSIBILITY
+===================================================== */
+
+button:focus,
+
+input:focus,
+
+select:focus{
+
+outline:none;
+
+}
+
+button{
+
+-webkit-tap-highlight-color:transparent;
+
+}
+
+input{
+
+-webkit-tap-highlight-color:transparent;
+
+}
+
+select{
+
+-webkit-tap-highlight-color:transparent;
+
+}
+/* =====================================================
+            IMAGE OPTIMIZATION
+===================================================== */
+
+img{
+
+max-width:100%;
+
+display:block;
+
+user-select:none;
+
+-webkit-user-drag:none;
+
+}
+/* =====================================================
+            PERFORMANCE
+===================================================== */
+
+.balanceCard,
+
+.statCard,
+
+.transactionItem,
+
+.bottomSheet,
+
+.analyticsCard{
+
+will-change:transform;
+
+}
+/* =====================================================
+                FINAL UTILITIES
+===================================================== */
+
+.textCenter{
+
+text-align:center;
+
+}
+
+.textLeft{
+
+text-align:left;
+
+}
+
+.textRight{
 
 text-align:right;
 
 }
 
-.transactionButtons{
+.mt10{
 
-margin-top:12px;
+margin-top:10px;
+
+}
+
+.mt20{
+
+margin-top:20px;
+
+}
+
+.mt30{
+
+margin-top:30px;
+
+}
+
+.mb10{
+
+margin-bottom:10px;
+
+}
+
+.mb20{
+
+margin-bottom:20px;
+
+}
+
+.mb30{
+
+margin-bottom:30px;
+
+}
+
+.hidden{
+
+display:none !important;
+
+}
+
+.flex{
 
 display:flex;
 
-gap:8px;
+}
 
-justify-content:flex-end;
+.flexCenter{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 }
 
-.editBtn,
-.deleteBtn{
+.spaceBetween{
 
-width:38px;
+display:flex;
 
-height:38px;
+justify-content:space-between;
 
-padding:0;
-
-border-radius:12px;
+align-items:center;
 
 }
+/* =====================================================
+                GLASS HELPERS
+===================================================== */
+
+.glass{
+
+background:
+
+rgba(255,255,255,.10);
+
+backdrop-filter:blur(20px);
+
+-webkit-backdrop-filter:blur(20px);
+
+border:
+
+1px solid rgba(255,255,255,.15);
+
+border-radius:22px;
+
+}
+
+.shadow{
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.20);
+
+}
+
+.round{
+
+border-radius:20px;
+
+}
+/* =====================================================
+                FADE HELPERS
+===================================================== */
+
+.fadeIn{
+
+animation:fadeIn .35s ease;
+
+}
+
+.fadeUp{
+
+animation:fadeUp .40s ease;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(18px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+/* =====================================================
+                HOVER EFFECTS
+===================================================== */
+
+.clickable{
+
+cursor:pointer;
+
+transition:.20s;
+
+}
+
+.clickable:hover{
+
+transform:translateY(-2px);
+
+}
+
+.clickable:active{
+
+transform:scale(.97);
+
+}
+/* =====================================================
+                PRINT
+===================================================== */
+
+@media print{
+
+.bottomNav,
+
+.fab,
+
+.bottomSheet,
+
+#toast{
+
+display:none;
+
+}
+
+body{
+
+background:white;
+
+color:black;
+
+}
+
+}
+/* =====================================================
+                CSS END
+===================================================== */
+
+/*
+
+MoneyPilot Lite V3
+
+Designed by:
+Utkarsh Dangayach ❤️
+
+Architecture:
+Mobile First
+Glass UI
+SPA Ready
+PWA Ready
+
+*/
