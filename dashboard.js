@@ -3,30 +3,45 @@
    Dashboard.js
 =========================================== */
 
-function calculateDashboard() {
+function calculateDashboard(){
+
+    const selectedMonth =
+    document.getElementById("monthFilter").value;
 
     let income = 0;
     let expense = 0;
     let fixed = 0;
     let variable = 0;
 
-    transactions.forEach(t => {
+    const filteredTransactions = transactions.filter(t => {
+
+        if(!selectedMonth) return true;
+
+        return t.date.startsWith(selectedMonth);
+
+    });
+
+    filteredTransactions.forEach(t=>{
 
         const amount = Number(t.amount) || 0;
 
-        if (t.type === "income") {
+        if(t.type==="income"){
 
             income += amount;
 
-        } else {
+        }
+
+        else if(t.type==="expense"){
 
             expense += amount;
 
-            if (t.fixed) {
+            if(t.fixed){
 
                 fixed += amount;
 
-            } else {
+            }
+
+            else{
 
                 variable += amount;
 
@@ -39,10 +54,15 @@ function calculateDashboard() {
     const balance = income - expense;
 
     setValue("balance", balance);
+
     setValue("incomeValue", income);
+
     setValue("expenseValue", expense);
+
     setValue("fixedTotal", fixed);
+
     setValue("variableTotal", variable);
+
     setValue("savingTotal", balance);
 
 }
