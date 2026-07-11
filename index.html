@@ -55,35 +55,59 @@ rel="stylesheet">
 
         <p id="lockTitle">
 
-            Enter PIN
+    Create Your 6 Digit PIN
 
-        </p>
+</p>
 
+<p id="pinHint">
+
+First time setup
+
+</p>
         <input
 
-            id="pinInput"
+id="pinInput"
 
-            type="password"
+type="password"
 
-            maxlength="6"
+maxlength="6"
 
-            inputmode="numeric"
+inputmode="numeric"
 
-            placeholder="●●●●●●"
+placeholder="Enter 6 digit PIN"
 
-        >
+autocomplete="off"
 
-        <button
+>
+            <input
 
-            id="unlockBtn"
+id="confirmPinInput"
 
-            class="primaryBtn"
+type="password"
 
-        >
+maxlength="6"
 
-            Unlock
+inputmode="numeric"
 
-        </button>
+placeholder="Confirm PIN"
+
+autocomplete="off"
+
+style="display:none;margin-top:12px;"
+
+>
+
+      <button
+
+id="unlockBtn"
+
+class="primaryBtn"
+
+>
+
+Continue
+
+</button>
 
     </div>
 
