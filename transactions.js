@@ -320,6 +320,10 @@ else if(transaction.type==="investment"){
 
 <div class="transactionIcon">
 
+${getCategoryIcon(transaction.category)}
+
+</div>
+
 ${icon}
 
 </div>
@@ -433,11 +437,17 @@ function getCategoryIcon(category){
 
         EMI:"🏦",
 
+        Rent:"🏠",
+
         Health:"🏥",
 
         Travel:"✈️",
 
         Entertainment:"🎬",
+
+        Bills:"📄",
+
+        Gift:"🎁",
 
         Other:"📦"
 
