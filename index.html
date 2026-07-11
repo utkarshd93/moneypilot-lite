@@ -36,6 +36,11 @@ rel="stylesheet">
 <div class="background-overlay"></div>
 
 <div class="app">
+<!-- ==========================================
+            HOME SCREEN
+========================================== -->
+
+<div id="homeScreen">
 
 <!-- ==========================================
             Header
@@ -527,7 +532,7 @@ id="fabButton">
 
 class="navItem active"
 
-id="navHome">
+id="homeTab">
 
 🏠
 
@@ -543,13 +548,13 @@ Home
 
 class="navItem"
 
-id="navTransactions">
+id="transactionTab">
 
-📋
+💸
 
 <span>
 
-History
+Transactions
 
 </span>
 
@@ -559,23 +564,7 @@ History
 
 class="navItem"
 
-id="navReports">
-
-📈
-
-<span>
-
-Reports
-
-</span>
-
-</button>
-
-<button
-
-class="navItem"
-
-id="navSettings">
+id="settingsTab">
 
 ⚙️
 
@@ -588,6 +577,41 @@ Settings
 </button>
 
 </nav>
+</div>
+
+<!-- ==========================================
+        TRANSACTIONS SCREEN
+========================================== -->
+
+<div
+
+id="transactionScreen"
+
+style="display:none;">
+
+<section class="transactionCard">
+
+<div class="sectionHeader">
+
+<h2>
+
+All Transactions
+
+</h2>
+
+</div>
+
+<div
+
+id="transactionList"
+
+class="transactionList">
+
+</div>
+
+</section>
+
+</div>
 
 <footer class="version">
 
