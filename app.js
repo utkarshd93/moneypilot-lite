@@ -2,46 +2,44 @@
         MoneyPilot Navigation
 =========================================== */
 
-const homeTab =
-document.getElementById("homeTab");
+const homeTab = document.getElementById("homeTab");
+const transactionTab = document.getElementById("transactionTab");
+const settingsTab = document.getElementById("settingsTab");
 
-const transactionTab =
-document.getElementById("transactionTab");
+const homeScreen = document.getElementById("homeScreen");
+const transactionScreen = document.getElementById("transactionScreen");
 
-const homeScreen =
-document.getElementById("homeScreen");
+function openHome() {
 
-const transactionScreen =
-document.getElementById("transactionScreen");
+    homeScreen.style.display = "block";
+    transactionScreen.style.display = "none";
+
+    homeTab.classList.add("active");
+    transactionTab.classList.remove("active");
+
+}
+
+function openTransactions() {
+
+    homeScreen.style.display = "none";
+    transactionScreen.style.display = "block";
+
+    transactionTab.classList.add("active");
+    homeTab.classList.remove("active");
+
+}
 
 if(homeTab){
 
-homeTab.onclick=function(){
-
-homeScreen.style.display="block";
-
-transactionScreen.style.display="none";
-
-homeTab.classList.add("active");
-
-transactionTab.classList.remove("active");
-
-};
+    homeTab.addEventListener("click", openHome);
 
 }
 
 if(transactionTab){
 
-transactionTab.onclick=function(){
-
-homeScreen.style.display="none";
-
-transactionScreen.style.display="block";
-
-transactionTab.classList.add("active");
-
-homeTab.classList.remove("active");
-
-};
+    transactionTab.addEventListener("click", openTransactions);
 
 }
+
+// App opens on Home
+openHome();
