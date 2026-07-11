@@ -68,9 +68,7 @@ function(){
         confirmInput.style.display = "block";
 
     }
-
-});
-document.getElementById(
+        document.getElementById(
 
 "unlockBtn"
 
@@ -145,3 +143,6 @@ document.getElementById(
     }
 
 };
+
+
+});
