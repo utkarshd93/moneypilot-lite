@@ -550,17 +550,11 @@ function clearTransactionForm(){
     document.getElementById("type").value = "expense";
 
     document.getElementById("category").value = "Food";
-            const selectedMonth =
+        if(typeof syncTransactionDate==="function"){
 
-    document.getElementById("monthFilter")?.value;
+            syncTransactionDate();
 
-    if(selectedMonth){
-
-        document.getElementById("date").value =
-
-        selectedMonth + "-01";
-
-    }
+        }
 
     editingTransactionId = null;
 
