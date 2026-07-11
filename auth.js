@@ -116,8 +116,9 @@ function setupMode(){
     $("lockHeading").innerHTML="Welcome 👋";
 
     $("lockSubHeading").innerHTML=
+    "Let's setup your MoneyPilot";
 
-    "Create a 6-digit PIN";
+    $("userNameInput").style.display="block";
 
     $("confirmPinInput").style.display="block";
 
@@ -128,9 +129,13 @@ function loginMode(){
 
     $("lockHeading").innerHTML="Welcome Back";
 
-    $("lockSubHeading").innerHTML=
+    const userName =
+    localStorage.getItem("mp_user_name") || "";
 
-    "Enter your PIN";
+    $("lockSubHeading").innerHTML=
+    userName;
+
+    $("userNameInput").style.display="none";
 
     $("confirmPinInput").style.display="none";
 
@@ -182,35 +187,55 @@ async function(){
 
     if(!hasPin()){
 
-        const confirm =
+    const name =
 
-        $("confirmPinInput").value.trim();
+    $("userNameInput").value.trim();
 
-        if(pin !== confirm){
+    if(name===""){
 
-            alert("PINs do not match.");
-
-            return;
-
-        }
-
-        const hashedPin =
-
-        await hashPin(pin);
-
-        localStorage.setItem(
-
-            AUTH.PIN_KEY,
-
-            hashedPin
-
-        );
-
-        loginSuccess();
+        alert("Please enter your name.");
 
         return;
 
     }
+
+    const confirm =
+
+    $("confirmPinInput").value.trim();
+
+    if(pin !== confirm){
+
+        alert("PINs do not match.");
+
+        return;
+
+    }
+
+    const hashedPin =
+
+    await hashPin(pin);
+
+    localStorage.setItem(
+
+        AUTH.PIN_KEY,
+
+        hashedPin
+
+    );
+
+    localStorage.setItem(
+
+        "mp_user_name",
+
+        name
+
+    );
+
+    loginSuccess();
+
+    return;
+
+}
 
     const hashedPin =
 
