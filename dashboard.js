@@ -62,61 +62,83 @@ function calculateDashboard(){
 
     });
 
-    const balance =
+const cashBalance =
 
-    income -
+income -
 
-    expense -
+expense -
 
-    investment;
-       updateValue(
+investment;
 
-        "balance",
+const netWorth =
 
-        balance
+cashBalance +
 
-    );
+investment;
 
-    updateValue(
+updateValue(
 
-        "incomeValue",
+    "balance",
 
-        income
+    cashBalance
 
-    );
+);
 
-    updateValue(
+updateValue(
 
-        "expenseValue",
+    "incomeValue",
 
-        expense
+    income
 
-    );
+);
 
-    updateValue(
+updateValue(
 
-        "fixedTotal",
+    "expenseValue",
 
-        fixed
+    expense
 
-    );
+);
 
-    updateValue(
+updateValue(
 
-        "variableTotal",
+    "cashBalance",
 
-        variable
+    cashBalance
 
-    );
+);
 
-    updateValue(
+updateValue(
 
-        "savingTotal",
+    "investmentTotal",
 
-        balance
+    investment
 
-    );
+);
 
+updateValue(
+
+    "netWorth",
+
+    netWorth
+
+);
+
+updateValue(
+
+    "analyticsFixed",
+
+    fixed
+
+);
+
+updateValue(
+
+    "analyticsVariable",
+
+    variable
+
+);
 }
 /* =====================================================
         Update Values
