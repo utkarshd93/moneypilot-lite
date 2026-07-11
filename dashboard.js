@@ -123,13 +123,22 @@ if (monthInput) {
 
     monthInput.addEventListener("change", () => {
 
-    if (typeof renderTransactions === "function") {
+    const selectedMonth = monthInput.value;
+
+    if(selectedMonth){
+
+        document.getElementById("date").value =
+        selectedMonth + "-01";
+
+    }
+
+    if(typeof renderTransactions === "function"){
 
         renderTransactions();
 
     }
 
-    if (typeof refreshDashboard === "function") {
+    if(typeof refreshDashboard === "function"){
 
         refreshDashboard();
 
