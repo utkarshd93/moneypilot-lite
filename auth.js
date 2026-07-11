@@ -44,6 +44,8 @@ function loginSuccess(){
 
     );
 
+    AUTH.initialized = true;
+
     hideLockScreen();
 
 }
@@ -55,12 +57,22 @@ function logout(){
 
     );
 
-    showLockScreen();
+    $("pinInput").value="";
+
+    $("confirmPinInput").value="";
+
+    loginMode();
 
 }
 function showLockScreen(){
 
     $("lockScreen").style.display="flex";
+
+    setTimeout(function(){
+
+        $("pinInput").focus();
+
+    },150);
 
 }
 
@@ -227,5 +239,45 @@ async function(){
         $("pinInput").focus();
 
     }
+
+});
+$("pinInput").addEventListener(
+
+"keydown",
+
+function(e){
+
+    if(e.key==="Enter"){
+
+        $("unlockBtn").click();
+
+    }
+
+});
+
+$("confirmPinInput").addEventListener(
+
+"keydown",
+
+function(e){
+
+    if(e.key==="Enter"){
+
+        $("unlockBtn").click();
+
+    }
+
+});
+window.addEventListener(
+
+"beforeunload",
+
+function(){
+
+    sessionStorage.removeItem(
+
+        AUTH.SESSION_KEY
+
+    );
 
 });
