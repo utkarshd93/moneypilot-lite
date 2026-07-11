@@ -33,6 +33,65 @@ rel="stylesheet">
 
 <body>
 
+<!-- ==========================
+     MoneyPilot Lock Screen
+========================== -->
+
+<div id="lockScreen" class="lockScreen">
+
+    <div class="lockCard">
+
+        <div class="lockLogo">
+
+            💰
+
+        </div>
+
+        <h1 id="lockHeading">
+
+            MoneyPilot
+
+        </h1>
+
+        <p id="lockSubHeading">
+
+            Securing your financial data...
+
+        </p>
+
+        <input
+            id="pinInput"
+            class="pinInput"
+            type="password"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder="Enter 6-digit PIN"
+            autocomplete="off"
+        >
+
+        <input
+            id="confirmPinInput"
+            class="pinInput"
+            type="password"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder="Confirm PIN"
+            autocomplete="off"
+            style="display:none;"
+        >
+
+        <button
+            id="unlockBtn"
+            class="primaryBtn">
+
+            Continue
+
+        </button>
+
+    </div>
+
+</div>
+
 <div class="backgroundOverlay"></div>
 
 <div class="app">
