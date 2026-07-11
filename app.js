@@ -1,45 +1,429 @@
-/* ===========================================
-        MoneyPilot Navigation
-=========================================== */
+/* =====================================================
+            MoneyPilot Lite V3
+===================================================== */
 
-const homeTab = document.getElementById("homeTab");
-const transactionTab = document.getElementById("transactionTab");
-const settingsTab = document.getElementById("settingsTab");
+document.addEventListener("DOMContentLoaded", function () {
 
-const homeScreen = document.getElementById("homeScreen");
-const transactionScreen = document.getElementById("transactionScreen");
+    initializeApp();
 
-function openHome() {
+});
 
-    homeScreen.style.display = "block";
-    transactionScreen.style.display = "none";
+function initializeApp() {
 
-    homeTab.classList.add("active");
-    transactionTab.classList.remove("active");
+    // Load Local Storage
+    if (typeof loadStorage === "function") {
+
+        loadStorage();
+
+    }
+
+    if (typeof loadBills === "function") {
+
+        loadBills();
+
+    }
+
+    // Dashboard
+    if (typeof refreshDashboard === "function") {
+
+        refreshDashboard();
+
+    }
+
+    // Transactions
+    if (typeof renderTransactions === "function") {
+
+        renderTransactions();
+
+    }
+
+    // Bills
+    if (typeof renderBills === "function") {
+
+        renderBills();
+
+    }
+
+    initializeMonth();
+
+}
+function initializeMonth() {
+
+    const monthFilter =
+
+    document.getElementById("monthFilter");
+
+    if (!monthFilter) return;
+
+    if (!monthFilter.value) {
+
+        monthFilter.value =
+
+        new Date()
+
+        .toISOString()
+
+        .substring(0, 7);
+
+    }
+
+}
+function refreshApp() {
+
+    if (typeof refreshDashboard === "function") {
+
+        refreshDashboard();
+
+    }
+
+    if (typeof renderTransactions === "function") {
+
+        renderTransactions();
+
+    }
+
+}
+function showHome() {
+
+    if (typeof openPage === "function") {
+
+        openPage("home");
+
+    }
 
 }
 
-function openTransactions() {
+function showTransactions() {
 
-    homeScreen.style.display = "none";
-    transactionScreen.style.display = "block";
+    if (typeof openPage === "function") {
 
-    transactionTab.classList.add("active");
-    homeTab.classList.remove("active");
+        openPage("transactions");
 
-}
-
-if(homeTab){
-
-    homeTab.addEventListener("click", openHome);
+    }
 
 }
 
-if(transactionTab){
+function showAnalytics() {
 
-    transactionTab.addEventListener("click", openTransactions);
+    if (typeof openPage === "function") {
+
+        openPage("analytics");
+
+    }
 
 }
 
-// App opens on Home
-openHome();
+function showSettings() {
+
+    if (typeof openPage === "function") {
+
+        openPage("settings");
+
+    }
+
+}
+/* =====================================================
+            Month Navigation
+===================================================== */
+
+const monthFilter =
+document.getElementById("monthFilter");
+
+const prevMonth =
+document.getElementById("prevMonth");
+
+const nextMonth =
+document.getElementById("nextMonth");
+
+function changeMonth(offset){
+
+    if(!monthFilter) return;
+
+    let value = monthFilter.value;
+
+    if(!value){
+
+        value = new Date()
+        .toISOString()
+        .substring(0,7);
+
+    }
+
+    let parts = value.split("-");
+
+    let year = parseInt(parts[0]);
+
+    let month = parseInt(parts[1]);
+
+    month += offset;
+
+    if(month < 1){
+
+        month = 12;
+
+        year--;
+
+    }
+
+    if(month > 12){
+
+        month = 1;
+
+        year++;
+
+    }
+
+    monthFilter.value =
+    year + "-" +
+    String(month).padStart(2,"0");
+
+    monthFilter.dispatchEvent(
+        new Event("change")
+    );
+
+}
+if(prevMonth){
+
+    prevMonth.onclick=function(){
+
+        changeMonth(-1);
+
+    };
+
+}
+
+if(nextMonth){
+
+    nextMonth.onclick=function(){
+
+        changeMonth(1);
+
+    };
+
+}
+/* =====================================================
+            Save Transaction
+===================================================== */
+
+const saveButton =
+document.getElementById("saveButton");
+
+if(saveButton){
+
+saveButton.onclick=function(){
+
+    if(typeof addTransaction==="function"){
+
+        addTransaction();
+
+    }
+
+    else if(typeof saveTransaction==="function"){
+
+        saveTransaction();
+
+    }
+
+    refreshApp();
+
+    if(typeof closeBottomSheet==="function"){
+
+        closeBottomSheet();
+
+    }
+
+    if(typeof showToast==="function"){
+
+        showToast("Transaction Added");
+
+    }
+
+};
+
+}
+/* =====================================================
+            Month Change
+===================================================== */
+
+if(monthFilter){
+
+monthFilter.addEventListener(
+
+"change",
+
+function(){
+
+    refreshApp();
+
+}
+
+);
+
+}
+/* =====================================================
+            Refresh Every Minute
+===================================================== */
+
+setInterval(function(){
+
+    refreshDashboard();
+
+},60000);
+/* =====================================================
+            Recent Transactions
+===================================================== */
+
+function renderRecentTransactions(){
+
+    const container =
+    document.getElementById("recentTransactionList");
+
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    if(typeof transactions === "undefined") return;
+
+    const selectedMonth =
+    document.getElementById("monthFilter")?.value || "";
+
+    let filtered = transactions;
+
+    if(selectedMonth){
+
+        filtered = transactions.filter(t =>
+            t.date &&
+            t.date.startsWith(selectedMonth)
+        );
+
+    }
+
+    filtered = filtered
+        .slice()
+        .reverse()
+        .slice(0,5);
+
+    if(filtered.length===0){
+
+        container.innerHTML =
+
+        "<p class='textCenter'>No transactions found.</p>";
+
+        return;
+
+    }
+
+    filtered.forEach(t=>{
+
+        const cls =
+        t.type==="income"
+        ? "incomeText"
+        : t.type==="investment"
+        ? "investmentText"
+        : "expenseText";
+
+        const sign =
+        t.type==="income"
+        ? "+"
+        : "-";
+
+        container.innerHTML += `
+
+<div class="transactionItem">
+
+<div class="transactionLeft">
+
+<div class="transactionIcon">
+
+💳
+
+</div>
+
+<div class="transactionInfo">
+
+<h3>${t.category}</h3>
+
+<p>${t.note || "-"}</p>
+
+<small>${t.date}</small>
+
+</div>
+
+</div>
+
+<div class="transactionRight">
+
+<div class="${cls}">
+
+${sign} ₹${Number(t.amount).toLocaleString()}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+    });
+
+}
+/* =====================================================
+            Search
+===================================================== */
+
+const searchBox =
+document.getElementById("searchTransaction");
+
+if(searchBox){
+
+searchBox.addEventListener(
+
+"input",
+
+function(){
+
+    if(typeof renderTransactions==="function"){
+
+        renderTransactions();
+
+    }
+
+}
+
+);
+
+}
+/* =====================================================
+            Refresh Everything
+===================================================== */
+
+function fullRefresh(){
+
+    refreshApp();
+
+    renderRecentTransactions();
+
+}
+/* =====================================================
+            First Load
+===================================================== */
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+    fullRefresh();
+
+});
+/* =====================================================
+            App Loaded
+===================================================== */
+
+console.log(
+
+"✅ MoneyPilot Lite V3 Loaded"
+
+);
