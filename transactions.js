@@ -337,6 +337,17 @@ function toggleEmptyState(){
 =================================================== */
 
 function renderTransactions(){
+        const selectedMonth =
+document.getElementById("monthFilter").value;
+
+const filteredTransactions =
+transactions.filter(t=>{
+
+    if(!selectedMonth) return true;
+
+    return t.date.startsWith(selectedMonth);
+
+});
 
     const container =
 
@@ -352,7 +363,7 @@ function renderTransactions(){
 
     toggleEmptyState();
 
-    transactions.forEach(transaction=>{
+    filteredTransactions.forEach(transaction=>{
 
         const icon=
 
