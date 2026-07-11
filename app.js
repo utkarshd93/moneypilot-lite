@@ -442,6 +442,35 @@ function(){
 );
 
 }
+const typeFilter =
+document.getElementById("transactionTypeFilter");
+
+if(typeFilter){
+
+    typeFilter.addEventListener(
+
+        "change",
+
+        renderTransactions
+
+    );
+
+}
+
+const categoryFilter =
+document.getElementById("categoryFilter");
+
+if(categoryFilter){
+
+    categoryFilter.addEventListener(
+
+        "change",
+
+        renderTransactions
+
+    );
+
+}
 /* =====================================================
             Refresh Everything
 ===================================================== */
