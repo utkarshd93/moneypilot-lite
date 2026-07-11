@@ -2371,6 +2371,31 @@ margin-bottom:20px;
 border-radius:16px;
 
 }
+#pinHint{
+
+opacity:.7;
+
+font-size:13px;
+
+margin-top:8px;
+
+margin-bottom:18px;
+
+}
+
+#confirmPinInput{
+
+width:100%;
+
+padding:16px;
+
+font-size:22px;
+
+text-align:center;
+
+border-radius:16px;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
