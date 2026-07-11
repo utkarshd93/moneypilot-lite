@@ -2377,6 +2377,37 @@ margin-top:18px;
 width:100%;
 
 }
+.authBtn{
+
+width:100%;
+
+margin-top:20px;
+
+padding:14px;
+
+border:none;
+
+border-radius:14px;
+
+background:#4F8CFF;
+
+color:white;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.authBtn:hover{
+
+opacity:.9;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
