@@ -355,16 +355,25 @@ function renderRecentTransactions(){
     filtered.forEach(t=>{
 
         const cls =
-        t.type==="income"
-        ? "incomeText"
-        : t.type==="investment"
-        ? "investmentText"
-        : "expenseText";
+t.type==="income"
+? "incomeText"
+: t.type==="investment"
+? "investmentText"
+: "expenseText";
 
-        const sign =
-        t.type==="income"
-        ? "+"
-        : "-";
+let sign = "-";
+
+if(t.type==="income"){
+
+    sign = "+";
+
+}
+
+else if(t.type==="investment"){
+
+    sign = "";
+
+}
 
         container.innerHTML += `
 
@@ -374,7 +383,7 @@ function renderRecentTransactions(){
 
 <div class="transactionIcon">
 
-💳
+${getCategoryIcon(t.category)}
 
 </div>
 
