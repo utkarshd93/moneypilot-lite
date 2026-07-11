@@ -280,8 +280,20 @@ function clearTransactionForm(){
 
     document.getElementById("note").value="";
 
+    const selectedMonth =
+document.getElementById("monthFilter").value;
+
+if(selectedMonth){
+
+    document.getElementById("date").value =
+    selectedMonth + "-01";
+
+}else{
+
     document.getElementById("date").value =
     new Date().toISOString().split("T")[0];
+
+}
 
     document.getElementById("type").value="expense";
 
@@ -700,8 +712,14 @@ function initializeTransactions(){
     }
 
 }
+const currentMonth =
+new Date().toISOString().substring(0,7);
+
+document.getElementById("monthFilter").value =
+currentMonth;
+
 document.getElementById("date").value =
-new Date().toISOString().split("T")[0];
+currentMonth + "-01";
 
 initializeTransactions();
 
