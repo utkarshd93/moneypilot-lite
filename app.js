@@ -1,133 +1,47 @@
-/* =====================================
-   MoneyPilot Lite
-   app.js
-===================================== */
+/* ===========================================
+        MoneyPilot Navigation
+=========================================== */
 
-document.addEventListener("DOMContentLoaded", initApp);
+const homeTab =
+document.getElementById("homeTab");
 
-function initApp() {
+const transactionTab =
+document.getElementById("transactionTab");
 
-    setTodayDate();
+const homeScreen =
+document.getElementById("homeScreen");
 
-    setGreeting();
+const transactionScreen =
+document.getElementById("transactionScreen");
 
-    bindEvents();
+if(homeTab){
 
-    if (typeof loadStorage === "function") {
-        loadStorage();
-    }
+homeTab.onclick=function(){
 
-    if (typeof renderTransactions === "function") {
-        renderTransactions();
-    }
+homeScreen.style.display="block";
 
-    if (typeof renderBills === "function") {
-        renderBills();
-    }
+transactionScreen.style.display="none";
 
-}
+homeTab.classList.add("active");
 
-function bindEvents() {
+transactionTab.classList.remove("active");
 
-    const exportBtn = document.getElementById("exportBtn");
-    const importBtn = document.getElementById("importBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const backupFile = document.getElementById("backupFile");
-
-    if(exportBtn){
-
-        exportBtn.onclick = exportBackup;
-
-    }
-
-    if(importBtn){
-
-        importBtn.onclick = function(){
-
-            backupFile.click();
-
-        };
-
-    }
-
-    if(backupFile){
-
-        backupFile.onchange = function(e){
-
-            if(e.target.files.length){
-
-                importBackup(e.target.files[0]);
-
-            }
-
-        };
-
-    }
-
-    if(resetBtn){
-
-        resetBtn.onclick = resetAllData;
-
-    }
+};
 
 }
 
-function setTodayDate(){
+if(transactionTab){
 
-    const input = document.getElementById("date");
+transactionTab.onclick=function(){
 
-    if(!input) return;
+homeScreen.style.display="none";
 
-    if(!input.value){
+transactionScreen.style.display="block";
 
-        input.valueAsDate = new Date();
+transactionTab.classList.add("active");
 
-    }
+homeTab.classList.remove("active");
 
-}
-
-function setGreeting(){
-
-    const greeting = document.getElementById("greeting");
-
-    if(!greeting) return;
-
-    const hour = new Date().getHours();
-
-    if(hour < 12){
-
-        greeting.innerHTML = "Good Morning ☀️";
-
-    }
-
-    else if(hour < 17){
-
-        greeting.innerHTML = "Good Afternoon 🌤";
-
-    }
-
-    else{
-
-        greeting.innerHTML = "Good Evening 🌙";
-
-    }
-
-}
-
-function showToast(message){
-
-    const toast = document.getElementById("toast");
-
-    if(!toast) return;
-
-    toast.innerHTML = message;
-
-    toast.classList.add("show");
-
-    setTimeout(()=>{
-
-        toast.classList.remove("show");
-
-    },2000);
+};
 
 }
