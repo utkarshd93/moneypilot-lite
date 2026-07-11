@@ -1,166 +1,335 @@
-/* ===========================================
-   MoneyPilot Lite
-   Dashboard.js
-=========================================== */
+/* =====================================================
+        MoneyPilot Lite V3
+        Dashboard
+===================================================== */
 
 function calculateDashboard(){
 
-    const selectedMonth =
-    document.getElementById("monthFilter").value;
+    const month =
+
+    document.getElementById("monthFilter")?.value || "";
+
+    const list =
+
+    getTransactionsByMonth(month);
 
     let income = 0;
+
     let expense = 0;
+
+    let investment = 0;
+
     let fixed = 0;
+
     let variable = 0;
+       list.forEach(t=>{
 
-    const filteredTransactions = transactions.filter(t => {
+        const amount = Number(t.amount)||0;
 
-        if(!selectedMonth) return true;
+        switch(t.type){
 
-        return t.date.startsWith(selectedMonth);
+            case "income":
 
-    });
+                income += amount;
 
-    filteredTransactions.forEach(t=>{
+                break;
 
-        const amount = Number(t.amount) || 0;
+            case "expense":
 
-        if(t.type==="income"){
+                expense += amount;
 
-            income += amount;
+                if(t.fixed){
+
+                    fixed += amount;
+
+                }
+
+                else{
+
+                    variable += amount;
+
+                }
+
+                break;
+
+            case "investment":
+
+                investment += amount;
+
+                break;
 
         }
 
-        else if(t.type==="expense"){
-
-            expense += amount;
-
-            if(t.fixed){
-
-                fixed += amount;
-
-            }
-
-            else{
-
-                variable += amount;
-
-            }
-
-        }
-
     });
 
-    const balance = income - expense;
+const cashBalance =
 
-    setValue("balance", balance);
+income -
 
-    setValue("incomeValue", income);
+expense -
 
-    setValue("expenseValue", expense);
+investment;
 
-    setValue("fixedTotal", fixed);
+const netWorth =
 
-    setValue("variableTotal", variable);
+cashBalance +
 
-    setValue("savingTotal", balance);
+investment;
+
+updateValue(
+
+    "balance",
+
+    cashBalance
+
+);
+
+updateValue(
+
+    "incomeValue",
+
+    income
+
+);
+
+updateValue(
+
+    "expenseValue",
+
+    expense
+
+);
+
+updateValue(
+
+    "cashBalance",
+
+    cashBalance
+
+);
+
+updateValue(
+
+    "investmentTotal",
+
+    investment
+
+);
+
+updateValue(
+
+    "netWorth",
+
+    netWorth
+
+);
+
+updateValue(
+
+    "analyticsFixed",
+
+    fixed
+
+);
+
+updateValue(
+
+    "analyticsVariable",
+
+    variable
+
+);
+}
+/* =====================================================
+        Update Values
+===================================================== */
+
+function updateValue(id,value){
+
+    const el =
+
+    document.getElementById(id);
+
+    if(!el) return;
+
+    el.innerHTML =
+
+    "₹"+
+
+    Number(value)
+
+    .toLocaleString("en-IN");
 
 }
+/* =====================================================
+        Greeting
+===================================================== */
 
-function setValue(id, value) {
+function updateGreeting(){
 
-    const el = document.getElementById(id);
+    const greeting =
 
-    if (!el) return;
+    document.getElementById("greeting");
 
-    el.innerHTML = "₹" + Number(value).toLocaleString();
+    if(!greeting) return;
 
-}
+    const hour =
 
+    new Date().getHours();
 
-/* ===========================================
-   Greeting
-=========================================== */
+    if(hour<12){
 
-function updateGreeting() {
+        greeting.innerHTML =
 
-    const greeting = document.getElementById("greeting");
-
-    if (!greeting) return;
-
-    const hour = new Date().getHours();
-
-    if (hour < 12) {
-
-        greeting.innerHTML = "Good Morning ☀️";
+        "Good Morning ☀️";
 
     }
 
-    else if (hour < 17) {
+    else if(hour<17){
 
-        greeting.innerHTML = "Good Afternoon 🌤";
+        greeting.innerHTML =
+
+        "Good Afternoon 🌤";
 
     }
 
-    else {
+    else{
 
-        greeting.innerHTML = "Good Evening 🌙";
+        greeting.innerHTML =
+
+        "Good Evening 🌙";
 
     }
 
 }
+/* =====================================================
+        Dashboard Refresh
+===================================================== */
 
-
-/* ===========================================
-   Month Filter
-=========================================== */
-
-const monthInput = document.getElementById("monthFilter");
-
-if (monthInput) {
-
-    monthInput.value = new Date().toISOString().substring(0, 7);
-
-    monthInput.addEventListener("change", () => {
-
-    const selectedMonth = monthInput.value;
-
-    if(selectedMonth){
-
-        document.getElementById("date").value =
-        selectedMonth + "-01";
-
-    }
-
-    if(typeof renderTransactions === "function"){
-
-        renderTransactions();
-
-    }
-
-    if(typeof refreshDashboard === "function"){
-
-        refreshDashboard();
-
-    }
-
-});
-
-}
-
-
-/* ===========================================
-   Dashboard Refresh
-=========================================== */
-
-function refreshDashboard() {
+function refreshDashboard(){
 
     calculateDashboard();
 
     updateGreeting();
 
 }
+/* =====================================================
+        Month Navigation
+===================================================== */
 
-refreshDashboard();
+function initializeDashboard(){
 
-setInterval(refreshDashboard, 30000);
+    const monthFilter =
+
+    document.getElementById("monthFilter");
+
+    if(!monthFilter) return;
+
+    if(!monthFilter.value){
+
+        monthFilter.value =
+
+        new Date()
+
+        .toISOString()
+
+        .substring(0,7);
+
+    }
+
+    refreshDashboard();
+
+}
+/* =====================================================
+        Month Change
+===================================================== */
+
+const dashboardMonth =
+
+document.getElementById("monthFilter");
+
+if(dashboardMonth){
+
+    dashboardMonth.addEventListener(
+
+        "change",
+
+        function(){
+
+            refreshDashboard();
+
+            if(typeof refreshTransactionUI==="function"){
+
+                refreshTransactionUI();
+
+            }
+
+        }
+
+    );
+
+}
+/* =====================================================
+        Summary
+===================================================== */
+
+function getDashboardSummary(){
+
+    const month =
+
+    document.getElementById("monthFilter")?.value || "";
+
+    const stats =
+
+    getTransactionStatistics();
+
+    return{
+
+        month,
+
+        income:stats.income,
+
+        expense:stats.expense,
+
+        investment:stats.investment,
+
+        balance:
+
+        stats.income -
+
+        stats.expense -
+
+        stats.investment
+
+    };
+
+}
+/* =====================================================
+        Dashboard Auto Refresh
+===================================================== */
+
+setInterval(
+
+function(){
+
+    refreshDashboard();
+
+},
+
+60000
+
+);
+/* =====================================================
+        Dashboard Start
+===================================================== */
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+    initializeDashboard();
+
+}
+);

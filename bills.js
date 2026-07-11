@@ -83,17 +83,20 @@ if (addBillBtn) {
    Save Bill
 ========================================== */
 
-document
+const saveBillBtn =
+document.getElementById("saveBillBtn");
 
-.getElementById("saveBillBtn")
+if(saveBillBtn){
 
-.addEventListener(
+    saveBillBtn.addEventListener(
 
-"click",
+        "click",
 
-saveBill
+        saveBill
 
-);
+    );
+
+}
 
 function saveBill(){
 

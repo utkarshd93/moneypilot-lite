@@ -1,36 +1,53 @@
-/* ===========================================
-   MoneyPilot Lite
-   Storage Manager
-=========================================== */
+/* =====================================================
+        MoneyPilot Lite V3
+        Storage Manager
+===================================================== */
 
-const TRANSACTION_KEY = "moneypilot_transactions";
+const TRANSACTION_KEY = "moneypilot_transactions_v3";
 
-/* ===========================================
-   Load Transactions
-=========================================== */
+const SETTINGS_KEY = "moneypilot_settings_v3";
+
+let settings = {};
+/* =====================================================
+        Load Transactions
+===================================================== */
 
 function loadStorage(){
 
     try{
 
-        const data = localStorage.getItem(TRANSACTION_KEY);
+        const data =
 
-        transactions = data ? JSON.parse(data) : [];
+        localStorage.getItem(
+
+            TRANSACTION_KEY
+
+        );
+
+        transactions =
+
+        data ?
+
+        JSON.parse(data)
+
+        :
+
+        [];
 
     }
 
     catch(e){
+
+        console.error(e);
 
         transactions=[];
 
     }
 
 }
-
-
-/* ===========================================
-   Save Transactions
-=========================================== */
+/* =====================================================
+        Save Transactions
+===================================================== */
 
 function saveStorage(){
 
@@ -38,32 +55,90 @@ function saveStorage(){
 
         TRANSACTION_KEY,
 
-        JSON.stringify(transactions)
+        JSON.stringify(
+
+            transactions
+
+        )
 
     );
 
 }
+/* =====================================================
+        Settings
+===================================================== */
 
+function loadSettings(){
 
-/* ===========================================
-   Export Backup
-=========================================== */
+    try{
+
+        const data =
+
+        localStorage.getItem(
+
+            SETTINGS_KEY
+
+        );
+
+        settings =
+
+        data ?
+
+        JSON.parse(data)
+
+        :
+
+        {};
+
+    }
+
+    catch(e){
+
+        settings={};
+
+    }
+
+}
+function saveSettings(){
+
+    localStorage.setItem(
+
+        SETTINGS_KEY,
+
+        JSON.stringify(
+
+            settings
+
+        )
+
+    );
+
+}
+/* =====================================================
+        Backup
+===================================================== */
 
 function exportBackup(){
 
     const backup={
 
-        version:"1.2",
+        version:"3.0",
 
-        exportedAt:new Date().toISOString(),
+        exportedAt:
 
-        transactions:transactions,
+        new Date()
 
-        bills:bills
+        .toISOString(),
+
+        transactions,
+
+        settings
 
     };
 
-    const blob=new Blob(
+    const blob =
+
+    new Blob(
 
         [
 
@@ -81,66 +156,82 @@ function exportBackup(){
 
         {
 
-            type:"application/json"
+            type:
+
+            "application/json"
 
         }
 
     );
 
-    const a=document.createElement("a");
+    const url =
 
-    a.href=URL.createObjectURL(blob);
+    URL.createObjectURL(blob);
 
-    a.download="MoneyPilot_Backup.json";
+    const a =
+
+    document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+
+    "MoneyPilot_Backup.json";
 
     a.click();
 
+    URL.revokeObjectURL(url);
+
 }
-
-
-/* ===========================================
-   Import Backup
-=========================================== */
+/* =====================================================
+        Import Backup
+===================================================== */
 
 function importBackup(file){
 
-    const reader=new FileReader();
+    const reader = new FileReader();
 
-    reader.onload=function(e){
+    reader.onload = function(e){
 
         try{
 
-            const backup=
-
-            JSON.parse(
+            const backup = JSON.parse(
 
                 e.target.result
 
             );
 
-            transactions=
+            transactions =
 
             backup.transactions || [];
 
-            bills=
+            settings =
 
-            backup.bills || [];
+            backup.settings || {};
 
             saveStorage();
 
-            saveBills();
+            saveSettings();
 
-            renderTransactions();
+            if(typeof fullRefresh==="function"){
 
-            renderBills();
+                fullRefresh();
 
-            alert("Backup Imported");
+            }
+
+            if(typeof showToast==="function"){
+
+                showToast("Backup Imported");
+
+            }
 
         }
 
         catch(err){
 
-            alert("Invalid Backup");
+            console.error(err);
+
+            alert("Invalid Backup File");
 
         }
 
@@ -149,43 +240,134 @@ function importBackup(file){
     reader.readAsText(file);
 
 }
+/* =====================================================
+        Reset Application
+===================================================== */
 
-
-/* ===========================================
-   Reset App
-=========================================== */
-
-function resetAllData(){
+function resetApplication(){
 
     if(
 
         !confirm(
 
-        "Delete all data?"
+            "Delete all MoneyPilot data?"
 
         )
 
-    )
+    ){
 
-    return;
+        return;
+
+    }
 
     transactions=[];
 
-    bills=[];
+    settings={};
 
     saveStorage();
 
-    saveBills();
+    saveSettings();
 
-    renderTransactions();
+    if(typeof fullRefresh==="function"){
 
-    renderBills();
+        fullRefresh();
+
+    }
+
+    if(typeof showToast==="function"){
+
+        showToast("Data Reset");
+
+    }
 
 }
+/* =====================================================
+        Backup Events
+===================================================== */
 
+document.addEventListener(
 
-/* ===========================================
-   Auto Load
-=========================================== */
+"DOMContentLoaded",
 
-loadStorage();
+function(){
+
+    const exportBtn =
+
+    document.getElementById("exportBtn");
+
+    const importBtn =
+
+    document.getElementById("importBtn");
+
+    const resetBtn =
+
+    document.getElementById("resetBtn");
+
+    const backupFile =
+
+    document.getElementById("backupFile");
+
+    if(exportBtn){
+
+        exportBtn.onclick = exportBackup;
+
+    }
+
+    if(importBtn){
+
+        importBtn.onclick=function(){
+
+            backupFile.click();
+
+        };
+
+    }
+
+    if(backupFile){
+
+        backupFile.onchange=function(){
+
+            if(this.files.length){
+
+                importBackup(
+
+                    this.files[0]
+
+                );
+
+            }
+
+        };
+
+    }
+
+    if(resetBtn){
+
+        resetBtn.onclick=
+
+        resetApplication;
+
+    }
+
+});
+/* =====================================================
+        Initialize Storage
+===================================================== */
+
+function initializeStorage(){
+
+    loadStorage();
+
+    loadSettings();
+
+}
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+    initializeStorage();
+
+}
+);
