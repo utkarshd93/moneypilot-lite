@@ -168,38 +168,45 @@ function updateValue(id,value){
 function updateGreeting(){
 
     const greeting =
-
     document.getElementById("greeting");
 
     if(!greeting) return;
 
     const hour =
-
     new Date().getHours();
+
+    let text="";
 
     if(hour<12){
 
-        greeting.innerHTML =
-
-        "Good Morning ☀️";
+        text="Good Morning ☀️";
 
     }
 
     else if(hour<17){
 
-        greeting.innerHTML =
-
-        "Good Afternoon 🌤";
+        text="Good Afternoon 🌤";
 
     }
 
     else{
 
-        greeting.innerHTML =
-
-        "Good Evening 🌙";
+        text="Good Evening 🌙";
 
     }
+
+    const user =
+    localStorage.getItem("mp_user_name") || "User";
+
+    greeting.innerHTML=
+
+    text +
+
+    "<br><strong>"+
+
+    user+
+
+    "</strong>";
 
 }
 /* =====================================================
