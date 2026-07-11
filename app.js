@@ -290,6 +290,8 @@ monthFilter.addEventListener(
 
 function(){
 
+    syncTransactionDate();
+
     refreshApp();
 
 }
