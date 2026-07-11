@@ -2253,6 +2253,47 @@ color:black;
 }
 
 }
+.analyticsStats{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:16px;
+
+margin-bottom:22px;
+
+}
+
+.analyticsBox{
+
+padding:18px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.08);
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.10);
+
+}
+
+.analyticsBox p{
+
+font-size:13px;
+
+opacity:.75;
+
+margin-bottom:8px;
+
+}
+
+.analyticsBox h2{
+
+font-size:22px;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
