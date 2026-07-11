@@ -170,7 +170,14 @@ function updateGreeting(){
     const greeting =
     document.getElementById("greeting");
 
-    if(!greeting) return;
+    const userName =
+    document.getElementById("userName");
+
+    if(!greeting || !userName){
+
+        return;
+
+    }
 
     const hour =
     new Date().getHours();
@@ -195,18 +202,11 @@ function updateGreeting(){
 
     }
 
-    const user =
+    greeting.innerHTML = text;
+
+    userName.innerHTML =
+
     localStorage.getItem("mp_user_name") || "User";
-
-    greeting.innerHTML=
-
-    text +
-
-    "<br><strong>"+
-
-    user+
-
-    "</strong>";
 
 }
 /* =====================================================
