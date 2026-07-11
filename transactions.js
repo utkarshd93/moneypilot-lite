@@ -1,415 +1,318 @@
-/* ===================================================
-        MoneyPilot Premium V2
-        Transactions Engine
-=================================================== */
+/* =====================================================
+        MoneyPilot Lite V3
+        Transactions
+===================================================== */
 
 let transactions = [];
 
-let editTransactionId = null;
+let editingTransactionId = null;
 
-const STORAGE_KEY = "moneypilot_transactions";
+/* =====================================================
+        Transaction Model
+===================================================== */
 
-/* ===================================================
-                Categories
-=================================================== */
+function createTransactionObject(){
 
-const CATEGORY_ICONS = {
+    return{
 
-    Food:"🍔",
+        id:Date.now(),
 
-    Fuel:"⛽",
+        amount:Number(
 
-    Shopping:"🛍",
+            document.getElementById("amount").value
 
-    Salary:"💼",
+        ),
 
-    Investment:"📈",
+        type:
 
-    Travel:"✈️",
+        document.getElementById("type").value,
 
-    Health:"🏥",
+        category:
 
-    Recharge:"📱",
+        document.getElementById("category").value,
 
-    Entertainment:"🎬",
+        note:
 
-    Other:"📦"
+        document.getElementById("note").value.trim(),
 
-};
+        date:
 
-/* ===================================================
-                Storage
-=================================================== */
+        document.getElementById("date").value,
 
-function loadTransactions(){
+        fixed:
 
-    const data = localStorage.getItem(STORAGE_KEY);
+        document.getElementById("fixedExpense").checked,
 
-    if(data){
+        repeat:
 
-        try{
+        document.getElementById("repeatMonthly").checked
 
-            transactions = JSON.parse(data);
-
-        }
-
-        catch(e){
-
-            transactions=[];
-
-        }
-
-    }
+    };
 
 }
+/* =====================================================
+        Validation
+===================================================== */
 
-function saveTransactions(){
+function validateTransaction(){
 
-    localStorage.setItem(
+    const amount =
 
-        STORAGE_KEY,
-
-        JSON.stringify(transactions)
-
-    );
-
-}
-
-/* ===================================================
-                Helpers
-=================================================== */
-
-function generateId(){
-
-    return Date.now();
-
-}
-
-function formatMoney(amount){
-
-    return "₹"+
-
-    Number(amount)
-
-    .toLocaleString(
-
-    "en-IN"
-
-    );
-
-}
-
-function formatDate(date){
-
-    return new Date(date)
-
-    .toLocaleDateString(
-
-    "en-IN",
-
-    {
-
-    day:"2-digit",
-
-    month:"short",
-
-    year:"numeric"
-
-    }
-
-    );
-
-}
-
-/* ===================================================
-            Category Icon
-=================================================== */
-
-function getIcon(category){
-
-    return CATEGORY_ICONS[category]
-
-    ||
-
-    "📦";
-
-}
-/* ===================================================
-                Save Transaction
-=================================================== */
-
-const saveButton = document.getElementById("saveButton");
-
-if(saveButton){
-
-    saveButton.addEventListener("click", saveTransaction);
-
-}
-
-function saveTransaction(){
-
-    const amount = Number(
-
-        document.getElementById("amount").value
-
-    );
-
-    const note =
-
-        document.getElementById("note").value.trim();
+    document.getElementById("amount").value;
 
     const date =
 
-        document.getElementById("date").value;
+    document.getElementById("date").value;
 
-    const type =
+    if(amount==="" || Number(amount)<=0){
 
-        document.getElementById("type").value;
+        showToast("Enter valid amount");
 
-    const category =
+        return false;
 
-        document.getElementById("category").value;
+    }
 
-    const fixed =
+    if(date===""){
 
-        document.getElementById("fixedExpense").checked;
+        showToast("Select transaction date");
 
-    const repeat =
+        return false;
 
-        document.getElementById("repeatMonthly").checked;
+    }
 
-    /* ---------------- Validation ---------------- */
+    return true;
 
-    if(amount<=0){
+}
+/* =====================================================
+        Save Transaction
+===================================================== */
 
-        alert("Enter valid amount");
+function saveTransaction(){
+
+    if(!validateTransaction()){
 
         return;
 
     }
 
-    const transaction={
+    const transaction =
 
-        id:
+    createTransactionObject();
+            if(editingTransactionId){
 
-        editTransactionId
-
-        ||
-
-        generateId(),
-
-        amount,
-
-        note,
-
-        date,
-
-        type,
-
-        category,
-
-        fixed,
-
-        repeat,
-
-        createdAt:
-
-        new Date().toISOString()
-
-    };
-
-    /* ---------------- Edit ---------------- */
-
-    if(editTransactionId){
-
-        const index=
+        const index =
 
         transactions.findIndex(
 
-        t=>t.id===editTransactionId
+            t=>t.id===editingTransactionId
 
         );
 
-        if(index>-1){
+        if(index!==-1){
+
+            transaction.id = editingTransactionId;
 
             transactions[index]=transaction;
 
         }
 
-        editTransactionId=null;
-
-        saveButton.innerHTML=
-
-        "💾 Save Transaction";
+        editingTransactionId=null;
 
     }
 
     else{
 
-        transactions.unshift(
+        if(isDuplicateTransaction(transaction)){
 
-        transaction
+    showToast("Duplicate Transaction");
 
-        );
+    return;
+
+}
+
+transactions.push(transaction);
 
     }
+            afterTransactionChanged();
 
-    saveTransactions();
+clearTransactionForm();
 
-    renderTransactions();
+    showToast("Transaction Saved");
 
-    refreshDashboard();
+}
+/* =====================================================
+        Helpers
+===================================================== */
 
-    clearTransactionForm();
+function formatMoney(value){
 
-    showToast(
+    return Number(value)
 
-    "Transaction Saved"
+    .toLocaleString(
+
+        "en-IN"
 
     );
 
 }
-
-/* ===================================================
-            Clear Form
-=================================================== */
-
-function clearTransactionForm(){
-
-    document.getElementById("amount").value="";
-
-    document.getElementById("note").value="";
-
-    const selectedMonth =
-document.getElementById("monthFilter").value;
-
-if(selectedMonth){
-
-    document.getElementById("date").value =
-    selectedMonth + "-01";
-
-}else{
-
-    document.getElementById("date").value =
-    new Date().toISOString().split("T")[0];
-
-}
-
-    document.getElementById("type").value="expense";
-
-    document.getElementById("category").value="Other";
-
-    document.getElementById("fixedExpense").checked=false;
-
-    document.getElementById("repeatMonthly").checked=false;
-
-}
-
-/* ===================================================
-            Empty State
-=================================================== */
-
-function toggleEmptyState(){
-
-    const empty=
-
-    document.getElementById(
-
-    "emptyState"
-
-    );
-
-    const list=
-
-    document.getElementById(
-
-    "transactionList"
-
-    );
-
-    if(transactions.length===0){
-
-        empty.style.display="block";
-
-        list.style.display="none";
-
-    }
-
-    else{
-
-        empty.style.display="none";
-
-        list.style.display="block";
-
-    }
-
-}
-/* ===================================================
-            Render Transactions
-=================================================== */
+/* =====================================================
+        Render Transactions
+===================================================== */
 
 function renderTransactions(){
-        const selectedMonth =
-document.getElementById("monthFilter").value;
-
-const filteredTransactions =
-transactions.filter(t=>{
-
-    if(!selectedMonth) return true;
-
-    return t.date.startsWith(selectedMonth);
-
-});
 
     const container =
-
-    document.getElementById(
-
-    "transactionList"
-
-    );
+    document.getElementById("transactionList");
 
     if(!container) return;
 
     container.innerHTML="";
 
-    toggleEmptyState();
+    const selectedMonth =
+    document.getElementById("monthFilter")?.value || "";
 
-    filteredTransactions.forEach(transaction=>{
+    const search =
+    document.getElementById("searchTransaction")?.value
+    ?.toLowerCase() || "";
 
-        const icon=
+    const typeFilter =
+    document.getElementById("transactionTypeFilter")?.value || "";
 
-        getIcon(
+    const categoryFilter =
+    document.getElementById("categoryFilter")?.value || "";
 
-        transaction.category
+    let filtered =
+    [...transactions];
+            if(selectedMonth){
+
+        filtered = filtered.filter(t=>
+
+            t.date &&
+            t.date.startsWith(selectedMonth)
 
         );
 
-        const amountClass=
+    }
 
-        transaction.type==="income"
+    if(typeFilter){
 
-        ?
+        filtered = filtered.filter(
 
-        "incomeText"
+            t=>t.type===typeFilter
 
-        :
+        );
 
-        "expenseText";
+    }
 
-        const sign=
+    if(categoryFilter){
 
-        transaction.type==="income"
+        filtered = filtered.filter(
 
-        ?
+            t=>t.category===categoryFilter
 
-        "+"
+        );
 
-        :
+    }
+            if(search){
 
-        "-";
+        filtered = filtered.filter(t=>{
 
-        container.innerHTML+=`
+            return (
+
+                t.category.toLowerCase()
+
+                .includes(search)
+
+                ||
+
+                (t.note||"")
+
+                .toLowerCase()
+
+                .includes(search)
+
+            );
+
+        });
+
+    }
+            filtered.sort(
+
+        (a,b)=>
+
+        new Date(b.date)-new Date(a.date)
+
+    );
+            if(filtered.length===0){
+
+        container.innerHTML=
+
+        `
+
+        <div class="emptyState">
+
+            <div class="emptyIcon">
+
+                📭
+
+            </div>
+
+            <h2>
+
+                No Transactions
+
+            </h2>
+
+            <p>
+
+                Add your first transaction.
+
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+            filtered.forEach(t=>{
+
+        drawTransactionCard(
+
+            container,
+
+            t
+
+        );
+
+    });
+
+}
+/* =====================================================
+        Draw Transaction Card
+===================================================== */
+
+function drawTransactionCard(container, transaction){
+
+    let amountClass = "expenseText";
+    let sign = "-";
+    let icon = getCategoryIcon(transaction.category);
+
+if(transaction.type==="income"){
+
+    amountClass="incomeText";
+    sign="+";
+
+}
+
+else if(transaction.type==="investment"){
+
+    amountClass="investmentText";
+    sign="";
+
+}
+            container.innerHTML += `
 
 <div class="transactionItem">
 
@@ -431,33 +334,32 @@ ${transaction.category}
 
 <p>
 
-${transaction.note}
+${transaction.note || "No Description"}
 
 </p>
 
 <small>
 
-${formatDate(transaction.date)}
+${formatDisplayDate(transaction.date)}
 
 </small>
 
 </div>
 
 </div>
-
 <div class="transactionRight">
 
 <div class="${amountClass}">
 
-${sign}${formatMoney(transaction.amount)}
+${sign}₹${formatMoney(transaction.amount)}
 
 </div>
 
-<div class="transactionButtons">
+<div class="transactionActions">
 
 <button
 
-class="editBtn"
+class="editTransaction"
 
 onclick="editTransaction(${transaction.id})">
 
@@ -467,11 +369,11 @@ onclick="editTransaction(${transaction.id})">
 
 <button
 
-class="deleteBtn"
+class="deleteTransaction"
 
 onclick="deleteTransaction(${transaction.id})">
 
-🗑
+🗑️
 
 </button>
 
@@ -483,43 +385,87 @@ onclick="deleteTransaction(${transaction.id})">
 
 `;
 
-    });
-
 }
+/* =====================================================
+        Date Format
+===================================================== */
 
-/* ===================================================
-            Transaction Card Classes
-=================================================== */
+function formatDisplayDate(date){
 
-function getTransactionById(id){
+    if(!date) return "";
 
-    return transactions.find(
+    return new Date(date)
 
-    t=>t.id===id
+    .toLocaleDateString(
+
+        "en-IN",
+
+        {
+
+            day:"2-digit",
+
+            month:"short",
+
+            year:"numeric"
+
+        }
 
     );
 
 }
-/* ===================================================
-            Edit Transaction
-=================================================== */
+/* =====================================================
+        Category Icons
+===================================================== */
+
+function getCategoryIcon(category){
+
+    const icons={
+
+        Salary:"💼",
+
+        Food:"🍔",
+
+        Fuel:"⛽",
+
+        Shopping:"🛍️",
+
+        Investment:"📈",
+
+        EMI:"🏦",
+
+        Health:"🏥",
+
+        Travel:"✈️",
+
+        Entertainment:"🎬",
+
+        Other:"📦"
+
+    };
+
+    return icons[category] || "💳";
+
+}
+/* =====================================================
+        Edit Transaction
+===================================================== */
 
 function editTransaction(id){
 
-    const transaction = getTransactionById(id);
+    const transaction =
+
+    transactions.find(
+
+        t => t.id === id
+
+    );
 
     if(!transaction) return;
 
-    editTransactionId = id;
+    editingTransactionId = id;
 
     document.getElementById("amount").value =
     transaction.amount;
-
-    document.getElementById("note").value =
-    transaction.note;
-
-    document.getElementById("date").value =
-    transaction.date;
 
     document.getElementById("type").value =
     transaction.type;
@@ -527,202 +473,337 @@ function editTransaction(id){
     document.getElementById("category").value =
     transaction.category;
 
+    document.getElementById("note").value =
+    transaction.note || "";
+
+    document.getElementById("date").value =
+    transaction.date;
+
     document.getElementById("fixedExpense").checked =
     transaction.fixed;
 
     document.getElementById("repeatMonthly").checked =
     transaction.repeat;
 
-    document.getElementById("saveButton").innerHTML =
-    "✅ Update Transaction";
+    if(typeof openBottomSheet==="function"){
 
-    window.scrollTo({
+        openBottomSheet();
 
-        top:0,
+    }
 
-        behavior:"smooth"
-
-    });
+    showToast("Editing Transaction");
 
 }
-
-/* ===================================================
-            Delete Transaction
-=================================================== */
+/* =====================================================
+        Delete Transaction
+===================================================== */
 
 function deleteTransaction(id){
 
-    const ok = confirm(
+    if(!confirm(
 
         "Delete this transaction?"
 
-    );
+    )){
 
-    if(!ok) return;
+        return;
 
-    transactions = transactions.filter(
+    }
+
+    transactions =
+
+    transactions.filter(
 
         t => t.id !== id
 
     );
 
-    saveTransactions();
+    afterTransactionChanged();
 
-    renderTransactions();
+    showToast("Transaction Deleted");
 
-    refreshDashboard();
+}
+/* =====================================================
+        Clear Form
+===================================================== */
 
-    toggleEmptyState();
+function clearTransactionForm(){
 
-    showToast(
+    document.getElementById("amount").value = "";
 
-        "Transaction Deleted"
+    document.getElementById("note").value = "";
+
+    document.getElementById("fixedExpense").checked = false;
+
+    document.getElementById("repeatMonthly").checked = false;
+
+    document.getElementById("type").value = "expense";
+
+    document.getElementById("category").value = "Food";
+            const selectedMonth =
+
+    document.getElementById("monthFilter")?.value;
+
+    if(selectedMonth){
+
+        document.getElementById("date").value =
+
+        selectedMonth + "-01";
+
+    }
+
+    editingTransactionId = null;
+
+}
+/* =====================================================
+        Transaction Count
+===================================================== */
+
+function getTransactionCount(){
+
+    return transactions.length;
+
+}
+/* =====================================================
+        Total Amount
+===================================================== */
+
+function getTotalAmount(type){
+
+    return transactions
+
+    .filter(t=>t.type===type)
+
+    .reduce(
+
+        (total,t)=>
+
+        total + Number(t.amount),
+
+        0
 
     );
 
 }
+/* =====================================================
+        Monthly Helpers
+===================================================== */
 
-/* ===================================================
-            Refresh
-=================================================== */
+function getTransactionsByMonth(month){
 
-function refreshTransactionScreen(){
+    return transactions.filter(t=>{
 
-    renderTransactions();
+        if(!t.date) return false;
 
-    refreshDashboard();
+        return t.date.startsWith(month);
 
-    toggleEmptyState();
-
-}
-
-/* ===================================================
-            Sort Latest First
-=================================================== */
-
-function sortTransactions(){
-
-    transactions.sort(
-
-        (a,b)=>
-
-        new Date(b.date)-
-
-        new Date(a.date)
-
-    );
+    });
 
 }
-/* ===================================================
-            Search (Future Ready)
-=================================================== */
-
-function searchTransactions(keyword){
-
-    keyword = keyword.toLowerCase();
-
-    return transactions.filter(t =>
-
-        t.note.toLowerCase().includes(keyword) ||
-
-        t.category.toLowerCase().includes(keyword)
-
-    );
-
-}
-
-/* ===================================================
-            Filter By Type
-=================================================== */
-
-function getTransactionsByType(type){
-
-    return transactions.filter(
-
-        t => t.type === type
-
-    );
-
-}
-
-/* ===================================================
-            Filter By Category
-=================================================== */
-
-function getTransactionsByCategory(category){
-
-    return transactions.filter(
-
-        t => t.category === category
-
-    );
-
-}
-
-/* ===================================================
-            Monthly Transactions
-=================================================== */
 
 function getCurrentMonthTransactions(){
 
-    const monthInput =
+    const month =
 
-    document.getElementById(
+    document.getElementById("monthFilter")?.value || "";
 
-    "monthFilter"
+    return getTransactionsByMonth(month);
 
-    );
+}
+/* =====================================================
+        Investment Helpers
+===================================================== */
 
-    if(!monthInput) return transactions;
-
-    const selectedMonth =
-
-    monthInput.value;
-
-    if(!selectedMonth) return transactions;
+function getInvestments(){
 
     return transactions.filter(
 
-        t =>
-
-        t.date.startsWith(selectedMonth)
+        t=>t.type==="investment"
 
     );
 
 }
 
-/* ===================================================
-            Initial Load
-=================================================== */
+function getInvestmentTotal(){
 
-function initializeTransactions(){
+    return getInvestments()
 
-    loadTransactions();
+    .reduce(
 
-    sortTransactions();
+        (total,t)=>
 
-    renderTransactions();
+        total+Number(t.amount),
 
-    toggleEmptyState();
+        0
 
-    if(typeof refreshDashboard==="function"){
+    );
 
-        refreshDashboard();
+}
+/* =====================================================
+        Income / Expense Helpers
+===================================================== */
+
+function getIncomeTransactions(){
+
+    return transactions.filter(
+
+        t=>t.type==="income"
+
+    );
+
+}
+
+function getExpenseTransactions(){
+
+    return transactions.filter(
+
+        t=>t.type==="expense"
+
+    );
+
+}
+/* =====================================================
+        Duplicate Check
+===================================================== */
+
+function isDuplicateTransaction(transaction){
+
+    return transactions.some(t=>
+
+        t.amount===transaction.amount &&
+
+        t.date===transaction.date &&
+
+        t.type===transaction.type &&
+
+        t.category===transaction.category &&
+
+        t.note===transaction.note
+
+    );
+
+}
+/* =====================================================
+        Auto Save Hook
+===================================================== */
+
+function afterTransactionChanged(){
+
+    if(typeof saveStorage==="function"){
+
+        saveStorage();
+
+    }
+
+    if(typeof fullRefresh==="function"){
+
+        fullRefresh();
 
     }
 
 }
-const currentMonth =
-new Date().toISOString().substring(0,7);
+/* =====================================================
+        Initialize Transactions
+===================================================== */
 
-document.getElementById("monthFilter").value =
-currentMonth;
+function initializeTransactions(){
 
-document.getElementById("date").value =
-currentMonth + "-01";
+    if(typeof loadStorage==="function"){
 
-initializeTransactions();
+        loadStorage();
 
-/* ===================================================
-        End of File
-=================================================== */
+    }
+
+    renderTransactions();
+
+    if(typeof renderRecentTransactions==="function"){
+
+        renderRecentTransactions();
+
+    }
+
+}
+/* =====================================================
+        Transaction Statistics
+===================================================== */
+
+function getTransactionStatistics(){
+
+    const month =
+
+    document.getElementById("monthFilter")?.value || "";
+
+    const list =
+
+    getTransactionsByMonth(month);
+
+    return{
+
+        total:list.length,
+
+        income:list
+        .filter(t=>t.type==="income")
+        .reduce((a,b)=>a+Number(b.amount),0),
+
+        expense:list
+        .filter(t=>t.type==="expense")
+        .reduce((a,b)=>a+Number(b.amount),0),
+
+        investment:list
+        .filter(t=>t.type==="investment")
+        .reduce((a,b)=>a+Number(b.amount),0)
+
+    };
+
+}
+/* =====================================================
+        Recent Transactions
+===================================================== */
+
+function getRecentTransactions(limit=5){
+
+    return [...transactions]
+
+    .sort(
+
+        (a,b)=>
+
+        new Date(b.date)-new Date(a.date)
+
+    )
+
+    .slice(0,limit);
+
+}
+/* =====================================================
+        Refresh UI
+===================================================== */
+
+function refreshTransactionUI(){
+
+    renderTransactions();
+
+    if(typeof renderRecentTransactions==="function"){
+
+        renderRecentTransactions();
+
+    }
+
+}
+/* =====================================================
+        Start Module
+===================================================== */
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+    initializeTransactions();
+
+}
+
+);
+
+
