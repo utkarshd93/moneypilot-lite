@@ -154,21 +154,13 @@ const closeSheetButton =
 document.getElementById("closeSheetBtn");
 function openBottomSheet(){
 
+    if(typeof syncTransactionDate==="function"){
+
+        syncTransactionDate();
+
+    }
+
     if(bottomSheet){
-
-        const month =
-
-        document.getElementById("monthFilter")?.value;
-
-        const dateInput =
-
-        document.getElementById("date");
-
-        if(month && dateInput){
-
-            dateInput.value = month + "-01";
-
-        }
 
         bottomSheet.classList.add("show");
 
