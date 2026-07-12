@@ -158,11 +158,13 @@ document.getElementById("transactionMiniBar");
 
 let sheetState="closed";
 
-let startY=0;
+let startY = 0;
 
-let currentY=0;
+let currentY = 0;
 
-let dragging=false;
+let dragging = false;
+
+let moved = false;
 
 function openBottomSheet(){
 
@@ -371,6 +373,7 @@ if(dragElement){
             currentY = startY;
 
             dragging = true;
+            moved = false;
 
         }
 
@@ -420,6 +423,12 @@ if(dragElement){
 
             const diff = currentY - startY;
 
+            if(Math.abs(diff) > 8){
+
+                moved = true;
+
+            }
+
             bottomSheet.style.transition = "transform .18s ease";
 
             bottomSheet.style.transform = "translateY(0px)";
@@ -430,7 +439,7 @@ if(dragElement){
 
             },180);
 
-            if(diff > 35){
+            if(moved && diff > 35){
 
                 minimizeBottomSheet();
 
