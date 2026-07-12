@@ -670,10 +670,6 @@ font-weight:600;
 position:relative;
 
 z-index:2;
-
-background:inherit;
-
-transition:transform .28s ease;
             
 display:flex;
 
@@ -689,7 +685,13 @@ background:rgba(255,255,255,.08);
 
 border:1px solid rgba(255,255,255,.10);
 
-transition:.25s;
+transition:transform .25s ease;
+
+will-change:transform;
+
+touch-action:pan-y;
+
+cursor:pointer;
 
 }
 
