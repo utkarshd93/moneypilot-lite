@@ -702,6 +702,7 @@ transform:translateY(-3px);
 background:rgba(255,255,255,.12);
 
 }
+
 .transactionLeft{
 
 display:flex;
@@ -709,6 +710,10 @@ display:flex;
 align-items:center;
 
 gap:14px;
+
+flex:1;
+
+min-width:0;
 
 }
 
@@ -732,13 +737,27 @@ background:rgba(255,255,255,.12);
 
 }
 
+.transactionInfo{
+
+flex:1;
+
+min-width:0;
+
+}
+
 .transactionInfo h3{
 
-font-size:15px;
+margin:0;
 
-font-weight:600;
+font-size:19px;
 
-margin-bottom:3px;
+font-weight:700;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
 
 }
 
@@ -754,9 +773,13 @@ margin-bottom:3px;
 
 .transactionInfo small{
 
-font-size:12px;
+display:block;
 
-opacity:.65;
+margin-top:6px;
+
+font-size:15px;
+
+opacity:.75;
 
 }
 
@@ -766,7 +789,11 @@ display:flex;
 
 justify-content:space-between;
 
-align-items:center;
+align-items:flex-start;
+
+gap:12px;
+
+margin-bottom:8px;
 
 }
 
@@ -778,33 +805,43 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-top:6px;
+gap:12px;
 
 }
 
 .transactionAmount{
 
-font-size:18px;
+margin-left:14px;
+
+flex-shrink:0;
+
+font-size:19px;
 
 font-weight:700;
 
 white-space:nowrap;
 
+text-align:right;
+
+display:flex;
+
+align-items:flex-start;
+
 }
 
 .transactionNote{
 
-font-size:12px;
+flex:1;
 
-opacity:.70;
+font-size:16px;
+
+white-space:nowrap;
 
 overflow:hidden;
 
 text-overflow:ellipsis;
 
-white-space:nowrap;
-
-max-width:170px;
+color:rgba(255,255,255,.78);
 
 }
 
@@ -2675,25 +2712,49 @@ display:block;
 
 .transactionMenu{
 
+width:34px;
+
 display:flex;
 
+justify-content:flex-end;
+
 align-items:center;
+
+flex-shrink:0;
 
 }
 
 .menuButton{
 
+width:34px;
+
+height:34px;
+
 border:none;
 
-background:none;
+background:transparent;
 
 color:#fff;
 
-font-size:22px;
-
-padding:6px;
+font-size:26px;
 
 cursor:pointer;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:50%;
+
+transition:.2s;
+
+}
+
+.menuButton:hover{
+
+background:rgba(255,255,255,.12);
 
 }
 
