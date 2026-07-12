@@ -1014,21 +1014,61 @@ const dx=e.touches[0].clientX-swipeState.startX;
 
 const dy=e.touches[0].clientY-swipeState.startY;
 
+/* Ignore vertical scroll */
+
 if(
 
-Math.abs(dx)>Math.abs(dy)
+Math.abs(dx)<Math.abs(dy)
 
 ){
+
+return;
+
+}
 
 swipeState.dragging=true;
 
 e.preventDefault();
+
+/* Only swipe LEFT */
+
+if(dx<0){
+
+const move=Math.max(dx,-168);
+
+swipeState.card.style.transform=
+
+`translateX(${move}px)`;
 
 }
 
 }
 
 function handleSwipeEnd(){
+
+if(!swipeState.card){
+
+return;
+
+}
+
+swipeState.card.style.transition=
+
+"transform .25s ease";
+
+swipeState.card.style.transform=
+
+"translateX(0px)";
+
+setTimeout(function(){
+
+if(swipeState.card){
+
+swipeState.card.style.transition="";
+
+}
+
+},250);
 
 swipeState.card=null;
 
