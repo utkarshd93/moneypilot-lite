@@ -372,27 +372,41 @@ ${transaction.note || transaction.type}
 
 </div>
 
-<div class="transactionActions">
+<div class="transactionMenu">
 
 <button
 
-class="editTransaction"
+class="menuButton"
+
+onclick="toggleTransactionMenu(${transaction.id})">
+
+⋮
+
+</button>
+
+<div
+
+id="menu-${transaction.id}"
+
+class="transactionPopup">
+
+<button
 
 onclick="editTransaction(${transaction.id})">
 
-✏️
+✏️ Edit
 
 </button>
 
 <button
 
-class="deleteTransaction"
-
 onclick="deleteTransaction(${transaction.id})">
 
-🗑️
+🗑 Delete
 
 </button>
+
+</div>
 
 </div>
 
@@ -807,6 +821,39 @@ function refreshTransactionUI(){
     }
 
 }
+
+function toggleTransactionMenu(id){
+
+document
+
+.querySelectorAll(
+
+".transactionPopup"
+
+)
+
+.forEach(menu=>{
+
+if(menu.id!==`menu-${id}`){
+
+menu.classList.remove("show");
+
+}
+
+});
+
+const menu=
+
+document.getElementById(
+
+`menu-${id}`
+
+);
+
+menu.classList.toggle("show");
+
+}
+
 /* =====================================================
         Start Module
 ===================================================== */
@@ -823,4 +870,41 @@ function(){
 
 );
 
+document.addEventListener(
+
+"click",
+
+function(e){
+
+if(
+
+!e.target.closest(
+
+".transactionMenu"
+
+)
+
+){
+
+document
+
+.querySelectorAll(
+
+".transactionPopup"
+
+)
+
+.forEach(menu=>{
+
+menu.classList.remove(
+
+"show"
+
+);
+
+});
+
+}
+
+});
 
