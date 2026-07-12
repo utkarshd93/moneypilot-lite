@@ -188,7 +188,7 @@ align-items:center;
 
 margin-bottom:24px;
 
-padding-top:0;
+padding-top:52;
 
 }
 
@@ -1065,7 +1065,7 @@ align-items:center;
 
 margin-bottom:24px;
 
-padding-top:0;
+padding-top:52;
 
 }
 
@@ -2522,22 +2522,6 @@ background:rgba(255,255,255,.10);
 color:white;
 
 display:block;
-
-}
-
-/* ==========================================
-        iPhone Safe Area
-========================================== */
-
-#transactionsPage,
-
-#analyticsPage,
-
-#settingsPage{
-
-padding-top:42px;
-
-box-sizing:border-box;
 
 }
 
