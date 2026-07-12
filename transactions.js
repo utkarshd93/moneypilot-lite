@@ -1034,39 +1034,7 @@ e.preventDefault();
 
 /* Only swipe LEFT */
 
-/* Card already open */
-
-if(
-
-swipeState.openCard===swipeState.card
-
-){
-
-const move=Math.min(
-
-Math.max(
-
--180+dx,
-
--180
-
-),
-
-0
-
-);
-
-swipeState.translateX=move;
-
-swipeState.card.style.transform=
-
-`translateX(${move}px)`;
-
-}
-
-/* Closed card */
-
-else if(dx<0){
+if(dx<0){
 
 const move=Math.max(dx,-180);
 
@@ -1108,41 +1076,7 @@ swipeState.openCard.style.transform=
 
 }
 
-/* Already open */
-
-if(
-
-swipeState.openCard===swipeState.card
-
-){
-
-if(
-
-swipeState.translateX>-90
-
-){
-
-swipeState.card.style.transform=
-
-"translateX(0px)";
-
-swipeState.openCard=null;
-
-}
-
-else{
-
-swipeState.card.style.transform=
-
-"translateX(-180px)";
-
-}
-
-}
-
-/* Closed */
-
-else{
+/* Snap Open */
 
 if(
 
@@ -1157,16 +1091,6 @@ swipeState.card.style.transform=
 swipeState.openCard=
 
 swipeState.card;
-
-}
-
-else{
-
-swipeState.card.style.transform=
-
-"translateX(0px)";
-
-}
 
 }
 
@@ -1231,5 +1155,3 @@ swipeState.openCard=null;
 }
 
 });
-
-
