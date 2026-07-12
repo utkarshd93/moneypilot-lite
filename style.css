@@ -1063,15 +1063,19 @@ justify-content:space-between;
 
 align-items:center;
 
+padding-top:22px;
+
 margin-bottom:20px;
 
 }
 
 .pageHeader h2{
 
-font-size:24px;
+font-size:21px;
 
 font-weight:700;
+
+line-height:1.2;
 
 }
 /* =====================================================
