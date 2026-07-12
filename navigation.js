@@ -150,6 +150,18 @@ document.getElementById("fabButton");
 const bottomSheet =
 document.getElementById("addTransactionSheet");
 
+let transactionSheetState = "closed";
+
+/*
+
+closed
+
+open
+
+minimized
+
+*/
+
 const closeSheetButton =
 document.getElementById("closeSheetBtn");
 function openBottomSheet(){
@@ -166,7 +178,10 @@ function openBottomSheet(){
 
     }
 
+    transactionSheetState="open";
+
 }
+
 function closeBottomSheet(){
 
     if(typeof clearTransactionForm==="function"){
@@ -181,7 +196,23 @@ function closeBottomSheet(){
 
     }
 
+    transactionSheetState="closed";
+
 }
+function minimizeBottomSheet(){
+
+    if(!bottomSheet) return;
+
+    bottomSheet.classList.remove(
+
+        "show"
+
+    );
+
+    transactionSheetState="minimized";
+
+}
+
 if(fabButton){
 
     fabButton.addEventListener(
