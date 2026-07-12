@@ -152,7 +152,27 @@ document.getElementById("addTransactionSheet");
 
 const closeSheetButton =
 document.getElementById("closeSheetBtn");
+
+const transactionMiniBar =
+document.getElementById("transactionMiniBar");
+
+let sheetState="closed";
+
+let startY = 0;
+
+let currentY = 0;
+
+let dragging = false;
+
+let moved = false;
+
 function openBottomSheet(){
+
+    if(sheetState==="open"){
+
+        return;
+
+    }
 
     if(typeof syncTransactionDate==="function"){
 
@@ -164,25 +184,123 @@ function openBottomSheet(){
 
         bottomSheet.classList.add("show");
 
+        bottomSheet.style.transform="translateY(0px)";
+
     }
 
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.remove("show");
+
+    }
+
+    if(fabButton){
+
+        fabButton.style.display="none";
+
+    }
+
+    sheetState="open";
+
 }
+
 function closeBottomSheet(){
+
+    if(typeof clearTransactionForm==="function"){
+
+        clearTransactionForm();
+
+    }
 
     if(bottomSheet){
 
         bottomSheet.classList.remove("show");
 
+        bottomSheet.style.transform="translateY(0px)";
+
+    }
+
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.remove("show");
+
+    }
+
+    if(fabButton){
+
+        fabButton.style.display="flex";
+
+    }
+
+    sheetState="closed";
+
+}
+
+function minimizeBottomSheet(){
+
+    if(bottomSheet){
+
+        bottomSheet.classList.remove("show");
+
+        bottomSheet.style.transform="translateY(0px)";
+
+    }
+
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.add("show");
+
+    }
+
+    sheetState="minimized";
+
+    if(fabButton){
+
+     fabButton.style.display="none";
+
     }
 
 }
+
+function restoreBottomSheet(){
+
+    if(bottomSheet){
+
+        bottomSheet.classList.add("show");
+
+    }
+
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.remove("show");
+
+    }
+
+    sheetState="open";
+   
+    if(fabButton){
+
+    fabButton.style.display="none";
+
+   }
+
+}
+
 if(fabButton){
 
     fabButton.addEventListener(
 
         "click",
 
-        openBottomSheet
+        function(){
+
+            if(sheetState==="closed"){
+
+                openBottomSheet();
+
+            }
+
+        }
 
     );
 
@@ -194,11 +312,146 @@ if(closeSheetButton){
 
         "click",
 
-        closeBottomSheet
+        function(e){
+
+            e.stopPropagation();
+
+            dragging = false;
+
+            closeBottomSheet();
+
+        }
 
     );
 
 }
+
+if(transactionMiniBar){
+
+    transactionMiniBar.addEventListener(
+
+"pointerdown",
+
+function(e){
+
+    e.preventDefault();
+
+    restoreBottomSheet();
+
+}
+
+);
+
+}
+
+const dragElement =
+
+document.querySelector(
+
+"#addTransactionSheet .sheetHeader"
+
+);
+
+if(dragElement){
+
+    dragElement.addEventListener(
+
+        "touchstart",
+
+        function(e){
+
+            if(e.target.closest("#closeSheetBtn")){
+
+                dragging = false;
+
+                return;
+
+            }
+
+            startY = e.touches[0].clientY;
+
+            currentY = startY;
+
+            dragging = true;
+            moved = false;
+
+        }
+
+    );
+
+    dragElement.addEventListener(
+
+        "touchmove",
+
+        function(e){
+
+            if(!dragging){
+
+                return;
+
+            }
+
+            currentY = e.touches[0].clientY;
+
+            const diff = currentY - startY;
+
+            if(diff > 0){
+
+                bottomSheet.style.transform =
+
+                `translateY(${Math.min(diff,140)}px)`;
+
+            }
+
+        }
+
+    );
+
+    dragElement.addEventListener(
+
+        "touchend",
+
+        function(){
+
+            if(!dragging){
+
+                return;
+
+            }
+
+            dragging = false;
+
+            const diff = currentY - startY;
+
+            if(Math.abs(diff) > 8){
+
+                moved = true;
+
+            }
+
+            bottomSheet.style.transition = "transform .18s ease";
+
+            bottomSheet.style.transform = "translateY(0px)";
+
+            setTimeout(function(){
+
+                bottomSheet.style.transition = "";
+
+            },180);
+
+            if(moved && diff > 35){
+
+                minimizeBottomSheet();
+
+            }
+
+        }
+
+    );
+
+}
+
+
 document.addEventListener(
 
     "keydown",
@@ -274,59 +527,3 @@ if(viewAllButton){
 ===================================================== */
 
 openPage("home");
-
-const transactionMiniBar =
-
-document.getElementById(
-
-"transactionMiniBar"
-
-);
-
-function minimizeTransactionSheet(){
-
-    if(!bottomSheet) return;
-
-    bottomSheet.classList.remove(
-
-        "show"
-
-    );
-
-    transactionMiniBar.classList.add(
-
-        "show"
-
-    );
-
-}
-
-function restoreTransactionSheet(){
-
-    if(!bottomSheet) return;
-
-    bottomSheet.classList.add(
-
-        "show"
-
-    );
-
-    transactionMiniBar.classList.remove(
-
-        "show"
-
-    );
-
-}
-
-if(transactionMiniBar){
-
-    transactionMiniBar.addEventListener(
-
-        "click",
-
-        restoreTransactionSheet
-
-    );
-
-}
