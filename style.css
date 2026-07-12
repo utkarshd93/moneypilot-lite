@@ -422,7 +422,7 @@ margin-bottom:4px;
 
 .smallCard h3{
 
-font-size:20px;
+font-size:18px;
 
 font-weight:700;
 
@@ -437,7 +437,7 @@ color:white;
 
 display:grid;
 
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 
 gap:14px;
 
@@ -1854,7 +1854,7 @@ font-size:22px;
 
 .balanceCard{
 
-padding:18px;
+padding:16px;
 
 }
 
