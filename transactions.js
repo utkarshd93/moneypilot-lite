@@ -378,31 +378,9 @@ ${transaction.note || transaction.type}
 
 class="menuButton"
 
-onclick="toggleTransactionMenu(${transaction.id})">
+onclick="openTransactionActions(${transaction.id})">
 
 ⋮
-
-</button>
-
-<div
-
-id="menu-${transaction.id}"
-
-class="transactionPopup">
-
-<button
-
-onclick="editTransaction(${transaction.id})">
-
-✏️ Edit
-
-</button>
-
-<button
-
-onclick="deleteTransaction(${transaction.id})">
-
-🗑 Delete
 
 </button>
 
@@ -822,38 +800,6 @@ function refreshTransactionUI(){
 
 }
 
-function toggleTransactionMenu(id){
-
-document
-
-.querySelectorAll(
-
-".transactionPopup"
-
-)
-
-.forEach(menu=>{
-
-if(menu.id!==`menu-${id}`){
-
-menu.classList.remove("show");
-
-}
-
-});
-
-const menu=
-
-document.getElementById(
-
-`menu-${id}`
-
-);
-
-menu.classList.toggle("show");
-
-}
-
 /* =====================================================
         Start Module
 ===================================================== */
@@ -870,41 +816,53 @@ function(){
 
 );
 
-document.addEventListener(
+let selectedTransactionId=null;
 
-"click",
+function openTransactionActions(id){
 
-function(e){
+selectedTransactionId=id;
 
-if(
+const sheet=document.getElementById("transactionActionSheet");
 
-!e.target.closest(
-
-".transactionMenu"
-
-)
-
-){
-
-document
-
-.querySelectorAll(
-
-".transactionPopup"
-
-)
-
-.forEach(menu=>{
-
-menu.classList.remove(
-
-"show"
-
-);
-
-});
+sheet.classList.add("show");
 
 }
 
-});
+function closeTransactionActions(){
+
+document
+.getElementById(
+"transactionActionSheet"
+)
+.classList.remove(
+"show"
+);
+
+selectedTransactionId=null;
+
+}
+
+function editSelectedTransaction(){
+
+if(selectedTransactionId){
+
+editTransaction(selectedTransactionId);
+
+}
+
+closeTransactionActions();
+
+}
+
+function deleteSelectedTransaction(){
+
+if(selectedTransactionId){
+
+deleteTransaction(selectedTransactionId);
+
+}
+
+closeTransactionActions();
+
+}
 
