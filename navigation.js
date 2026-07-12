@@ -183,6 +183,18 @@ function openBottomSheet(){
 
         bottomSheet.classList.add("show");
 
+        bottomSheet.style.transform="";
+
+    }
+
+    if(transactionDraft){
+
+        transactionDraft.classList.remove(
+
+            "show"
+
+        );
+
     }
 
     transactionSheetState="open";
@@ -199,13 +211,30 @@ function closeBottomSheet(){
 
     if(bottomSheet){
 
-        bottomSheet.classList.remove("show");
+        bottomSheet.classList.remove(
+
+            "show"
+
+        );
+
+        bottomSheet.style.transform="";
+
+    }
+
+    if(transactionDraft){
+
+        transactionDraft.classList.remove(
+
+            "show"
+
+        );
 
     }
 
     transactionSheetState="closed";
 
 }
+
 function minimizeBottomSheet(){
 
     if(!bottomSheet) return;
