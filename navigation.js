@@ -169,6 +169,12 @@ function openBottomSheet(){
 }
 function closeBottomSheet(){
 
+    if(typeof clearTransactionForm==="function"){
+
+        clearTransactionForm();
+
+    }
+
     if(bottomSheet){
 
         bottomSheet.classList.remove("show");
