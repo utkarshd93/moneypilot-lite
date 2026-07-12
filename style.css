@@ -2408,42 +2408,92 @@ transition:.25s;
 opacity:.9;
 
 }
+
 .transactionMiniBar{
 
 position:fixed;
 
 left:50%;
 
-bottom:18px;
+bottom:82px;
 
 transform:translateX(-50%);
 
-background:#17213A;
-
-padding:14px 24px;
-
-border-radius:24px;
-
-box-shadow:0 8px 25px rgba(0,0,0,.35);
-
 display:none;
+
+align-items:center;
+
+justify-content:center;
+
+padding:10px 18px;
+
+min-width:145px;
+
+height:42px;
+
+border-radius:22px;
+
+background:rgba(18,28,45,.96);
+
+backdrop-filter:blur(16px);
+
+-webkit-backdrop-filter:blur(16px);
+
+color:#fff;
+
+font-size:13px;
+
+font-weight:600;
+
+letter-spacing:.2px;
+
+box-shadow:
+
+0 8px 25px rgba(0,0,0,.35);
 
 cursor:pointer;
 
-z-index:9998;
+z-index:9999;
 
-font-size:14px;
+transition:
 
-font-weight:600;
+transform .25s,
+
+opacity .25s;
+
+opacity:0;
 
 }
 
 .transactionMiniBar.show{
 
-display:block;
+display:flex;
+
+opacity:1;
+
+animation:miniBarUp .22s ease;
 
 }
-/* =====================================================
+
+@keyframes miniBarUp{
+
+from{
+
+opacity:0;
+
+transform:translate(-50%,18px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translate(-50%,0);
+
+}
+
+}/* =====================================================
                 CSS END
 ===================================================== */
 
