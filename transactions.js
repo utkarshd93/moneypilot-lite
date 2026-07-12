@@ -326,7 +326,41 @@ else if(transaction.type==="investment"){
 
 container.innerHTML += `
 
-<div class="transactionItem">
+<div class="transactionRow">
+
+<div class="transactionSwipeActions">
+
+<button
+
+class="swipeEdit"
+
+onclick="editTransaction(${transaction.id})">
+
+✏️
+
+<span>Edit</span>
+
+</button>
+
+<button
+
+class="swipeDelete"
+
+onclick="deleteTransaction(${transaction.id})">
+
+🗑️
+
+<span>Delete</span>
+
+</button>
+
+</div>
+
+<div
+
+class="transactionItem"
+
+data-id="${transaction.id}">
 
 <div class="transactionTop">
 
