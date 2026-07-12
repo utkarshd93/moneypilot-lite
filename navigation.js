@@ -160,20 +160,27 @@ function openBottomSheet(){
 
     }
 
-    if(bottomSheet){
+    if(!bottomSheet) return;
 
-        bottomSheet.classList.add("show");
+    bottomSheet.classList.add("show");
 
-    }
+    bottomSheet.classList.remove("minimized");
 
 }
 function closeBottomSheet(){
 
-    if(bottomSheet){
+    if(!bottomSheet) return;
 
-        bottomSheet.classList.remove("show");
+    bottomSheet.classList.remove("show");
 
-    }
+    bottomSheet.classList.remove("minimized");
+
+}
+function minimizeBottomSheet(){
+
+    if(!bottomSheet) return;
+
+    bottomSheet.classList.add("minimized");
 
 }
 if(fabButton){
@@ -194,7 +201,46 @@ if(closeSheetButton){
 
         "click",
 
-        closeBottomSheet
+        minimizeBottomSheet
+
+    );
+
+}
+const sheetHeader =
+
+document.querySelector(
+
+"#addTransactionSheet .sheetHeader"
+
+);
+
+if(sheetHeader){
+
+    sheetHeader.addEventListener(
+
+        "click",
+
+        function(){
+
+            if(
+
+                bottomSheet.classList.contains(
+
+                    "minimized"
+
+                )
+
+            ){
+
+                bottomSheet.classList.remove(
+
+                    "minimized"
+
+                );
+
+            }
+
+        }
 
     );
 
