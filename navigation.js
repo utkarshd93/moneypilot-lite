@@ -252,6 +252,12 @@ function minimizeBottomSheet(){
 
     sheetState="minimized";
 
+    if(fabButton){
+
+     fabButton.style.display="none";
+
+    }
+
 }
 
 function restoreBottomSheet(){
@@ -269,6 +275,12 @@ function restoreBottomSheet(){
     }
 
     sheetState="open";
+   
+    if(fabButton){
+
+    fabButton.style.display="none";
+
+   }
 
 }
 
@@ -279,14 +291,6 @@ if(fabButton){
         "click",
 
         function(){
-
-            if(sheetState==="minimized"){
-
-                restoreBottomSheet();
-
-                return;
-
-            }
 
             if(sheetState==="closed"){
 
