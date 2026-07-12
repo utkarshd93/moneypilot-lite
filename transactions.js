@@ -299,6 +299,8 @@ function renderTransactions(){
 
     });
 
+initializeSwipeCards();
+
 }
 /* =====================================================
         Draw Transaction Card
@@ -933,3 +935,100 @@ closeTransactionActions();
 }
 
 });
+
+let openSwipeCard = null;
+
+let startX = 0;
+
+let startY = 0;
+
+let currentCard = null;
+
+let draggingCard = false;
+
+function initializeSwipeCards(){
+
+document
+
+.querySelectorAll(
+
+".transactionItem"
+
+)
+
+.forEach(card=>{
+
+card.addEventListener(
+
+"touchstart",
+
+handleSwipeStart,
+
+{passive:true}
+
+);
+
+card.addEventListener(
+
+"touchmove",
+
+handleSwipeMove,
+
+{passive:false}
+
+);
+
+card.addEventListener(
+
+"touchend",
+
+handleSwipeEnd
+
+);
+
+});
+
+}
+
+function handleSwipeStart(e){
+
+currentCard=e.currentTarget;
+
+startX=e.touches[0].clientX;
+
+startY=e.touches[0].clientY;
+
+draggingCard=false;
+
+}
+
+function handleSwipeMove(e){
+
+if(!currentCard) return;
+
+const dx=e.touches[0].clientX-startX;
+
+const dy=e.touches[0].clientY-startY;
+
+if(
+
+Math.abs(dx)>Math.abs(dy)
+
+){
+
+draggingCard=true;
+
+e.preventDefault();
+
+}
+}
+
+function handleSwipeEnd(){
+
+currentCard=null;
+
+draggingCard=false;
+
+}
+
+
