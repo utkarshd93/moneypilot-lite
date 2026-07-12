@@ -866,3 +866,36 @@ closeTransactionActions();
 
 }
 
+document.addEventListener(
+
+"click",
+
+function(e){
+
+const sheet = document.getElementById(
+
+"transactionActionSheet"
+
+);
+
+const actionSheet = document.querySelector(
+
+".actionSheet"
+
+);
+
+if(
+
+sheet.classList.contains("show") &&
+
+!actionSheet.contains(e.target) &&
+
+!e.target.closest(".menuButton")
+
+){
+
+closeTransactionActions();
+
+}
+
+});
