@@ -638,7 +638,7 @@ background:rgba(255,255,255,.12);
 
 .transactionInfo h3{
 
-font-size:16px;
+font-size:15px;
 
 font-weight:600;
 
@@ -660,18 +660,55 @@ margin-bottom:3px;
 
 font-size:12px;
 
-color:rgba(255,255,255,.55);
+opacity:.65;
 
 }
-.transactionRight{
+
+.transactionTop{
 
 display:flex;
 
-flex-direction:column;
+justify-content:space-between;
 
-align-items:flex-end;
+align-items:center;
 
-gap:10px;
+}
+
+.transactionBottom{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-top:6px;
+
+}
+
+.transactionAmount{
+
+font-size:18px;
+
+font-weight:700;
+
+white-space:nowrap;
+
+}
+
+.transactionNote{
+
+font-size:12px;
+
+opacity:.70;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
+
+max-width:170px;
 
 }
 
