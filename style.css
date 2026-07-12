@@ -2443,6 +2443,42 @@ font-weight:600;
 display:block;
 
 }
+
+.transactionDraft{
+
+position:fixed;
+
+left:50%;
+
+bottom:82px;
+
+transform:translateX(-50%);
+
+padding:12px 22px;
+
+border-radius:25px;
+
+background:#182338;
+
+color:#fff;
+
+font-size:14px;
+
+display:none;
+
+z-index:9000;
+
+box-shadow:0 10px 25px rgba(0,0,0,.30);
+
+cursor:pointer;
+
+}
+
+.transactionDraft.show{
+
+display:block;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
