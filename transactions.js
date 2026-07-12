@@ -323,17 +323,16 @@ else if(transaction.type==="investment"){
     sign="";
 
 }
-            container.innerHTML += `
+
+container.innerHTML += `
 
 <div class="transactionItem">
+
+<div class="transactionTop">
 
 <div class="transactionLeft">
 
 <div class="transactionIcon">
-
-${getCategoryIcon(transaction.category)}
-
-</div>
 
 ${icon}
 
@@ -347,12 +346,6 @@ ${transaction.category}
 
 </h3>
 
-<p>
-
-${transaction.note || "No Description"}
-
-</p>
-
 <small>
 
 ${formatDisplayDate(transaction.date)}
@@ -362,11 +355,20 @@ ${formatDisplayDate(transaction.date)}
 </div>
 
 </div>
-<div class="transactionRight">
 
-<div class="${amountClass}">
+<div class="transactionAmount ${amountClass}">
 
 ${sign}₹${formatMoney(transaction.amount)}
+
+</div>
+
+</div>
+
+<div class="transactionBottom">
+
+<div class="transactionNote">
+
+${transaction.note || transaction.type}
 
 </div>
 
