@@ -148,8 +148,6 @@ overflow-y:auto;
 
 padding:22px;
 
-padding-top:42px;
-
 padding-bottom:95px;
 
 }
@@ -187,6 +185,8 @@ display:flex;
 justify-content:space-between;
 
 align-items:center;
+
+padding-top:42px;
 
 margin-bottom:24px;
 
