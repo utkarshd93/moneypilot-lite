@@ -320,11 +320,17 @@ if(transactionMiniBar){
 
     transactionMiniBar.addEventListener(
 
-        "click",
+"pointerdown",
 
-        restoreBottomSheet
+function(e){
 
-    );
+    e.preventDefault();
+
+    restoreBottomSheet();
+
+}
+
+);
 
 }
 
@@ -348,15 +354,29 @@ function(e){
 
 if(
 
-e.target.tagName==="INPUT" ||
+e.target.closest(
 
-e.target.tagName==="TEXTAREA" ||
+"#closeSheetBtn"
 
-e.target.tagName==="SELECT"
+)
 
 ){
 
 return;
+
+}
+
+const ignoreDrag =
+
+e.target.closest(
+
+"input,textarea,select,button,label,.formGroup"
+
+);
+
+if(ignoreDrag){
+
+    return;
 
 }
 
