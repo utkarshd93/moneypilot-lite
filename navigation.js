@@ -163,7 +163,14 @@ let startY=0;
 let currentY=0;
 
 let dragging=false;
+
 function openBottomSheet(){
+
+    if(sheetState==="open"){
+
+        return;
+
+    }
 
     if(typeof syncTransactionDate==="function"){
 
@@ -175,25 +182,119 @@ function openBottomSheet(){
 
         bottomSheet.classList.add("show");
 
+        bottomSheet.style.transform="translateY(0px)";
+
     }
 
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.remove("show");
+
+    }
+
+    if(fabButton){
+
+        fabButton.style.display="none";
+
+    }
+
+    sheetState="open";
+
 }
+
 function closeBottomSheet(){
+
+    if(typeof clearTransactionForm==="function"){
+
+        clearTransactionForm();
+
+    }
 
     if(bottomSheet){
 
         bottomSheet.classList.remove("show");
 
+        bottomSheet.style.transform="translateY(0px)";
+
     }
 
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.remove("show");
+
+    }
+
+    if(fabButton){
+
+        fabButton.style.display="flex";
+
+    }
+
+    sheetState="closed";
+
 }
+
+function minimizeBottomSheet(){
+
+    if(bottomSheet){
+
+        bottomSheet.classList.remove("show");
+
+        bottomSheet.style.transform="translateY(0px)";
+
+    }
+
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.add("show");
+
+    }
+
+    sheetState="minimized";
+
+}
+
+function restoreBottomSheet(){
+
+    if(bottomSheet){
+
+        bottomSheet.classList.add("show");
+
+    }
+
+    if(transactionMiniBar){
+
+        transactionMiniBar.classList.remove("show");
+
+    }
+
+    sheetState="open";
+
+}
+
 if(fabButton){
 
     fabButton.addEventListener(
 
         "click",
 
-        openBottomSheet
+        function(){
+
+            if(sheetState==="minimized"){
+
+                restoreBottomSheet();
+
+                return;
+
+            }
+
+            if(sheetState==="closed"){
+
+                openBottomSheet();
+
+            }
+
+        }
 
     );
 
@@ -210,6 +311,102 @@ if(closeSheetButton){
     );
 
 }
+
+if(transactionMiniBar){
+
+    transactionMiniBar.addEventListener(
+
+        "click",
+
+        restoreBottomSheet
+
+    );
+
+}
+
+let dragElement=null;
+
+dragElement=
+
+document.querySelector(
+
+"#addTransactionSheet .sheetContent"
+
+);
+
+if(dragElement){
+
+dragElement.addEventListener(
+
+"touchstart",
+
+function(e){
+
+startY=
+
+e.touches[0].clientY;
+
+dragging=true;
+
+}
+
+);
+
+dragElement.addEventListener(
+
+"touchmove",
+
+function(e){
+
+if(!dragging) return;
+
+currentY=
+
+e.touches[0].clientY;
+
+const diff=
+
+currentY-startY;
+
+if(diff>0){
+
+bottomSheet.style.transform=
+
+`translateY(${diff}px)`;
+
+}
+
+}
+
+);
+
+dragElement.addEventListener(
+
+"touchend",
+
+function(){
+
+dragging=false;
+
+const diff=
+
+currentY-startY;
+
+bottomSheet.style.transform="";
+
+if(diff>40){
+
+minimizeBottomSheet();
+
+}
+
+}
+
+);
+
+}
+
+
 document.addEventListener(
 
     "keydown",
