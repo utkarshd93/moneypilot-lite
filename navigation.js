@@ -334,13 +334,11 @@ function(e){
 
 }
 
-let dragElement=null;
-
-dragElement=
+const dragElement =
 
 document.querySelector(
 
-"#addTransactionSheet"
+"#addTransactionSheet .sheetHeader"
 
 );
 
@@ -363,20 +361,6 @@ e.target.closest(
 ){
 
 return;
-
-}
-
-const ignoreDrag =
-
-e.target.closest(
-
-"input,textarea,select,button,label,.formGroup"
-
-);
-
-if(ignoreDrag){
-
-    return;
 
 }
 
@@ -410,7 +394,7 @@ if(diff>0){
 
 bottomSheet.style.transform=
 
-`translateY(${diff}px)`;
+`translateY(${Math.min(diff,140)}px)`;
 
 }
 
@@ -430,9 +414,19 @@ const diff=
 
 currentY-startY;
 
-bottomSheet.style.transform="";
+bottomSheet.style.transition=
 
-if(diff>20){
+"transform .18s ease";
+
+bottomSheet.style.transform="translateY(0px)";
+
+setTimeout(function(){
+
+bottomSheet.style.transition="";
+
+},180);
+
+if(diff>35){
 
 minimizeBottomSheet();
 
