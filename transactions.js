@@ -133,11 +133,22 @@ function saveTransaction(){
 transactions.push(transaction);
 
     }
-            afterTransactionChanged();
+        
+afterTransactionChanged();
 
 clearTransactionForm();
 
-    showToast("Transaction Saved");
+if(typeof transactionMiniBar!=="undefined"){
+
+    transactionMiniBar.classList.remove(
+
+        "show"
+
+    );
+
+}
+
+showToast("Transaction Saved");
 
 }
 /* =====================================================

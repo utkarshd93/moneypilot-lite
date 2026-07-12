@@ -274,3 +274,59 @@ if(viewAllButton){
 ===================================================== */
 
 openPage("home");
+
+const transactionMiniBar =
+
+document.getElementById(
+
+"transactionMiniBar"
+
+);
+
+function minimizeTransactionSheet(){
+
+    if(!bottomSheet) return;
+
+    bottomSheet.classList.remove(
+
+        "show"
+
+    );
+
+    transactionMiniBar.classList.add(
+
+        "show"
+
+    );
+
+}
+
+function restoreTransactionSheet(){
+
+    if(!bottomSheet) return;
+
+    bottomSheet.classList.add(
+
+        "show"
+
+    );
+
+    transactionMiniBar.classList.remove(
+
+        "show"
+
+    );
+
+}
+
+if(transactionMiniBar){
+
+    transactionMiniBar.addEventListener(
+
+        "click",
+
+        restoreTransactionSheet
+
+    );
+
+}
