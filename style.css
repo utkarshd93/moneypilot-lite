@@ -260,7 +260,7 @@ align-items:center;
 
 gap:10px;
 
-padding:10px 14px;
+padding:8px 12px;
 
 border-radius:18px;
 
@@ -274,9 +274,9 @@ border:1px solid var(--glass-border);
 
 .monthButton{
 
-width:38px;
+width:34px;
 
-height:38px;
+height:34px;
 
 border:none;
 
@@ -320,7 +320,7 @@ background:transparent;
 
 color:white;
 
-font-size:15px;
+font-size:14px;
 
 font-weight:600;
 
@@ -398,7 +398,7 @@ align-items:center;
 
 gap:14px;
 
-padding:12px;
+padding:10px;
 
 border-radius:18px;
 
@@ -408,13 +408,13 @@ background:rgba(255,255,255,.10);
 
 .emoji{
 
-font-size:28px;
+font-size:24px;
 
 }
 
 .smallCard p{
 
-font-size:13px;
+font-size:12px;
 
 margin-bottom:4px;
 
@@ -447,7 +447,7 @@ margin-bottom:24px;
 
 .statCard{
 
-padding:14px;
+padding:12px;
 
 border-radius:22px;
 
@@ -529,7 +529,7 @@ margin-bottom:18px;
 
 .cardHeader h2{
 
-font-size:20px;
+font-size:18px;
 
 font-weight:600;
 
