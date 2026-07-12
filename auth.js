@@ -48,7 +48,26 @@ function loginSuccess(){
 
     hideLockScreen();
 
+    if(typeof updateGreeting === "function"){
+
+        updateGreeting();
+
+    }
+
+    if(typeof calculateDashboard === "function"){
+
+        calculateDashboard();
+
+    }
+
+    if(typeof refreshDashboard === "function"){
+
+        refreshDashboard();
+
+    }
+
 }
+
 function logout(){
 
     sessionStorage.removeItem(
@@ -100,11 +119,23 @@ function initializeAuthentication(){
 
     if(isLoggedIn()){
 
-        hideLockScreen();
+    hideLockScreen();
 
-        return;
+    if(typeof updateGreeting === "function"){
+
+        updateGreeting();
 
     }
+
+    if(typeof calculateDashboard === "function"){
+
+        calculateDashboard();
+
+    }
+
+    return;
+
+}
 
     loginMode();
 
