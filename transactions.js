@@ -936,7 +936,7 @@ closeTransactionActions();
 
 });
 
-const swipeState = {
+const swipeState={
 
 openCard:null,
 
@@ -946,7 +946,9 @@ startY:0,
 
 card:null,
 
-dragging:false
+dragging:false,
+
+translateX:0
 
 };
 
@@ -1034,7 +1036,9 @@ e.preventDefault();
 
 if(dx<0){
 
-const move=Math.max(dx,-168);
+const move=Math.max(dx,-180);
+
+swipeState.translateX=move;
 
 swipeState.card.style.transform=
 
@@ -1054,11 +1058,61 @@ return;
 
 swipeState.card.style.transition=
 
-"transform .25s ease";
+"transform .22s ease";
+
+/* Close previous */
+
+if(
+
+swipeState.openCard &&
+
+swipeState.openCard!==swipeState.card
+
+){
+
+swipeState.openCard.style.transform=
+
+"translateX(0px)";
+
+}
+
+/* Snap Open */
+
+if(
+
+swipeState.translateX<-80
+
+){
+
+swipeState.card.style.transform=
+
+"translateX(-180px)";
+
+swipeState.openCard=
+
+swipeState.card;
+
+}
+
+/* Snap Close */
+
+else{
 
 swipeState.card.style.transform=
 
 "translateX(0px)";
+
+if(
+
+swipeState.openCard===swipeState.card
+
+){
+
+swipeState.openCard=null;
+
+}
+
+}
 
 setTimeout(function(){
 
@@ -1068,12 +1122,38 @@ swipeState.card.style.transition="";
 
 }
 
-},250);
+},220);
 
 swipeState.card=null;
 
 swipeState.dragging=false;
 
+swipeState.translateX=0;
+
 }
+
+document.addEventListener(
+
+"click",
+
+function(e){
+
+if(
+
+swipeState.openCard &&
+
+!e.target.closest(".transactionRow")
+
+){
+
+swipeState.openCard.style.transform=
+
+"translateX(0px)";
+
+swipeState.openCard=null;
+
+}
+
+});
 
 
