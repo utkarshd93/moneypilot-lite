@@ -3,6 +3,14 @@
             Mobile First UI
 ===================================================== */
 
+:root{
+
+--safe-top:env(safe-area-inset-top);
+
+--safe-bottom:env(safe-area-inset-bottom);
+
+}
+
 *{
 
 margin:0;
@@ -188,7 +196,7 @@ align-items:center;
 
 margin-bottom:24px;
 
-padding-top:52;
+padding-top:calc(var(--safe-top) + 16px);
 
 }
 
@@ -1065,7 +1073,7 @@ align-items:center;
 
 margin-bottom:24px;
 
-padding-top:52;
+padding-top:calc(var(--safe-top) + 16px);
 
 }
 
@@ -1457,7 +1465,15 @@ font-size:34px;
 
 .page{
 
-padding:42px 18px 95px;
+display:none;
+
+height:100vh;
+
+overflow-y:auto;
+
+padding:18px 18px 95px;
+
+box-sizing:border-box;
 
 }
 
@@ -1575,23 +1591,15 @@ background:transparent;
 
 .bottomNav{
 
-padding-bottom:
+padding-bottom:0;
 
-env(safe-area-inset-bottom);
+bottom:calc(var(--safe-bottom) + 14px);
 
 }
 
 .fab{
 
-bottom:
-
-calc(
-
-90px +
-
-env(safe-area-inset-bottom)
-
-);
+bottom:calc(var(--safe-bottom) + 96px);
 
 }
 
@@ -2401,7 +2409,7 @@ position:fixed;
 
 left:50%;
 
-bottom:105px;
+bottom:calc(var(--safe-bottom) + 95px);
 
 transform:translateX(-50%);
 
