@@ -2413,7 +2413,7 @@ position:fixed;
 
 left:50%;
 
-bottom:118px;
+bottom:122px;
 
 transform:translateX(-50%);
 
@@ -2425,20 +2425,16 @@ justify-content:center;
 
 align-items:center;
 
-width:230px;
+width:255px;
 
-height:60px;
+height:64px;
 
 border-radius:18px;
 
 background:linear-gradient(
-
 135deg,
-
-#D32F2F,
-
-#EF5350
-
+#5B6CFF,
+#7B61FF
 );
 
 color:white;
