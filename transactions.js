@@ -936,15 +936,19 @@ closeTransactionActions();
 
 });
 
-let openSwipeCard = null;
+const swipeState = {
 
-let startX = 0;
+openCard:null,
 
-let startY = 0;
+startX:0,
 
-let currentCard = null;
+startY:0,
 
-let draggingCard = false;
+card:null,
+
+dragging:false
+
+};
 
 function initializeSwipeCards(){
 
@@ -992,23 +996,23 @@ handleSwipeEnd
 
 function handleSwipeStart(e){
 
-currentCard=e.currentTarget;
+swipeState.card=e.currentTarget;
 
-startX=e.touches[0].clientX;
+swipeState.startX=e.touches[0].clientX;
 
-startY=e.touches[0].clientY;
+swipeState.startY=e.touches[0].clientY;
 
-draggingCard=false;
+swipeState.dragging=false;
 
 }
 
 function handleSwipeMove(e){
 
-if(!currentCard) return;
+if(!swipeState.card) return;
 
-const dx=e.touches[0].clientX-startX;
+const dx=e.touches[0].clientX-swipeState.startX;
 
-const dy=e.touches[0].clientY-startY;
+const dy=e.touches[0].clientY-swipeState.startY;
 
 if(
 
@@ -1016,18 +1020,19 @@ Math.abs(dx)>Math.abs(dy)
 
 ){
 
-draggingCard=true;
+swipeState.dragging=true;
 
 e.preventDefault();
 
 }
+
 }
 
 function handleSwipeEnd(){
 
-currentCard=null;
+swipeState.card=null;
 
-draggingCard=false;
+swipeState.dragging=false;
 
 }
 
