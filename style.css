@@ -148,8 +148,6 @@ overflow-y:auto;
 
 padding:22px;
 
-padding-top:42px;
-
 padding-bottom:95px;
 
 }
@@ -189,6 +187,8 @@ justify-content:space-between;
 align-items:center;
 
 margin-bottom:24px;
+
+padding-top:42px;
 
 }
 
@@ -1063,13 +1063,13 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:20px;
+margin-bottom:24px;
 
 }
 
 .pageHeader h2{
 
-font-size:24px;
+font-size:28px;
 
 font-weight:700;
 
