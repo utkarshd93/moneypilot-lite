@@ -2577,6 +2577,84 @@ display:block;
 
 }
 
+.transactionMenu{
+
+position:relative;
+
+}
+
+.menuButton{
+
+border:none;
+
+background:none;
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+padding:4px 8px;
+
+}
+
+.transactionPopup{
+
+position:absolute;
+
+right:0;
+
+top:34px;
+
+display:none;
+
+flex-direction:column;
+
+min-width:150px;
+
+background:#1E293B;
+
+border-radius:16px;
+
+overflow:hidden;
+
+box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+z-index:999;
+
+}
+
+.transactionPopup.show{
+
+display:flex;
+
+}
+
+.transactionPopup button{
+
+border:none;
+
+background:none;
+
+color:white;
+
+padding:14px 16px;
+
+text-align:left;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+.transactionPopup button:hover{
+
+background:rgba(255,255,255,.08);
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
