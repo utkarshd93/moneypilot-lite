@@ -774,6 +774,12 @@ max-height:88vh;
 
 overflow:auto;
 
+transition:
+
+bottom .30s,
+
+transform .20s;
+
 }
 
 .bottomSheet.show{
