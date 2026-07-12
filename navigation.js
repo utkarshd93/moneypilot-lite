@@ -310,7 +310,15 @@ if(closeSheetButton){
 
         "click",
 
-        closeBottomSheet
+        function(e){
+
+            e.stopPropagation();
+
+            dragging = false;
+
+            closeBottomSheet();
+
+        }
 
     );
 
@@ -344,97 +352,93 @@ document.querySelector(
 
 if(dragElement){
 
-dragElement.addEventListener(
+    dragElement.addEventListener(
 
-"touchstart",
+        "touchstart",
 
-function(e){
+        function(e){
 
-if(
+            if(e.target.closest("#closeSheetBtn")){
 
-e.target.closest(
+                dragging = false;
 
-"#closeSheetBtn"
+                return;
 
-)
+            }
 
-){
+            startY = e.touches[0].clientY;
 
-return;
+            currentY = startY;
 
-}
+            dragging = true;
 
-startY=
+        }
 
-e.touches[0].clientY;
+    );
 
-dragging=true;
+    dragElement.addEventListener(
 
-}
+        "touchmove",
 
-);
+        function(e){
 
-dragElement.addEventListener(
+            if(!dragging){
 
-"touchmove",
+                return;
 
-function(e){
+            }
 
-if(!dragging) return;
+            currentY = e.touches[0].clientY;
 
-currentY=
+            const diff = currentY - startY;
 
-e.touches[0].clientY;
+            if(diff > 0){
 
-const diff=
+                bottomSheet.style.transform =
 
-currentY-startY;
+                `translateY(${Math.min(diff,140)}px)`;
 
-if(diff>0){
+            }
 
-bottomSheet.style.transform=
+        }
 
-`translateY(${Math.min(diff,140)}px)`;
+    );
 
-}
+    dragElement.addEventListener(
 
-}
+        "touchend",
 
-);
+        function(){
 
-dragElement.addEventListener(
+            if(!dragging){
 
-"touchend",
+                return;
 
-function(){
+            }
 
-dragging=false;
+            dragging = false;
 
-const diff=
+            const diff = currentY - startY;
 
-currentY-startY;
+            bottomSheet.style.transition = "transform .18s ease";
 
-bottomSheet.style.transition=
+            bottomSheet.style.transform = "translateY(0px)";
 
-"transform .18s ease";
+            setTimeout(function(){
 
-bottomSheet.style.transform="translateY(0px)";
+                bottomSheet.style.transition = "";
 
-setTimeout(function(){
+            },180);
 
-bottomSheet.style.transition="";
+            if(diff > 35){
 
-},180);
+                minimizeBottomSheet();
 
-if(diff>35){
+            }
 
-minimizeBottomSheet();
+        }
 
-}
-
-}
-
-);
+    );
 
 }
 
