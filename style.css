@@ -781,25 +781,6 @@ overflow:auto;
 bottom:0;
 
 }
-.bottomSheet.minimized{
-
-bottom:-78vh;
-
-}
-
-.bottomSheet.minimized .sheetContent{
-
-display:none;
-
-}
-
-.bottomSheet.minimized .sheetHeader{
-
-margin-bottom:0;
-
-cursor:pointer;
-
-}
 .sheetHandle{
 
 width:60px;
