@@ -141,8 +141,6 @@ position:relative;
 
 background:transparent;
 
-padding-top:env(safe-area-inset-top);
-
 }
 
 /* =====================================================
@@ -196,6 +194,8 @@ display:flex;
 justify-content:space-between;
 
 align-items:center;
+
+padding-top:42px;
 
 margin-bottom:24px;
 
@@ -1072,7 +1072,9 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:24px;
+padding-top:42px;
+
+margin-bottom:20px;
 
 }
 
