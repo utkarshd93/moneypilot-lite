@@ -793,6 +793,10 @@ background:rgba(255,255,255,.30);
 
 margin:0 auto 18px;
 
+cursor:grab;
+
+transition:.2s;
+
 }
 
 .sheetHeader{
@@ -804,6 +808,12 @@ justify-content:space-between;
 align-items:center;
 
 margin-bottom:20px;
+
+cursor:grab;
+
+touch-action:none;
+
+user-select:none;
 
 }
 
