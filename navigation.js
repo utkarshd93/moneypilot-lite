@@ -334,7 +334,7 @@ dragElement=
 
 document.querySelector(
 
-"#addTransactionSheet .sheetContent"
+"#addTransactionSheet"
 
 );
 
@@ -345,6 +345,20 @@ dragElement.addEventListener(
 "touchstart",
 
 function(e){
+
+if(
+
+e.target.tagName==="INPUT" ||
+
+e.target.tagName==="TEXTAREA" ||
+
+e.target.tagName==="SELECT"
+
+){
+
+return;
+
+}
 
 startY=
 
@@ -398,7 +412,7 @@ currentY-startY;
 
 bottomSheet.style.transform="";
 
-if(diff>40){
+if(diff>20){
 
 minimizeBottomSheet();
 
