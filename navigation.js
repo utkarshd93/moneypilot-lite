@@ -164,6 +164,13 @@ minimized
 
 const closeSheetButton =
 document.getElementById("closeSheetBtn");
+const transactionDraft =
+
+document.getElementById(
+
+"transactionDraft"
+
+);
 function openBottomSheet(){
 
     if(typeof syncTransactionDate==="function"){
@@ -209,7 +216,113 @@ function minimizeBottomSheet(){
 
     );
 
+    if(transactionDraft){
+
+        transactionDraft.classList.add(
+
+            "show"
+
+        );
+
+    }
+
     transactionSheetState="minimized";
+
+}
+
+function restoreBottomSheet(){
+
+    if(!bottomSheet) return;
+
+    bottomSheet.classList.add(
+
+        "show"
+
+    );
+
+    if(transactionDraft){
+
+        transactionDraft.classList.remove(
+
+            "show"
+
+        );
+
+    }
+
+    transactionSheetState="open";
+
+}
+
+let startY = 0;
+
+let currentY = 0;
+
+let dragging = false;
+
+const sheetHandle =
+document.getElementById("sheetHandle");
+
+if(sheetHandle){
+
+    sheetHandle.addEventListener(
+
+        "touchstart",
+
+        function(e){
+
+            startY = e.touches[0].clientY;
+
+            dragging = true;
+
+        }
+
+    );
+
+    sheetHandle.addEventListener(
+
+        "touchmove",
+
+        function(e){
+
+            if(!dragging) return;
+
+            currentY = e.touches[0].clientY;
+
+            const diff = currentY - startY;
+
+            if(diff > 0){
+
+                bottomSheet.style.transform =
+                `translateY(${diff}px)`;
+
+            }
+
+        }
+
+    );
+
+    sheetHandle.addEventListener(
+
+        "touchend",
+
+        function(){
+
+            dragging = false;
+
+            const diff = currentY - startY;
+
+            bottomSheet.style.transform = "";
+
+            if(diff > 120){
+
+                minimizeBottomSheet();
+
+            }
+
+        }
+
+    );
 
 }
 
@@ -312,57 +425,13 @@ if(viewAllButton){
 
 openPage("home");
 
-const transactionMiniBar =
+if(transactionDraft){
 
-document.getElementById(
-
-"transactionMiniBar"
-
-);
-
-function minimizeTransactionSheet(){
-
-    if(!bottomSheet) return;
-
-    bottomSheet.classList.remove(
-
-        "show"
-
-    );
-
-    transactionMiniBar.classList.add(
-
-        "show"
-
-    );
-
-}
-
-function restoreTransactionSheet(){
-
-    if(!bottomSheet) return;
-
-    bottomSheet.classList.add(
-
-        "show"
-
-    );
-
-    transactionMiniBar.classList.remove(
-
-        "show"
-
-    );
-
-}
-
-if(transactionMiniBar){
-
-    transactionMiniBar.addEventListener(
+    transactionDraft.addEventListener(
 
         "click",
 
-        restoreTransactionSheet
+        restoreBottomSheet
 
     );
 
