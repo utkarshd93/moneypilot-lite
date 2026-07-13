@@ -3,6 +3,14 @@
             Mobile First UI
 ===================================================== */
 
+:root{
+
+--safe-top:env(safe-area-inset-top);
+
+--safe-bottom:env(safe-area-inset-bottom);
+
+}
+
 *{
 
 margin:0;
@@ -125,7 +133,7 @@ max-width:480px;
 
 margin:auto;
 
-height:100vh;
+height:100dvh;
 
 overflow:hidden;
 
@@ -134,6 +142,7 @@ position:relative;
 background:transparent;
 
 }
+
 /* =====================================================
                 Pages
 ===================================================== */
@@ -142,13 +151,15 @@ background:transparent;
 
 display:none;
 
-height:100vh;
+min-height:100%;
+
+height:100%;
 
 overflow-y:auto;
 
-padding:22px;
+padding:18px 18px 110px;
 
-padding-bottom:95px;
+box-sizing:border-box;
 
 }
 
@@ -186,9 +197,9 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:24px;
-
 padding-top:42px;
+
+margin-bottom:24px;
 
 }
 
@@ -249,7 +260,7 @@ align-items:center;
 
 gap:10px;
 
-padding:10px 14px;
+padding:8px 12px;
 
 border-radius:18px;
 
@@ -263,9 +274,9 @@ border:1px solid var(--glass-border);
 
 .monthButton{
 
-width:38px;
+width:34px;
 
-height:38px;
+height:34px;
 
 border:none;
 
@@ -309,7 +320,7 @@ background:transparent;
 
 color:white;
 
-font-size:15px;
+font-size:14px;
 
 font-weight:600;
 
@@ -387,7 +398,7 @@ align-items:center;
 
 gap:14px;
 
-padding:12px;
+padding:10px;
 
 border-radius:18px;
 
@@ -397,13 +408,13 @@ background:rgba(255,255,255,.10);
 
 .emoji{
 
-font-size:28px;
+font-size:24px;
 
 }
 
 .smallCard p{
 
-font-size:13px;
+font-size:12px;
 
 margin-bottom:4px;
 
@@ -411,7 +422,7 @@ margin-bottom:4px;
 
 .smallCard h3{
 
-font-size:20px;
+font-size:18px;
 
 font-weight:700;
 
@@ -426,7 +437,7 @@ color:white;
 
 display:grid;
 
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 
 gap:14px;
 
@@ -436,7 +447,7 @@ margin-bottom:24px;
 
 .statCard{
 
-padding:14px;
+padding:12px;
 
 border-radius:22px;
 
@@ -518,7 +529,7 @@ margin-bottom:18px;
 
 .cardHeader h2{
 
-font-size:20px;
+font-size:18px;
 
 font-weight:600;
 
@@ -568,8 +579,98 @@ min-height:80px;
             TRANSACTION CARD
 ===================================================== */
 
+.transactionRow{
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:22px;
+
+margin-bottom:14px;
+
+}
+
+.transactionSwipeActions{
+
+position:absolute;
+
+top:0;
+
+right:0;
+
+bottom:0;
+
+display:flex;
+
+align-items:stretch;
+
+}
+
+.swipeEdit{
+
+width:84px;
+
+border:none;
+
+background:#4F7CFF;
+
+color:#fff;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:22px;
+
+gap:6px;
+
+}
+
+.swipeDelete{
+
+width:84px;
+
+border:none;
+
+background:#E53935;
+
+color:#fff;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:22px;
+
+gap:6px;
+
+}
+
+.swipeEdit span,
+
+.swipeDelete span{
+
+font-size:12px;
+
+font-weight:600;
+
+}
+
 .transactionItem{
 
+position:relative;
+
+z-index:2;
+            
 display:flex;
 
 justify-content:space-between;
@@ -584,7 +685,13 @@ background:rgba(255,255,255,.08);
 
 border:1px solid rgba(255,255,255,.10);
 
-transition:.25s;
+transition:transform .25s ease;
+
+will-change:transform;
+
+touch-action:pan-y;
+
+cursor:pointer;
 
 }
 
@@ -627,7 +734,7 @@ background:rgba(255,255,255,.12);
 
 .transactionInfo h3{
 
-font-size:16px;
+font-size:15px;
 
 font-weight:600;
 
@@ -649,18 +756,55 @@ margin-bottom:3px;
 
 font-size:12px;
 
-color:rgba(255,255,255,.55);
+opacity:.65;
 
 }
-.transactionRight{
+
+.transactionTop{
 
 display:flex;
 
-flex-direction:column;
+justify-content:space-between;
 
-align-items:flex-end;
+align-items:center;
 
-gap:10px;
+}
+
+.transactionBottom{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-top:6px;
+
+}
+
+.transactionAmount{
+
+font-size:18px;
+
+font-weight:700;
+
+white-space:nowrap;
+
+}
+
+.transactionNote{
+
+font-size:12px;
+
+opacity:.70;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
+
+max-width:170px;
 
 }
 
@@ -1063,15 +1207,19 @@ justify-content:space-between;
 
 align-items:center;
 
-margin-bottom:24px;
+padding-top:42px;
+
+margin-bottom:20px;
 
 }
 
 .pageHeader h2{
 
-font-size:28px;
+font-size:21px;
 
 font-weight:700;
+
+line-height:1.2;
 
 }
 /* =====================================================
@@ -1417,11 +1565,15 @@ transform:translateY(-4px);
 
 .header{
 
+display:flex;
+
 flex-direction:column;
 
 align-items:flex-start;
 
 gap:18px;
+
+padding-top:42px;
 
 }
 
@@ -1453,9 +1605,15 @@ font-size:34px;
 
 .page{
 
-padding:18px;
+display:none;
 
-padding-bottom:95px;
+height:100vh;
+
+overflow-y:auto;
+
+padding:18px 18px 95px;
+
+box-sizing:border-box;
 
 }
 
@@ -1573,40 +1731,18 @@ background:transparent;
 
 .bottomNav{
 
-padding-bottom:
+padding-bottom:0;
 
-env(safe-area-inset-bottom);
+bottom:calc(var(--safe-bottom) + 14px);
 
 }
 
 .fab{
 
-bottom:
-
-calc(
-
-90px +
-
-env(safe-area-inset-bottom)
-
-);
+bottom:calc(var(--safe-bottom) + 96px);
 
 }
-/* =====================================================
-            SMOOTH TRANSITIONS
-===================================================== */
 
-*{
-
-transition:
-
-background-color .25s,
-
-color .25s,
-
-border-color .25s;
-
-}
 /* =====================================================
             VERSION LABEL
 ===================================================== */
@@ -1851,7 +1987,7 @@ font-size:22px;
 
 .balanceCard{
 
-padding:18px;
+padding:16px;
 
 }
 
@@ -2413,53 +2549,45 @@ position:fixed;
 
 left:50%;
 
-bottom:105px;
+bottom:calc(var(--safe-bottom) + 95px);
 
 transform:translateX(-50%);
 
 display:none;
 
-align-items:center;
+flex-direction:column;
 
 justify-content:center;
 
-padding:10px 18px;
+align-items:center;
 
-min-width:145px;
+width:250px;
 
-height:42px;
+height:64px;
 
-border-radius:22px;
+border-radius:20px;
 
-background:rgba(18,28,45,.96);
+background:linear-gradient(
 
-backdrop-filter:blur(16px);
+135deg,
 
--webkit-backdrop-filter:blur(16px);
+#5B6CFF,
 
-color:#fff;
+#7B61FF
 
-font-size:13px;
+);
 
-font-weight:600;
+color:white;
 
-letter-spacing:.2px;
-
-box-shadow:
-
-0 8px 25px rgba(0,0,0,.35);
+box-shadow:0 10px 30px rgba(0,0,0,.35);
 
 cursor:pointer;
 
 z-index:9999;
 
-transition:
-
-transform .25s,
-
-opacity .25s;
-
 opacity:0;
+
+transition:.25s;
 
 }
 
@@ -2470,6 +2598,28 @@ display:flex;
 opacity:1;
 
 animation:miniBarUp .22s ease;
+
+}
+
+.draftTitle{
+
+font-size:16px;
+
+font-weight:700;
+
+line-height:18px;
+
+margin-bottom:4px;
+
+}
+
+.draftSubTitle{
+
+font-size:12px;
+
+opacity:.92;
+
+text-align:center;
 
 }
 
@@ -2520,6 +2670,148 @@ background:rgba(255,255,255,.10);
 color:white;
 
 display:block;
+
+}
+
+.transactionMenu{
+
+display:flex;
+
+align-items:center;
+
+}
+
+.menuButton{
+
+border:none;
+
+background:none;
+
+color:#fff;
+
+font-size:22px;
+
+padding:6px;
+
+cursor:pointer;
+
+}
+
+.actionSheetOverlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.35);
+
+display:none;
+
+align-items:flex-end;
+
+justify-content:center;
+
+z-index:99999;
+
+backdrop-filter:blur(8px);
+
+}
+
+.actionSheetOverlay.show{
+
+display:flex;
+
+}
+
+.actionSheetOverlay.show .actionSheet{
+
+transform:translateY(0);
+
+}
+
+.actionSheet{
+
+width:100%;
+
+max-width:480px;
+
+background:#1B2438;
+
+border-radius:24px 24px 0 0;
+
+padding:14px 18px calc(18px + env(safe-area-inset-bottom));
+
+transform:translateY(100%);
+
+transition:transform .25s ease;
+
+}
+
+.sheetHandle{
+
+width:48px;
+
+height:5px;
+
+border-radius:999px;
+
+background:#666;
+
+margin:0 auto 16px;
+
+}
+
+.actionSheet button{
+
+width:100%;
+
+border:none;
+
+background:none;
+
+color:#fff;
+
+font-size:17px;
+
+padding:18px;
+
+text-align:left;
+
+border-radius:14px;
+
+}
+
+.actionSheet button:hover{
+
+background:rgba(255,255,255,.08);
+
+}
+
+.deleteAction{
+
+color:#FF5B5B!important;
+
+}
+
+.cancelAction{
+
+color:#BFC7D5!important;
+
+}
+
+@keyframes sheetUp{
+
+from{
+
+transform:translateY(100%);
+
+}
+
+to{
+
+transform:translateY(0);
+
+}
 
 }
 

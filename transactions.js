@@ -299,6 +299,8 @@ function renderTransactions(){
 
     });
 
+initializeSwipeCards();
+
 }
 /* =====================================================
         Draw Transaction Card
@@ -323,17 +325,50 @@ else if(transaction.type==="investment"){
     sign="";
 
 }
-            container.innerHTML += `
 
-<div class="transactionItem">
+container.innerHTML += `
+
+<div class="transactionRow">
+
+<div class="transactionSwipeActions">
+
+<button
+
+class="swipeEdit"
+
+onclick="editTransaction(${transaction.id})">
+
+✏️
+
+<span>Edit</span>
+
+</button>
+
+<button
+
+class="swipeDelete"
+
+onclick="deleteTransaction(${transaction.id})">
+
+🗑️
+
+<span>Delete</span>
+
+</button>
+
+</div>
+
+<div
+
+class="transactionItem"
+
+data-id="${transaction.id}">
+
+<div class="transactionTop">
 
 <div class="transactionLeft">
 
 <div class="transactionIcon">
-
-${getCategoryIcon(transaction.category)}
-
-</div>
 
 ${icon}
 
@@ -347,12 +382,6 @@ ${transaction.category}
 
 </h3>
 
-<p>
-
-${transaction.note || "No Description"}
-
-</p>
-
 <small>
 
 ${formatDisplayDate(transaction.date)}
@@ -362,35 +391,36 @@ ${formatDisplayDate(transaction.date)}
 </div>
 
 </div>
-<div class="transactionRight">
 
-<div class="${amountClass}">
+<div class="transactionAmount ${amountClass}">
 
 ${sign}₹${formatMoney(transaction.amount)}
 
 </div>
 
-<div class="transactionActions">
+</div>
+
+<div class="transactionBottom">
+
+<div class="transactionNote">
+
+${transaction.note || transaction.type}
+
+</div>
+
+<div class="transactionMenu">
 
 <button
 
-class="editTransaction"
+class="menuButton"
 
-onclick="editTransaction(${transaction.id})">
+onclick="openTransactionActions(${transaction.id})">
 
-✏️
-
-</button>
-
-<button
-
-class="deleteTransaction"
-
-onclick="deleteTransaction(${transaction.id})">
-
-🗑️
+⋮
 
 </button>
+
+</div>
 
 </div>
 
@@ -805,6 +835,7 @@ function refreshTransactionUI(){
     }
 
 }
+
 /* =====================================================
         Start Module
 ===================================================== */
@@ -821,4 +852,306 @@ function(){
 
 );
 
+let selectedTransactionId=null;
 
+function openTransactionActions(id){
+
+selectedTransactionId=id;
+
+const sheet=document.getElementById("transactionActionSheet");
+
+sheet.classList.add("show");
+
+}
+
+function closeTransactionActions(){
+
+document
+.getElementById(
+"transactionActionSheet"
+)
+.classList.remove(
+"show"
+);
+
+selectedTransactionId=null;
+
+}
+
+function editSelectedTransaction(){
+
+if(selectedTransactionId){
+
+editTransaction(selectedTransactionId);
+
+}
+
+closeTransactionActions();
+
+}
+
+function deleteSelectedTransaction(){
+
+if(selectedTransactionId){
+
+deleteTransaction(selectedTransactionId);
+
+}
+
+closeTransactionActions();
+
+}
+
+document.addEventListener(
+
+"click",
+
+function(e){
+
+const sheet = document.getElementById(
+
+"transactionActionSheet"
+
+);
+
+const actionSheet = document.querySelector(
+
+".actionSheet"
+
+);
+
+if(
+
+sheet.classList.contains("show") &&
+
+!actionSheet.contains(e.target) &&
+
+!e.target.closest(".menuButton")
+
+){
+
+closeTransactionActions();
+
+}
+
+});
+
+const swipeState={
+
+openCard:null,
+
+startX:0,
+
+startY:0,
+
+card:null,
+
+dragging:false,
+
+translateX:0
+
+};
+
+function initializeSwipeCards(){
+
+document
+
+.querySelectorAll(
+
+".transactionItem"
+
+)
+
+.forEach(card=>{
+
+card.addEventListener(
+
+"touchstart",
+
+handleSwipeStart,
+
+{passive:true}
+
+);
+
+card.addEventListener(
+
+"touchmove",
+
+handleSwipeMove,
+
+{passive:false}
+
+);
+
+card.addEventListener(
+
+"touchend",
+
+handleSwipeEnd
+
+);
+
+});
+
+}
+
+function handleSwipeStart(e){
+
+swipeState.card=e.currentTarget;
+
+swipeState.startX=e.touches[0].clientX;
+
+swipeState.startY=e.touches[0].clientY;
+
+swipeState.dragging=false;
+
+}
+
+function handleSwipeMove(e){
+
+if(!swipeState.card) return;
+
+const dx=e.touches[0].clientX-swipeState.startX;
+
+const dy=e.touches[0].clientY-swipeState.startY;
+
+/* Ignore vertical scroll */
+
+if(
+
+Math.abs(dx)<Math.abs(dy)
+
+){
+
+return;
+
+}
+
+swipeState.dragging=true;
+
+e.preventDefault();
+
+/* Only swipe LEFT */
+
+if(dx<0){
+
+const move=Math.max(dx,-180);
+
+swipeState.translateX=move;
+
+swipeState.card.style.transform=
+
+`translateX(${move}px)`;
+
+}
+
+}
+
+function handleSwipeEnd(){
+
+if(!swipeState.card){
+
+return;
+
+}
+
+swipeState.card.style.transition=
+
+"transform .22s ease";
+
+/* Close previous */
+
+if(
+
+swipeState.openCard &&
+
+swipeState.openCard!==swipeState.card
+
+){
+
+swipeState.openCard.style.transform=
+
+"translateX(0px)";
+
+}
+
+/* Snap Open */
+
+if(
+
+swipeState.translateX<-80
+
+){
+
+swipeState.card.style.transform=
+
+"translateX(-180px)";
+
+swipeState.openCard=
+
+swipeState.card;
+
+}
+
+/* Snap Close */
+
+else{
+
+swipeState.card.style.transform=
+
+"translateX(0px)";
+
+if(
+
+swipeState.openCard===swipeState.card
+
+){
+
+swipeState.openCard=null;
+
+}
+
+}
+
+setTimeout(function(){
+
+if(swipeState.card){
+
+swipeState.card.style.transition="";
+
+}
+
+},220);
+
+swipeState.card=null;
+
+swipeState.dragging=false;
+
+swipeState.translateX=0;
+
+}
+
+document.addEventListener(
+
+"click",
+
+function(e){
+
+if(
+
+swipeState.openCard &&
+
+!e.target.closest(".transactionRow")
+
+){
+
+swipeState.openCard.style.transform=
+
+"translateX(0px)";
+
+swipeState.openCard=null;
+
+}
+
+});

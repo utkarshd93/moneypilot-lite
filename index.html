@@ -196,13 +196,13 @@ class="balanceCard">
 
 <p>
 
-Current Balance
+💰 Cash Balance
 
 </p>
 
 <h1
 
-id="balance">
+id="cashBalance">
 
 ₹0
 
@@ -274,22 +274,6 @@ id="expenseValue">
 ======================================= -->
 
 <section class="statsGrid">
-
-<div class="statCard">
-
-<p>
-
-Cash Balance
-
-</p>
-
-<h2 id="cashBalance">
-
-₹0
-
-</h2>
-
-</div>
 
 <div class="statCard">
 
@@ -812,7 +796,17 @@ id="transactionMiniBar"
 
 class="transactionMiniBar">
 
-📝 Draft ▲
+<div class="draftTitle">
+
+✏️ Continue Editing
+
+</div>
+
+<div class="draftSubTitle">
+
+Transaction Saved as Draft
+
+</div>
 
 </div>
 <!-- =======================================
@@ -986,6 +980,49 @@ MoneyPilot Lite V3
 <script src="app.js"></script>
 
 <script src="auth.js"></script>
+
+
+<div
+
+id="transactionActionSheet"
+
+class="actionSheetOverlay">
+
+<div class="actionSheet">
+
+<div class="sheetHandle"></div>
+
+<button
+
+onclick="editSelectedTransaction()">
+
+✏️ Edit Transaction
+
+</button>
+
+<button
+
+class="deleteAction"
+
+onclick="deleteSelectedTransaction()">
+
+🗑 Delete Transaction
+
+</button>
+
+<button
+
+class="cancelAction"
+
+onclick="closeTransactionActions()">
+
+✖️ Cancel
+
+</button>
+
+</div>
+
+</div>
 
 </body>
 
