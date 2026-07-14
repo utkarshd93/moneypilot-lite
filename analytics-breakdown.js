@@ -87,37 +87,49 @@ function renderAnalyticsTransactions() {
 
     filtered.forEach(t => {
 
-        html += `
+    const shortDate = new Date(t.date).toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short"
+        }
+    );
+
+    const icon = getCategoryEmoji(t.category);
+
+    html += `
 
         <div class="analyticsItem">
 
-            <div>
+            <span class="analyticsIcon">
 
-                <div class="analyticsCategory">
+                ${icon}
 
-                    ${t.category}
+            </span>
 
-                </div>
+            <span class="analyticsCategory">
 
-                <div class="analyticsDate">
+                ${t.category}
 
-                    ${t.date}
+            </span>
 
-                </div>
+            <span class="analyticsDate">
 
-            </div>
+                ${shortDate}
 
-            <div class="analyticsAmount">
+            </span>
+
+            <span class="analyticsAmount">
 
                 ₹${Number(t.amount).toLocaleString("en-IN")}
 
-            </div>
+            </span>
 
         </div>
 
-        `;
+    `;
 
-    });
+});
 
     container.innerHTML = html;
 
@@ -127,3 +139,35 @@ document.addEventListener(
     "DOMContentLoaded",
     initAnalyticsBreakdown
 );
+
+function getCategoryEmoji(category){
+
+    const icons = {
+
+        Food:"🍔",
+
+        Fuel:"⛽",
+
+        Shopping:"🛍️",
+
+        Health:"🏥",
+
+        Entertainment:"🎬",
+
+        Salary:"💼",
+
+        Investment:"📈",
+
+        Rent:"🏠",
+
+        Travel:"✈️",
+
+        Education:"📚",
+
+        Other:"📦"
+
+    };
+
+    return icons[category] || "💳";
+
+}
