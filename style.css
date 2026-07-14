@@ -2891,13 +2891,11 @@ white-space:nowrap;
 
 .analyticsAmount{
 
-font-size:16px;
+font-size:17px;
 
-font-weight:700;
+font-weight:800;
 
-text-align:right;
-
-white-space:nowrap;
+letter-spacing:.3px;
 
 }
 
@@ -2908,6 +2906,12 @@ text-align:center;
 padding:20px;
 
 opacity:.7;
+
+}
+
+#categorySummary{
+
+transition:opacity .18s ease;
 
 }
 
