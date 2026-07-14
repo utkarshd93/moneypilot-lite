@@ -1343,9 +1343,7 @@ font-weight:600;
 
 .analyticsCard canvas{
 
-width:100%!important;
-
-height:260px!important;
+display:none;
 
 }
 /* =====================================================
