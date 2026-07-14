@@ -106,7 +106,123 @@ function selectAnalyticsMode(mode){
 
 function refreshAnalyticsBreakdown(){
 
-    // Next phase
+    const container =
+    document.getElementById("categorySummary");
+
+    if(!container) return;
+
+    const title =
+    document.getElementById("analyticsBreakdownTitle");
+
+    if(!title) return;
+
+    const month =
+    document.getElementById("monthFilter")?.value || "";
+
+    const transactions =
+    getTransactionsByMonth(month);
+
+    let filtered = [];
+
+    if(analyticsMode==="fixed"){
+
+        title.innerHTML =
+        "🏠 Fixed Expense Breakdown";
+
+        filtered = transactions.filter(t =>
+            t.type==="expense" &&
+            t.fixed===true
+        );
+
+    }
+
+    else if(analyticsMode==="variable"){
+
+        title.innerHTML =
+        "🍔 Variable Expense Breakdown";
+
+        filtered = transactions.filter(t =>
+            t.type==="expense" &&
+            t.fixed===false
+        );
+
+    }
+
+    else{
+
+        title.innerHTML =
+        "Transaction Breakdown";
+
+        container.innerHTML =
+        `
+        <div class="analyticsEmpty">
+            Tap Fixed or Variable above
+        </div>
+        `;
+
+        return;
+
+    }
+
+    renderAnalyticsList(filtered,container);
+
+}
+
+function renderAnalyticsList(list,container){
+
+    if(list.length===0){
+
+        container.innerHTML=
+
+        `
+        <div class="analyticsEmpty">
+
+            No transactions found
+
+        </div>
+        `;
+
+        return;
+
+    }
+
+    let html="";
+
+    list.forEach(function(t){
+
+        html += `
+
+        <div class="analyticsItem">
+
+            <div>
+
+                <div class="analyticsCategory">
+
+                    ${t.category}
+
+                </div>
+
+                <div class="analyticsDate">
+
+                    ${formatDate(t.date)}
+
+                </div>
+
+            </div>
+
+            <div class="analyticsAmount">
+
+                ₹${Number(t.amount).toLocaleString("en-IN")}
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+    container.innerHTML = html;
 
 }
 
