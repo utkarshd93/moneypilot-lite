@@ -2815,6 +2815,16 @@ transform:translateY(0);
 
 }
 
+.analyticsBox.active{
+
+border:2px solid #6C63FF;
+
+transform:translateY(-2px);
+
+box-shadow:0 8px 20px rgba(108,99,255,.25);
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
