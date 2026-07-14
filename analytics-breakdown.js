@@ -1,194 +1,91 @@
-/* ===========================================
-        MoneyPilot Analytics Breakdown
-=========================================== */
+/* ==========================================
+   MoneyPilot Analytics Breakdown
+   V1
+========================================== */
 
 let analyticsMode = null;
 
-const analyticsCards = {
+function initAnalyticsBreakdown() {
 
-    fixed: null,
+    const cards = document.querySelectorAll(".analyticsBox");
 
-    variable: null
+    if (cards.length < 2) return;
 
-};
+    cards[0].addEventListener("click", () => {
+        setAnalyticsMode("fixed");
+    });
 
-function initializeAnalyticsBreakdown(){
-
-    analyticsCards.fixed =
-
-    document.getElementById(
-
-        "fixedExpenseCard"
-
-    );
-
-    analyticsCards.variable =
-
-    document.getElementById(
-
-        "variableExpenseCard"
-
-    );
-
-    if(analyticsCards.fixed){
-
-        analyticsCards.fixed.addEventListener(
-
-            "click",
-
-            function(){
-
-                selectAnalyticsMode(
-
-                    "fixed"
-
-                );
-
-            }
-
-        );
-
-    }
-
-    if(analyticsCards.variable){
-
-        analyticsCards.variable.addEventListener(
-
-            "click",
-
-            function(){
-
-                selectAnalyticsMode(
-
-                    "variable"
-
-                );
-
-            }
-
-        );
-
-    }
+    cards[1].addEventListener("click", () => {
+        setAnalyticsMode("variable");
+    });
 
 }
 
-function selectAnalyticsMode(mode){
+function setAnalyticsMode(mode) {
 
     analyticsMode = mode;
 
-    analyticsCards.fixed
+    const cards = document.querySelectorAll(".analyticsBox");
 
-    ?.classList.remove("active");
+    cards.forEach(card => card.classList.remove("active"));
 
-    analyticsCards.variable
+    if (mode === "fixed") {
 
-    ?.classList.remove("active");
+        cards[0].classList.add("active");
 
-    if(mode==="fixed"){
+    } else {
 
-        analyticsCards.fixed
-
-        ?.classList.add("active");
+        cards[1].classList.add("active");
 
     }
 
-    if(mode==="variable"){
-
-        analyticsCards.variable
-
-        ?.classList.add("active");
-
-    }
-
-    refreshAnalyticsBreakdown();
+    renderAnalyticsTransactions();
 
 }
 
-function refreshAnalyticsBreakdown(){
+function renderAnalyticsTransactions() {
 
     const container =
-    document.getElementById("categorySummary");
+        document.getElementById("categorySummary");
 
-    if(!container) return;
-
-    const title =
-    document.getElementById("analyticsBreakdownTitle");
-
-    if(!title) return;
-
-    const month =
-    document.getElementById("monthFilter")?.value || "";
+    if (!container) return;
 
     const transactions =
-    getTransactionsByMonth(month);
+        getCurrentMonthTransactions();
 
     let filtered = [];
 
-    if(analyticsMode==="fixed"){
-
-        title.innerHTML =
-        "🏠 Fixed Expense Breakdown";
+    if (analyticsMode === "fixed") {
 
         filtered = transactions.filter(t =>
-            t.type==="expense" &&
-            t.fixed===true
+            t.type === "expense" &&
+            t.fixed === true
+        );
+
+    } else {
+
+        filtered = transactions.filter(t =>
+            t.type === "expense" &&
+            t.fixed === false
         );
 
     }
 
-    else if(analyticsMode==="variable"){
+    if (filtered.length === 0) {
 
-        title.innerHTML =
-        "🍔 Variable Expense Breakdown";
-
-        filtered = transactions.filter(t =>
-            t.type==="expense" &&
-            t.fixed===false
-        );
-
-    }
-
-    else{
-
-        title.innerHTML =
-        "Transaction Breakdown";
-
-        container.innerHTML =
-        `
-        <div class="analyticsEmpty">
-            Tap Fixed or Variable above
-        </div>
+        container.innerHTML = `
+            <div class="analyticsEmpty">
+                No Transactions
+            </div>
         `;
 
         return;
 
     }
 
-    renderAnalyticsList(filtered,container);
+    let html = "";
 
-}
-
-function renderAnalyticsList(list,container){
-
-    if(list.length===0){
-
-        container.innerHTML=
-
-        `
-        <div class="analyticsEmpty">
-
-            No transactions found
-
-        </div>
-        `;
-
-        return;
-
-    }
-
-    let html="";
-
-    list.forEach(function(t){
+    filtered.forEach(t => {
 
         html += `
 
@@ -204,7 +101,7 @@ function renderAnalyticsList(list,container){
 
                 <div class="analyticsDate">
 
-                    ${formatDate(t.date)}
+                    ${t.date}
 
                 </div>
 
@@ -227,9 +124,6 @@ function renderAnalyticsList(list,container){
 }
 
 document.addEventListener(
-
-"DOMContentLoaded",
-
-initializeAnalyticsBreakdown
-
+    "DOMContentLoaded",
+    initAnalyticsBreakdown
 );
