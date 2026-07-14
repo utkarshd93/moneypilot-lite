@@ -2825,6 +2825,88 @@ box-shadow:0 8px 20px rgba(108,99,255,.25);
 
 }
 
+/* ==========================================
+   Analytics Transaction List
+========================================== */
+
+.analyticsItem{
+
+display:grid;
+
+grid-template-columns:34px 1fr 60px 90px;
+
+align-items:center;
+
+gap:10px;
+
+padding:14px 16px;
+
+margin-bottom:10px;
+
+border-radius:16px;
+
+background:rgba(255,255,255,.06);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.analyticsIcon{
+
+font-size:22px;
+
+text-align:center;
+
+}
+
+.analyticsCategory{
+
+font-size:15px;
+
+font-weight:600;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+}
+
+.analyticsDate{
+
+font-size:13px;
+
+opacity:.7;
+
+text-align:center;
+
+white-space:nowrap;
+
+}
+
+.analyticsAmount{
+
+font-size:16px;
+
+font-weight:700;
+
+text-align:right;
+
+white-space:nowrap;
+
+}
+
+.analyticsEmpty{
+
+text-align:center;
+
+padding:20px;
+
+opacity:.7;
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
