@@ -131,7 +131,15 @@ function renderAnalyticsTransactions() {
 
 });
 
+    container.style.opacity = "0";
+
+setTimeout(()=>{
+
     container.innerHTML = html;
+
+    container.style.opacity = "1";
+
+},120);
 
 }
 
