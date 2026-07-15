@@ -133,6 +133,74 @@ function hideSecuritySetup(){
 
 }
 
+async function saveSecuritySetup(){
+
+    const question =
+
+    $("securityQuestion").value.trim();
+
+    const answer =
+
+    $("securityAnswer").value.trim();
+
+    if(question===""){
+
+        alert("Please select a security question.");
+
+        return;
+
+    }
+
+    if(answer===""){
+
+        alert("Please enter your answer.");
+
+        return;
+
+    }
+
+    const hashedAnswer =
+
+    await hashPin(answer.toLowerCase());
+
+    localStorage.setItem(
+
+        AUTH.SECURITY_QUESTION_KEY,
+
+        question
+
+    );
+
+    localStorage.setItem(
+
+        AUTH.SECURITY_ANSWER_KEY,
+
+        hashedAnswer
+
+    );
+
+    localStorage.setItem(
+
+        AUTH.SECURITY_SETUP_KEY,
+
+        "true"
+
+    );
+
+    hideSecuritySetup();
+
+    loginSuccess();
+
+}
+
+$("saveSecurityBtn").addEventListener(
+
+    "click",
+
+    saveSecuritySetup
+
+);
+
 document.addEventListener(
 
 "DOMContentLoaded",
