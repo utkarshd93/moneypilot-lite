@@ -235,7 +235,7 @@ async function saveNewPin(){
 
     $("confirmNewPinInput").value="";
 
-    alert("PIN reset successfully.");
+    showToast("PIN reset successfully.");
 
     loginSuccess();
 
@@ -273,7 +273,7 @@ async function verifySecurityAnswer(){
 
     if(hashedAnswer!==savedHash){
 
-        alert("Incorrect answer.");
+        showToast("Incorrect answer.");
 
         $("forgotAnswer").value="";
 
@@ -573,7 +573,7 @@ async function(){
 
     else{
 
-        alert("Incorrect PIN");
+        showToast("Incorrect PIN");
 
         $("pinInput").value="";
 
