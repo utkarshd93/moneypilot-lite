@@ -64,6 +64,16 @@ function loginSuccess(){
 
     AUTH.initialized = true;
 
+    /* Force one-time security setup */
+
+    if(!hasSecuritySetup()){
+
+        showSecuritySetup();
+
+        return;
+
+    }
+
     hideLockScreen();
 
     if(typeof updateGreeting === "function"){
