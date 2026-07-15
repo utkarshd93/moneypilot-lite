@@ -167,6 +167,20 @@ function hideForgotPin(){
 
 }
 
+function showResetPinPage(){
+
+    hideForgotPin();
+
+    $("resetPinPage").classList.add("active");
+
+}
+
+function hideResetPinPage(){
+
+    $("resetPinPage").classList.remove("active");
+
+}
+
 async function verifySecurityAnswer(){
 
     const answer =
@@ -302,11 +316,6 @@ $("verifySecurityBtn").addEventListener(
 
 );
 
-function showResetPinPage(){
-
-    alert("Answer verified successfully!");
-
-}
 
 document.addEventListener(
 
