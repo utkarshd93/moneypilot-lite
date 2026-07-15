@@ -504,3 +504,13 @@ console.log(
 "✅ MoneyPilot Lite V3 Loaded"
 
 );
+
+function trackEvent(eventName,params={}){
+
+    if(typeof gtag==="function"){
+
+        gtag("event",eventName,params);
+
+    }
+
+}
