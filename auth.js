@@ -8,9 +8,16 @@ const AUTH = {
 
     SESSION_KEY: "mp_session",
 
+    SECURITY_SETUP_KEY: "mp_security_setup",
+
+    SECURITY_QUESTION_KEY: "mp_security_question",
+
+    SECURITY_ANSWER_KEY: "mp_security_answer",
+
     initialized: false
 
 };
+
 function $(id){
 
     return document.getElementById(id);
@@ -25,6 +32,17 @@ function hasPin(){
     ) !== null;
 
 }
+
+function hasSecuritySetup(){
+
+    return localStorage.getItem(
+
+        AUTH.SECURITY_SETUP_KEY
+
+    ) === "true";
+
+}
+
 function isLoggedIn(){
 
     return sessionStorage.getItem(
@@ -100,6 +118,21 @@ function hideLockScreen(){
     $("lockScreen").style.display="none";
 
 }
+
+function showSecuritySetup(){
+
+    hideLockScreen();
+
+    $("securitySetupPage").classList.add("active");
+
+}
+
+function hideSecuritySetup(){
+
+    $("securitySetupPage").classList.remove("active");
+
+}
+
 document.addEventListener(
 
 "DOMContentLoaded",
