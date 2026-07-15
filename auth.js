@@ -171,13 +171,73 @@ function showResetPinPage(){
 
     hideForgotPin();
 
+    $("forgotAnswer").value="";
+
+    $("newPinInput").value="";
+
+    $("confirmNewPinInput").value="";
+
     $("resetPinPage").classList.add("active");
+
+    $("newPinInput").focus();
 
 }
 
 function hideResetPinPage(){
 
     $("resetPinPage").classList.remove("active");
+
+}
+
+async function saveNewPin(){
+
+    const newPin =
+
+        $("newPinInput").value.trim();
+
+    const confirmPin =
+
+        $("confirmNewPinInput").value.trim();
+
+    if(newPin.length !== 6){
+
+        alert("PIN must be 6 digits.");
+
+        return;
+
+    }
+
+    if(newPin !== confirmPin){
+
+        alert("PINs do not match.");
+
+        return;
+
+    }
+
+    const hashedPin =
+
+        await hashPin(newPin);
+
+    localStorage.setItem(
+
+        AUTH.PIN_KEY,
+
+        hashedPin
+
+    );
+
+    hideResetPinPage();
+
+    $("forgotAnswer").value="";
+
+    $("newPinInput").value="";
+
+    $("confirmNewPinInput").value="";
+
+    alert("PIN reset successfully.");
+
+    loginSuccess();
 
 }
 
@@ -313,6 +373,14 @@ $("verifySecurityBtn").addEventListener(
     "click",
 
     verifySecurityAnswer
+
+);
+
+$("saveNewPinBtn").addEventListener(
+
+    "click",
+
+    saveNewPin
 
 );
 
