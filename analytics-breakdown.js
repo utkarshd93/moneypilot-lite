@@ -25,6 +25,10 @@ function setAnalyticsMode(mode) {
 
     analyticsMode = mode;
 
+   trackEvent("analytics_filter",{
+    filter: mode
+   });
+
     const cards = document.querySelectorAll(".analyticsBox");
 
     cards.forEach(card => card.classList.remove("active"));
