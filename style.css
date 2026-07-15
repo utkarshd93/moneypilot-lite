@@ -3087,6 +3087,60 @@ text-align:center;
 
 }
 
+/* ==========================================
+        Forgot PIN Button
+========================================== */
+
+#verifySecurityBtn{
+
+display:block;
+
+width:220px;
+
+margin:24px auto 0;
+
+padding:15px 20px;
+
+border:none;
+
+border-radius:16px;
+
+background:linear-gradient(
+135deg,
+#6C63FF,
+#5A7CFF
+);
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:all .25s ease;
+
+box-shadow:
+0 8px 20px rgba(108,99,255,.35);
+
+}
+
+#verifySecurityBtn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 26px rgba(108,99,255,.45);
+
+}
+
+#verifySecurityBtn:active{
+
+transform:scale(.98);
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
