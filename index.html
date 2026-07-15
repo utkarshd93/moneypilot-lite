@@ -29,6 +29,21 @@ rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YE4SVWS5KK"></script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+
+function gtag(){
+    dataLayer.push(arguments);
+}
+
+gtag("js", new Date());
+
+gtag("config", "G-YE4SVWS5KK");
+</script>
+
 </head>
 
 <body>
@@ -97,9 +112,163 @@ rel="stylesheet">
 
         </button>
 
+        <div id="forgotPinBtn" class="forgotPin">
+
+    Forgot PIN?
+
+</div>
+
     </div>
 
 </div>
+
+
+<!-- ==========================================
+     Security Setup
+========================================== -->
+
+<div id="securitySetupPage" class="authPage">
+
+    <div class="authCard">
+
+        <h2>🔐 Secure Your Account</h2>
+
+        <p class="securityDescription">
+            Setup a security question to recover your PIN if you forget it.
+        </p>
+
+        <select id="securityQuestion">
+
+            <option value="">
+                Select Security Question
+            </option>
+
+            <option>
+                What is your mother's birth year?
+            </option>
+
+            <option>
+                What is your father's birth year?
+            </option>
+
+            <option>
+                What was your first school?
+            </option>
+
+            <option>
+                What is your favourite city?
+            </option>
+
+            <option>
+                What is your childhood nickname?
+            </option>
+
+        </select>
+
+        <input
+            id="securityAnswer"
+            type="text"
+            placeholder="Answer"
+            autocomplete="off"
+        >
+
+        <button id="saveSecurityBtn">
+
+            Save & Continue
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     Forgot PIN
+========================================== -->
+
+<div id="forgotPinPage" class="authPage">
+
+    <div class="authCard">
+
+        <h2>🔑 Recover PIN</h2>
+
+        <p class="securityDescription">
+
+            Answer your security question to reset your PIN.
+
+        </p>
+
+        <div id="forgotQuestion" class="securityQuestionText">
+
+        </div>
+
+        <input
+
+            id="forgotAnswer"
+
+            type="text"
+
+            placeholder="Your Answer"
+
+            autocomplete="off"
+
+        >
+
+        <button id="verifySecurityBtn">
+
+            Continue
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     Reset PIN
+========================================== -->
+
+<div id="resetPinPage" class="authPage">
+
+    <div class="authCard">
+
+        <h2>🔒 Create New PIN</h2>
+
+        <p class="securityDescription">
+
+            Your identity has been verified.
+            Please create a new 6-digit PIN.
+
+        </p>
+
+        <input
+            id="newPinInput"
+            type="password"
+            maxlength="6"
+            placeholder="New PIN"
+            inputmode="numeric"
+        >
+
+        <input
+            id="confirmNewPinInput"
+            type="password"
+            maxlength="6"
+            placeholder="Confirm New PIN"
+            inputmode="numeric"
+        >
+
+        <button id="saveNewPinBtn">
+
+            Save New PIN
+
+        </button>
+
+    </div>
+
+</div>
+
 
 <div class="backgroundOverlay"></div>
 
@@ -523,14 +692,9 @@ Monthly Summary
 </h3>
             <div class="analyticsStats">
 
-<div class="analyticsBox">
+<div class="analyticsBox" id="fixedExpenseCard">
 
-<p>
-
-Fixed Expenses
-
-</p>
-
+<p>🏠 Fixed Expenses</p>
 <h2 id="analyticsFixed">
 
 ₹0
@@ -539,13 +703,9 @@ Fixed Expenses
 
 </div>
 
-<div class="analyticsBox">
+<div class="analyticsBox" id="variableExpenseCard">
 
-<p>
-
-Variable Expenses
-
-</p>
+<p>🛒 Variable Expenses</p>
 
 <h2 id="analyticsVariable">
 
@@ -556,12 +716,6 @@ Variable Expenses
 </div>
 
 </div>
-
-<canvas
-
-id="expenseChart">
-
-</canvas>
 
 </div>
 
@@ -973,14 +1127,15 @@ MoneyPilot Lite V3
 
 <script src="dashboard.js"></script>
 
-<script src="bills.js"></script>
+<script src="analytics-breakdown.js"></script>
 
-<script src="navigation.js"></script>
+<script src="bills.js"></script>
 
 <script src="app.js"></script>
 
-<script src="auth.js"></script>
+<script src="navigation.js"></script>
 
+<script src="auth.js"></script>
 
 <div
 

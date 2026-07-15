@@ -64,6 +64,20 @@ if(navButtons[pageName]){
 navButtons[pageName].classList.add("active");
 
 }
+            
+/* Analytics Tracking */
+
+trackEvent("page_opened",{
+
+        page:pageName
+
+    });
+
+if(pageName==="analytics"){
+
+        trackEvent("analytics_opened");
+
+    }
 
 }
 if(navButtons.home){

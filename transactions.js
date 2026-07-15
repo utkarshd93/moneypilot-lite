@@ -136,6 +136,16 @@ transactions.push(transaction);
         
 afterTransactionChanged();
 
+trackEvent("transaction_added",{
+
+    type: transaction.type,
+
+    category: transaction.category,
+
+    fixed: transaction.fixed
+
+});
+
 clearTransactionForm();
 
 if(typeof transactionMiniBar!=="undefined"){

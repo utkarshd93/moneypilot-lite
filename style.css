@@ -1343,9 +1343,7 @@ font-weight:600;
 
 .analyticsCard canvas{
 
-width:100%!important;
-
-height:260px!important;
+display:none;
 
 }
 /* =====================================================
@@ -2387,47 +2385,7 @@ color:black;
 }
 
 }
-.analyticsStats{
 
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:16px;
-
-margin-bottom:22px;
-
-}
-
-.analyticsBox{
-
-padding:18px;
-
-border-radius:20px;
-
-background:rgba(255,255,255,.08);
-
-text-align:center;
-
-border:1px solid rgba(255,255,255,.10);
-
-}
-
-.analyticsBox p{
-
-font-size:13px;
-
-opacity:.75;
-
-margin-bottom:8px;
-
-}
-
-.analyticsBox h2{
-
-font-size:22px;
-
-}
 /* ===========================================
         Authentication
 =========================================== */
@@ -2812,6 +2770,407 @@ to{
 transform:translateY(0);
 
 }
+
+}
+
+
+/* ==========================================
+   Analytics Transaction List
+========================================== */
+
+.analyticsStats{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:16px;
+
+margin-bottom:22px;
+
+}
+
+
+.analyticsBox{
+
+flex:1;
+
+padding:24px 18px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.07);
+
+border:1px solid rgba(255,255,255,.12);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:120px;
+
+transition:all .25s ease;
+
+cursor:pointer;
+
+backdrop-filter:blur(12px);
+
+-webkit-backdrop-filter:blur(12px);
+
+}
+
+.analyticsBox.active{
+
+border:2px solid #7C6CFF !important;
+
+background:rgba(124,108,255,.18);
+
+box-shadow:
+0 0 0 2px rgba(124,108,255,.25),
+0 10px 22px rgba(124,108,255,.22);
+
+transform:translateY(-2px);
+
+}
+.analyticsBox p{
+
+font-size:13px;
+
+opacity:.75;
+
+margin-bottom:8px;
+
+}
+
+.analyticsBox h2{
+
+font-size:22px;
+
+}
+
+.analyticsItem{
+
+display:grid;
+
+grid-template-columns:34px 1fr 60px 90px;
+
+align-items:center;
+
+gap:10px;
+
+padding:14px 16px;
+
+margin-bottom:10px;
+
+border-radius:16px;
+
+background:rgba(255,255,255,.06);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.analyticsIcon{
+
+font-size:22px;
+
+text-align:center;
+
+}
+
+.analyticsCategory{
+
+font-size:15px;
+
+font-weight:600;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+}
+
+.analyticsDate{
+
+font-size:13px;
+
+opacity:.7;
+
+text-align:center;
+
+white-space:nowrap;
+
+}
+
+.analyticsAmount{
+
+font-size:17px;
+
+font-weight:800;
+
+letter-spacing:.3px;
+
+}
+
+.analyticsEmpty{
+
+text-align:center;
+
+padding:20px;
+
+opacity:.7;
+
+}
+
+#categorySummary{
+
+transition:opacity .18s ease;
+
+}
+
+
+/* ==========================================
+        Security Setup
+========================================== */
+
+.authPage{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+padding:24px;
+
+background:linear-gradient(180deg,#17143B,#0B0F26);
+
+z-index:9999;
+
+}
+
+.authPage.active{
+
+display:flex;
+
+}
+
+.authCard{
+
+width:100%;
+
+max-width:420px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border-radius:28px;
+
+padding:28px;
+
+border:1px solid rgba(255,255,255,.10);
+
+}
+
+.authCard h2{
+
+margin-bottom:10px;
+
+text-align:center;
+
+}
+
+.securityDescription{
+
+text-align:center;
+
+opacity:.75;
+
+margin-bottom:24px;
+
+}
+
+.authCard select,
+
+.authCard input{
+
+width:100%;
+
+margin-bottom:18px;
+
+padding:14px;
+
+border:none;
+
+border-radius:14px;
+
+font-size:15px;
+
+}
+
+#saveSecurityBtn{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:16px;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+/* ==========================================
+        Forgot PIN
+========================================== */
+
+.forgotPin{
+
+margin-top:18px;
+
+text-align:center;
+
+color:#7C6CFF;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.forgotPin:hover{
+
+opacity:.8;
+
+}
+
+.securityQuestionText{
+
+margin:20px 0;
+
+padding:14px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.06);
+
+font-weight:600;
+
+text-align:center;
+
+}
+
+/* ==========================================
+        Forgot PIN Button
+========================================== */
+
+#verifySecurityBtn{
+
+display:block;
+
+width:220px;
+
+margin:24px auto 0;
+
+padding:15px 20px;
+
+border:none;
+
+border-radius:16px;
+
+background:linear-gradient(
+135deg,
+#6C63FF,
+#5A7CFF
+);
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:all .25s ease;
+
+box-shadow:
+0 8px 20px rgba(108,99,255,.35);
+
+}
+
+#verifySecurityBtn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 12px 26px rgba(108,99,255,.45);
+
+}
+
+#verifySecurityBtn:active{
+
+transform:scale(.98);
+
+}
+
+#saveNewPinBtn{
+
+display:block;
+
+width:220px;
+
+margin:24px auto 0;
+
+padding:15px 20px;
+
+border:none;
+
+border-radius:16px;
+
+background:linear-gradient(
+135deg,
+#6C63FF,
+#5A7CFF
+);
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+box-shadow:
+0 8px 20px rgba(108,99,255,.35);
 
 }
 

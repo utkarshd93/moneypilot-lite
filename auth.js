@@ -8,9 +8,16 @@ const AUTH = {
 
     SESSION_KEY: "mp_session",
 
+    SECURITY_SETUP_KEY: "mp_security_setup",
+
+    SECURITY_QUESTION_KEY: "mp_security_question",
+
+    SECURITY_ANSWER_KEY: "mp_security_answer",
+
     initialized: false
 
 };
+
 function $(id){
 
     return document.getElementById(id);
@@ -25,6 +32,17 @@ function hasPin(){
     ) !== null;
 
 }
+
+function hasSecuritySetup(){
+
+    return localStorage.getItem(
+
+        AUTH.SECURITY_SETUP_KEY
+
+    ) === "true";
+
+}
+
 function isLoggedIn(){
 
     return sessionStorage.getItem(
@@ -45,6 +63,16 @@ function loginSuccess(){
     );
 
     AUTH.initialized = true;
+
+    /* Force one-time security setup */
+
+    if(!hasSecuritySetup()){
+
+        showSecuritySetup();
+
+        return;
+
+    }
 
     hideLockScreen();
 
@@ -100,6 +128,263 @@ function hideLockScreen(){
     $("lockScreen").style.display="none";
 
 }
+
+function showSecuritySetup(){
+
+    hideLockScreen();
+
+    $("securitySetupPage").classList.add("active");
+
+}
+
+function hideSecuritySetup(){
+
+    $("securitySetupPage").classList.remove("active");
+
+}
+
+function showForgotPin(){
+
+    hideLockScreen();
+
+    hideSecuritySetup();
+
+    $("forgotPinPage").classList.add("active");
+
+    $("forgotQuestion").innerHTML =
+
+        localStorage.getItem(
+
+            AUTH.SECURITY_QUESTION_KEY
+
+        );
+
+}
+
+function hideForgotPin(){
+
+    $("forgotPinPage").classList.remove("active");
+
+}
+
+function showResetPinPage(){
+
+    hideForgotPin();
+
+    $("forgotAnswer").value="";
+
+    $("newPinInput").value="";
+
+    $("confirmNewPinInput").value="";
+
+    $("resetPinPage").classList.add("active");
+
+    $("newPinInput").focus();
+
+}
+
+function hideResetPinPage(){
+
+    $("resetPinPage").classList.remove("active");
+
+}
+
+async function saveNewPin(){
+
+    const newPin =
+
+        $("newPinInput").value.trim();
+
+    const confirmPin =
+
+        $("confirmNewPinInput").value.trim();
+
+    if(newPin.length !== 6){
+
+        alert("PIN must be 6 digits.");
+
+        return;
+
+    }
+
+    if(newPin !== confirmPin){
+
+        alert("PINs do not match.");
+
+        return;
+
+    }
+
+    const hashedPin =
+
+        await hashPin(newPin);
+
+    localStorage.setItem(
+
+        AUTH.PIN_KEY,
+
+        hashedPin
+
+    );
+
+    hideResetPinPage();
+
+    $("forgotAnswer").value="";
+
+    $("newPinInput").value="";
+
+    $("confirmNewPinInput").value="";
+
+    showToast("PIN reset successfully.");
+
+    loginSuccess();
+
+}
+
+async function verifySecurityAnswer(){
+
+    const answer =
+
+    $("forgotAnswer").value.trim();
+
+    if(answer===""){
+
+        alert("Please enter your answer.");
+
+        return;
+
+    }
+
+    const hashedAnswer =
+
+    await hashPin(
+
+        answer.toLowerCase()
+
+    );
+
+    const savedHash =
+
+    localStorage.getItem(
+
+        AUTH.SECURITY_ANSWER_KEY
+
+    );
+
+    if(hashedAnswer!==savedHash){
+
+        showToast("Incorrect answer.");
+
+        $("forgotAnswer").value="";
+
+        $("forgotAnswer").focus();
+
+        return;
+
+    }
+
+    showResetPinPage();
+
+}
+
+
+async function saveSecuritySetup(){
+
+    const question =
+
+    $("securityQuestion").value.trim();
+
+    const answer =
+
+    $("securityAnswer").value.trim();
+
+    if(question===""){
+
+        alert("Please select a security question.");
+
+        return;
+
+    }
+
+    if(answer===""){
+
+        alert("Please enter your answer.");
+
+        return;
+
+    }
+
+    const hashedAnswer =
+
+    await hashPin(answer.toLowerCase());
+
+    localStorage.setItem(
+
+        AUTH.SECURITY_QUESTION_KEY,
+
+        question
+
+    );
+
+    localStorage.setItem(
+
+        AUTH.SECURITY_ANSWER_KEY,
+
+        hashedAnswer
+
+    );
+
+    localStorage.setItem(
+
+        AUTH.SECURITY_SETUP_KEY,
+
+        "true"
+
+    );
+
+    hideSecuritySetup();
+
+    loginSuccess();
+
+}
+
+$("saveSecurityBtn").addEventListener(
+
+    "click",
+
+    saveSecuritySetup
+
+);
+
+$("forgotPinBtn").addEventListener(
+
+    "click",
+
+    function(){
+
+        showForgotPin();
+
+    }
+
+);
+
+$("verifySecurityBtn").addEventListener(
+
+    "click",
+
+    verifySecurityAnswer
+
+);
+
+$("saveNewPinBtn").addEventListener(
+
+    "click",
+
+    saveNewPin
+
+);
+
+
 document.addEventListener(
 
 "DOMContentLoaded",
@@ -288,7 +573,7 @@ async function(){
 
     else{
 
-        alert("Incorrect PIN");
+        showToast("Incorrect PIN");
 
         $("pinInput").value="";
 
