@@ -167,6 +167,52 @@ function hideForgotPin(){
 
 }
 
+async function verifySecurityAnswer(){
+
+    const answer =
+
+    $("forgotAnswer").value.trim();
+
+    if(answer===""){
+
+        alert("Please enter your answer.");
+
+        return;
+
+    }
+
+    const hashedAnswer =
+
+    await hashPin(
+
+        answer.toLowerCase()
+
+    );
+
+    const savedHash =
+
+    localStorage.getItem(
+
+        AUTH.SECURITY_ANSWER_KEY
+
+    );
+
+    if(hashedAnswer!==savedHash){
+
+        alert("Incorrect answer.");
+
+        $("forgotAnswer").value="";
+
+        $("forgotAnswer").focus();
+
+        return;
+
+    }
+
+    showResetPinPage();
+
+}
+
 
 async function saveSecuritySetup(){
 
@@ -247,6 +293,20 @@ $("forgotPinBtn").addEventListener(
     }
 
 );
+
+$("verifySecurityBtn").addEventListener(
+
+    "click",
+
+    verifySecurityAnswer
+
+);
+
+function showResetPinPage(){
+
+    alert("Answer verified successfully!");
+
+}
 
 document.addEventListener(
 
