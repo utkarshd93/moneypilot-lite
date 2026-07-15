@@ -3043,6 +3043,34 @@ cursor:pointer;
 
 }
 
+/* ==========================================
+        Forgot PIN
+========================================== */
+
+.forgotPin{
+
+margin-top:18px;
+
+text-align:center;
+
+color:#7C6CFF;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.forgotPin:hover{
+
+opacity:.8;
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
