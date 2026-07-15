@@ -143,6 +143,31 @@ function hideSecuritySetup(){
 
 }
 
+function showForgotPin(){
+
+    hideLockScreen();
+
+    hideSecuritySetup();
+
+    $("forgotPinPage").classList.add("active");
+
+    $("forgotQuestion").innerHTML =
+
+        localStorage.getItem(
+
+            AUTH.SECURITY_QUESTION_KEY
+
+        );
+
+}
+
+function hideForgotPin(){
+
+    $("forgotPinPage").classList.remove("active");
+
+}
+
+
 async function saveSecuritySetup(){
 
     const question =
@@ -208,6 +233,18 @@ $("saveSecurityBtn").addEventListener(
     "click",
 
     saveSecuritySetup
+
+);
+
+$("forgotPinBtn").addEventListener(
+
+    "click",
+
+    function(){
+
+        showForgotPin();
+
+    }
 
 );
 
