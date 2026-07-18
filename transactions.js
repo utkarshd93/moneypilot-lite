@@ -1351,7 +1351,7 @@ function handleCategorySelection(){
     const category =
     document.getElementById("category");
 
-    if(category.value !== "__add__"){
+    if(category.value === "__add__"){
 
         openCategoryPopup();
 
