@@ -37,9 +37,13 @@ function createTransactionObject(){
 
         date:
 
-        document.getElementById("date").value,
+document.getElementById("date").value,
 
-        fixed:
+createdAt:
+
+new Date().toISOString(),
+
+fixed:
 
         document.getElementById("fixedExpense").checked,
 
