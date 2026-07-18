@@ -170,13 +170,13 @@ function validateTransaction(){
 
     }
 
-     if(category===""){
+     if(category==="" || category==="__add__"){
 
-    showToast("Please select category");
+    showToast("Please select a category");
 
     return false;
 
-    }
+}
 
     return true;
 
@@ -196,6 +196,7 @@ function saveTransaction(){
     const transaction =
 
     createTransactionObject();
+        
             if(editingTransactionId){
 
         const index =
