@@ -1383,6 +1383,12 @@ function closeCategoryPopup(){
 
     refreshCategoryDropdown();
 
+    document
+    .getElementById("category").value = "";
+
+    document
+    .getElementById("newCategoryInput").value = "";
+
 }
 
 function saveNewCategory(){
