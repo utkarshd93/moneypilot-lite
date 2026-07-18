@@ -3,27 +3,15 @@
         Transactions
 ===================================================== */
 
-let transactions = [];
+/* =====================================================
+                CATEGORY ENGINE
+===================================================== */
 
 let editingTransactionId = null;
 
-
-/* =====================================================
-        Categories
-===================================================== */
-
 const DEFAULT_CATEGORIES = {
 
-    income: [
-
-        "Salary",
-        "Stock Market",
-        "Other"
-
-    ],
-
     expense: [
-
         "Food",
         "Milk",
         "Tea",
@@ -38,14 +26,17 @@ const DEFAULT_CATEGORIES = {
         "Share Market",
         "Gym",
         "Other"
+    ],
 
+    income: [
+        "Salary",
+        "Stock Market",
+        "Other"
     ],
 
     investment: [
-
         "Investment",
         "Other"
-
     ]
 
 };
@@ -56,7 +47,7 @@ function getCustomCategories(type){
 
         localStorage.getItem(
 
-            "customCategories_" + type
+            "mp_custom_categories_" + type
 
         ) || "[]"
 
@@ -66,21 +57,35 @@ function getCustomCategories(type){
 
 function saveCustomCategory(type,name){
 
-    let list=getCustomCategories(type);
+    name = name.trim();
 
-    if(!list.includes(name)){
+    if(name==="") return;
 
-        list.push(name);
+    let list = getCustomCategories(type);
 
-        localStorage.setItem(
+    if(list.includes(name)) return;
 
-            "customCategories_"+type,
+    list.unshift(name);
 
-            JSON.stringify(list)
+    localStorage.setItem(
 
-        );
+        "mp_custom_categories_"+type,
 
-    }
+        JSON.stringify(list)
+
+    );
+
+}
+
+function getAllCategories(type){
+
+    return [
+
+        ...getCustomCategories(type),
+
+        ...DEFAULT_CATEGORIES[type]
+
+    ];
 
 }
 
@@ -695,6 +700,7 @@ function clearTransactionForm(){
     document.getElementById("repeatMonthly").checked = false;
 
     document.getElementById("type").value = "expense";
+        refreshCategoryDropdown();
 
     document.getElementById("category").value = "";
         if(typeof syncTransactionDate==="function"){
@@ -1239,5 +1245,128 @@ swipeState.openCard.style.transform=
 swipeState.openCard=null;
 
 }
+
+});
+
+
+/* =====================================================
+            CATEGORY DROPDOWN
+===================================================== */
+
+function refreshCategoryDropdown(){
+
+    const type =
+
+    document.getElementById("type");
+
+    const category =
+
+    document.getElementById("category");
+
+    if(!type || !category){
+
+        return;
+
+    }
+
+    const selectedType =
+
+    type.value || "expense";
+
+    const currentValue =
+
+    category.value;
+
+    category.innerHTML="";
+
+    /* Add New */
+
+    const addOption =
+
+    document.createElement("option");
+
+    addOption.value="__add__";
+
+    addOption.textContent="➕ Add New Category";
+
+    category.appendChild(addOption);
+
+    /* Select Category */
+
+    const selectOption =
+
+    document.createElement("option");
+
+    selectOption.value="";
+
+    selectOption.textContent="Select Category";
+
+    category.appendChild(selectOption);
+
+    /* Categories */
+
+    getAllCategories(selectedType)
+
+    .forEach(function(item){
+
+        const option =
+
+        document.createElement("option");
+
+        option.value=item;
+
+        option.textContent=item;
+
+        category.appendChild(option);
+
+    });
+
+    if(
+
+        [...category.options]
+
+        .some(o=>o.value===currentValue)
+
+    ){
+
+        category.value=currentValue;
+
+    }
+
+    else{
+
+        category.value="";
+
+    }
+
+}
+
+/* =====================================================
+            TYPE CHANGE
+===================================================== */
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+    const type =
+
+    document.getElementById("type");
+
+    if(type){
+
+        type.addEventListener(
+
+            "change",
+
+            refreshCategoryDropdown
+
+        );
+
+    }
+
+    refreshCategoryDropdown();
 
 });
