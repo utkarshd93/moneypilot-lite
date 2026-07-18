@@ -425,6 +425,83 @@ ${sign} ₹${Number(t.amount).toLocaleString()}
     });
 
 }
+
+
+function refreshCategoryFilter(){
+
+    const typeFilter =
+    document.getElementById("transactionTypeFilter");
+
+    const categoryFilter =
+    document.getElementById("categoryFilter");
+
+    if(!typeFilter || !categoryFilter){
+
+        return;
+
+    }
+
+    categoryFilter.innerHTML="";
+
+    categoryFilter.value="";
+
+    const first =
+    document.createElement("option");
+
+    first.value="";
+
+    first.textContent="All Categories";
+
+    categoryFilter.appendChild(first);
+
+    let categories=[];
+
+    if(typeFilter.value==="expense"){
+
+        categories=getAllCategories("expense");
+
+    }
+
+    else if(typeFilter.value==="income"){
+
+        categories=getAllCategories("income");
+
+    }
+
+    else if(typeFilter.value==="investment"){
+
+        categories=getAllCategories("investment");
+
+    }
+
+    else{
+
+        categories=[
+            ...new Set([
+                ...getAllCategories("expense"),
+                ...getAllCategories("income"),
+                ...getAllCategories("investment")
+            ])
+        ];
+
+    }
+
+    categories.sort().forEach(function(item){
+
+        const option=
+        document.createElement("option");
+
+        option.value=item;
+
+        option.textContent=item;
+
+        categoryFilter.appendChild(option);
+
+    });
+
+}
+
+
 /* =====================================================
             Search
 ===================================================== */
@@ -451,6 +528,7 @@ function(){
 );
 
 }
+
 const typeFilter =
 document.getElementById("transactionTypeFilter");
 
@@ -460,7 +538,13 @@ if(typeFilter){
 
         "change",
 
-        renderTransactions
+        function(){
+
+            refreshCategoryFilter();
+
+            renderTransactions();
+
+        }
 
     );
 
@@ -500,6 +584,8 @@ document.addEventListener(
 "DOMContentLoaded",
 
 function(){
+
+    refreshCategoryFilter();
 
     fullRefresh();
 
