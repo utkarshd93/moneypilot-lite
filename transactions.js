@@ -220,9 +220,86 @@ function saveTransaction(){
 
     else{
 
+    if(transaction.repeat){
+
+        const selectedDate = new Date(transaction.date);
+
+        const year = selectedDate.getFullYear();
+
+        const startMonth = selectedDate.getMonth();
+
+        const day = selectedDate.getDate();
+
+        for(let month=startMonth; month<=11; month++){
+
+            const repeatTransaction={
+
+                ...transaction,
+
+                id:Date.now()+month
+
+            };
+
+            let repeatDate;
+
+if(month === startMonth){
+
+    repeatDate = new Date(year, month, day);
+
+}else{
+
+    repeatDate = new Date(year, month, 1);
+
+}
+
+            repeatTransaction.date=
+            repeatDate.toISOString().split("T")[0];
+
+            if(transaction.fixed){
+
+                const exists=transactions.some(t=>{
+
+                    const d=new Date(t.date);
+
+                    return(
+
+                        t.fixed===true &&
+
+                        t.type===repeatTransaction.type &&
+
+                        t.category===repeatTransaction.category &&
+
+                        Number(t.amount)===Number(repeatTransaction.amount) &&
+
+                        d.getFullYear()===year &&
+
+                        d.getMonth()===month
+
+                    );
+
+                });
+
+                if(exists){
+
+                    continue;
+
+                }
+
+            }
+
+            transactions.push(repeatTransaction);
+
+        }
+
+    }
+
+    else{
+
         transactions.push(transaction);
 
     }
+
+}
         
 afterTransactionChanged();
 
