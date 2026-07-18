@@ -3,9 +3,91 @@
         Transactions
 ===================================================== */
 
-let transactions = [];
+/* =====================================================
+                CATEGORY ENGINE
+===================================================== */
 
 let editingTransactionId = null;
+
+const DEFAULT_CATEGORIES = {
+
+    expense: [
+        "Food",
+        "Milk",
+        "Tea",
+        "Fuel",
+        "Shopping",
+        "Health",
+        "Entertainment",
+        "Rent",
+        "Travel",
+        "Education",
+        "Credit Card",
+        "Share Market",
+        "Gym",
+        "Other"
+    ],
+
+    income: [
+        "Salary",
+        "Stock Market",
+        "Other"
+    ],
+
+    investment: [
+        "Stock Market",
+        "Other"
+    ]
+
+};
+
+function getCustomCategories(type){
+
+    return JSON.parse(
+
+        localStorage.getItem(
+
+            "mp_custom_categories_" + type
+
+        ) || "[]"
+
+    );
+
+}
+
+function saveCustomCategory(type,name){
+
+    name = name.trim();
+
+    if(name==="") return;
+
+    let list = getCustomCategories(type);
+
+    if(list.includes(name)) return;
+
+    list.unshift(name);
+
+    localStorage.setItem(
+
+        "mp_custom_categories_"+type,
+
+        JSON.stringify(list)
+
+    );
+
+}
+
+function getAllCategories(type){
+
+    return [
+
+        ...getCustomCategories(type),
+
+        ...DEFAULT_CATEGORIES[type]
+
+    ];
+
+}
 
 /* =====================================================
         Transaction Model
@@ -37,9 +119,13 @@ function createTransactionObject(){
 
         date:
 
-        document.getElementById("date").value,
+document.getElementById("date").value,
 
-        fixed:
+createdAt:
+
+new Date().toISOString(),
+
+fixed:
 
         document.getElementById("fixedExpense").checked,
 
@@ -64,6 +150,10 @@ function validateTransaction(){
 
     document.getElementById("date").value;
 
+    const category =
+
+    document.getElementById("category").value;
+
     if(amount==="" || Number(amount)<=0){
 
         showToast("Enter valid amount");
@@ -80,6 +170,14 @@ function validateTransaction(){
 
     }
 
+     if(category==="" || category==="__add__"){
+
+    showToast("Please select a category");
+
+    return false;
+
+}
+
     return true;
 
 }
@@ -91,13 +189,22 @@ function saveTransaction(){
 
     if(!validateTransaction()){
 
-        return;
+    return false;
 
-    }
+}
 
     const transaction =
 
     createTransactionObject();
+
+        if(transaction.category === "__add__"){
+
+    showToast("Please select a category");
+
+    return;
+
+}
+        
             if(editingTransactionId){
 
         const index =
@@ -122,17 +229,102 @@ function saveTransaction(){
 
     else{
 
-        if(isDuplicateTransaction(transaction)){
+    if(transaction.repeat){
 
-    showToast("Duplicate Transaction");
+        const selectedDate = new Date(transaction.date);
 
-    return;
+        const year = selectedDate.getFullYear();
+
+        const startMonth = selectedDate.getMonth();
+
+        const day = selectedDate.getDate();
+
+        let transactionAdded = false;
+
+        for(let month=startMonth; month<=11; month++){
+
+            const repeatTransaction={
+
+                ...transaction,
+
+                id:Date.now()+month
+
+            };
+
+            let repeatDate;
+
+if(month === startMonth){
+
+    repeatDate = new Date(year, month, day);
+
+}else{
+
+    repeatDate = new Date(year, month, 1);
 
 }
 
-transactions.push(transaction);
+            repeatTransaction.date =
+`${repeatDate.getFullYear()}-${
+String(repeatDate.getMonth()+1).padStart(2,"0")
+}-${
+String(repeatDate.getDate()).padStart(2,"0")
+}`;
+
+            if(transaction.fixed){
+
+                const exists=transactions.some(t=>{
+
+                    const d=new Date(t.date);
+
+                    return(
+
+                        t.fixed===true &&
+
+                        t.type===repeatTransaction.type &&
+
+                        t.category===repeatTransaction.category &&
+
+                        Number(t.amount)===Number(repeatTransaction.amount) &&
+
+                        d.getFullYear()===year &&
+
+                        d.getMonth()===month
+
+                    );
+
+                });
+
+                if(exists){
+
+                    continue;
+
+                }
+
+            }
+
+            transactions.push(repeatTransaction);
+
+           transactionAdded = true;
+
+        }
+
+            if(!transactionAdded){
+
+    showToast("This fixed monthly expense already exists.");
+
+    return false;
+
+}
 
     }
+
+    else{
+
+        transactions.push(transaction);
+
+    }
+
+}
         
 afterTransactionChanged();
 
@@ -159,6 +351,8 @@ if(typeof transactionMiniBar!=="undefined"){
 }
 
 showToast("Transaction Saved");
+
+        return true;
 
 }
 /* =====================================================
@@ -257,13 +451,24 @@ function renderTransactions(){
         });
 
     }
-            filtered.sort(
+        
+filtered.sort((a, b) => {
 
-        (a,b)=>
+    // Newest transaction date first
+    const dateDiff =
+        new Date(b.date) - new Date(a.date);
 
-        new Date(b.date)-new Date(a.date)
+    if (dateDiff !== 0) {
 
-    );
+        return dateDiff;
+
+    }
+
+    // Same date -> newest transaction first
+    return Number(b.id || 0) - Number(a.id || 0);
+
+});
+        
             if(filtered.length===0){
 
         container.innerHTML=
@@ -474,39 +679,238 @@ function formatDisplayDate(date){
 
 function getCategoryIcon(category){
 
-    const icons={
+    if(!category) return "💳";
 
-        Salary:"💼",
+    const text = category.toLowerCase();
 
-        Food:"🍔",
+    /* Income */
 
-        Fuel:"⛽",
+    if(
+        text.includes("salary") ||
+        text.includes("bonus") ||
+        text.includes("incentive") ||
+        text.includes("income") ||
+        text.includes("freelance") ||
+        text.includes("commission")
+    ){
+        return "💼";
+    }
 
-        Shopping:"🛍️",
+    /* Investments */
 
-        Investment:"📈",
+    if(
+        text.includes("stock") ||
+        text.includes("share") ||
+        text.includes("mutual") ||
+        text.includes("sip") ||
+        text.includes("investment") ||
+        text.includes("crypto") ||
+        text.includes("bitcoin")
+    ){
+        return "📈";
+    }
 
-        EMI:"🏦",
+    if(
+        text.includes("gold") ||
+        text.includes("silver")
+    ){
+        return "🪙";
+    }
 
-        Rent:"🏠",
+    /* Fuel */
 
-        Health:"🏥",
+    if(
+        text.includes("fuel") ||
+        text.includes("petrol") ||
+        text.includes("diesel") ||
+        text.includes("cng")
+    ){
+        return "⛽";
+    }
 
-        Travel:"✈️",
+    /* Food */
 
-        Entertainment:"🎬",
+    if(
+        text.includes("food") ||
+        text.includes("restaurant") ||
+        text.includes("hotel") ||
+        text.includes("dinner") ||
+        text.includes("lunch") ||
+        text.includes("breakfast") ||
+        text.includes("pizza") ||
+        text.includes("burger")
+    ){
+        return "🍽️";
+    }
 
-        Bills:"📄",
+    if(text.includes("milk")){
+        return "🥛";
+    }
 
-        Gift:"🎁",
+    if(
+        text.includes("tea") ||
+        text.includes("coffee")
+    ){
+        return "☕";
+    }
 
-        Other:"📦"
+    if(
+        text.includes("fruit") ||
+        text.includes("vegetable") ||
+        text.includes("grocery")
+    ){
+        return "🛒";
+    }
 
-    };
+    /* Shopping */
 
-    return icons[category] || "💳";
+    if(
+        text.includes("shopping") ||
+        text.includes("amazon") ||
+        text.includes("flipkart") ||
+        text.includes("clothes")
+    ){
+        return "🛍️";
+    }
+
+    /* Entertainment */
+
+    if(
+        text.includes("movie") ||
+        text.includes("cinema") ||
+        text.includes("netflix") ||
+        text.includes("prime") ||
+        text.includes("hotstar") ||
+        text.includes("entertainment")
+    ){
+        return "🎬";
+    }
+
+    /* Health */
+
+    if(
+        text.includes("health") ||
+        text.includes("doctor") ||
+        text.includes("hospital")
+    ){
+        return "🏥";
+    }
+
+    if(
+        text.includes("medicine") ||
+        text.includes("medical") ||
+        text.includes("pharmacy")
+    ){
+        return "💊";
+    }
+
+    if(
+        text.includes("gym") ||
+        text.includes("fitness")
+    ){
+        return "💪";
+    }
+
+    /* Home */
+
+    if(text.includes("rent")){
+        return "🏠";
+    }
+
+    if(
+        text.includes("emi") ||
+        text.includes("loan")
+    ){
+        return "🏦";
+    }
+
+    /* Travel */
+
+    if(
+        text.includes("flight") ||
+        text.includes("air")
+    ){
+        return "✈️";
+    }
+
+    if(
+        text.includes("uber") ||
+        text.includes("ola") ||
+        text.includes("cab") ||
+        text.includes("taxi")
+    ){
+        return "🚕";
+    }
+
+    if(text.includes("train")){
+        return "🚆";
+    }
+
+    if(text.includes("bus")){
+        return "🚌";
+    }
+
+    /* Utilities */
+
+    if(text.includes("electricity")){
+        return "⚡";
+    }
+
+    if(text.includes("water")){
+        return "🚰";
+    }
+
+    if(
+        text.includes("mobile") ||
+        text.includes("recharge")
+    ){
+        return "📱";
+    }
+
+    if(
+        text.includes("internet") ||
+        text.includes("wifi")
+    ){
+        return "🌐";
+    }
+
+    /* Finance */
+
+    if(
+        text.includes("credit") ||
+        text.includes("card")
+    ){
+        return "💳";
+    }
+
+    /* Gifts */
+
+    if(text.includes("gift")){
+        return "🎁";
+    }
+
+    if(
+        text.includes("donation") ||
+        text.includes("charity")
+    ){
+        return "❤️";
+    }
+
+    /* Education */
+
+    if(
+        text.includes("school") ||
+        text.includes("college") ||
+        text.includes("education") ||
+        text.includes("course")
+    ){
+        return "📚";
+    }
+
+    return "💳";
 
 }
+
 /* =====================================================
         Edit Transaction
 ===================================================== */
@@ -599,8 +1003,9 @@ function clearTransactionForm(){
     document.getElementById("repeatMonthly").checked = false;
 
     document.getElementById("type").value = "expense";
+        refreshCategoryDropdown();
 
-    document.getElementById("category").value = "Food";
+    document.getElementById("category").value = "";
         if(typeof syncTransactionDate==="function"){
 
             syncTransactionDate();
@@ -717,27 +1122,7 @@ function getExpenseTransactions(){
     );
 
 }
-/* =====================================================
-        Duplicate Check
-===================================================== */
 
-function isDuplicateTransaction(transaction){
-
-    return transactions.some(t=>
-
-        t.amount===transaction.amount &&
-
-        t.date===transaction.date &&
-
-        t.type===transaction.type &&
-
-        t.category===transaction.category &&
-
-        t.note===transaction.note
-
-    );
-
-}
 /* =====================================================
         Auto Save Hook
 ===================================================== */
@@ -1163,5 +1548,262 @@ swipeState.openCard.style.transform=
 swipeState.openCard=null;
 
 }
+
+});
+
+
+/* =====================================================
+            CATEGORY DROPDOWN
+===================================================== */
+
+function refreshCategoryDropdown(){
+
+    const type =
+
+    document.getElementById("type");
+
+    const category =
+
+    document.getElementById("category");
+
+    if(!type || !category){
+
+        return;
+
+    }
+
+    const selectedType =
+
+    type.value || "expense";
+
+    const currentValue =
+
+    category.value;
+
+    category.innerHTML="";
+
+    /* Add New */
+
+    const addOption =
+
+    document.createElement("option");
+
+    addOption.value="__add__";
+
+    addOption.textContent="➕ Add New Category";
+
+    category.appendChild(addOption);
+
+    /* Select Category */
+
+    const selectOption =
+
+    document.createElement("option");
+
+    selectOption.value="";
+
+    selectOption.textContent="Select Category";
+
+    category.appendChild(selectOption);
+
+    /* Categories */
+
+    getAllCategories(selectedType)
+
+    .forEach(function(item){
+
+        const option =
+
+        document.createElement("option");
+
+        option.value=item;
+
+        option.textContent=item;
+
+        category.appendChild(option);
+
+    });
+
+    if(
+
+        [...category.options]
+
+        .some(o=>o.value===currentValue)
+
+    ){
+
+        category.value=currentValue;
+
+    }
+
+    else{
+
+        category.value="";
+
+    }
+
+}
+
+
+/* =====================================================
+            ADD CUSTOM CATEGORY
+===================================================== */
+
+function handleCategorySelection(){
+
+    const category =
+    document.getElementById("category");
+
+    if(category.value === "__add__"){
+
+        openCategoryPopup();
+
+    }
+
+}
+
+
+function openCategoryPopup(){
+
+    document
+    .getElementById("categoryPopup")
+    .classList.add("show");
+
+    const input =
+    document.getElementById("newCategoryInput");
+
+    input.value="";
+
+    setTimeout(()=>input.focus(),100);
+
+}
+
+function closeCategoryPopup(){
+
+    document
+    .getElementById("categoryPopup")
+    .classList.remove("show");
+
+    refreshCategoryDropdown();
+
+    document
+    .getElementById("category").value = "";
+
+    document
+    .getElementById("newCategoryInput").value = "";
+
+}
+
+function saveNewCategory(){
+
+    const input =
+    document.getElementById("newCategoryInput");
+
+    const type =
+    document.getElementById("type");
+
+    const category =
+    document.getElementById("category");
+
+    const newCategory =
+    input.value.trim();
+
+    if(newCategory===""){
+
+        showToast("Enter category name");
+
+        return;
+
+    }
+
+    const exists =
+    getAllCategories(type.value)
+    .some(c=>c.toLowerCase()===newCategory.toLowerCase());
+
+    if(exists){
+
+        showToast("Category already exists");
+
+        return;
+
+    }
+
+    saveCustomCategory(
+        type.value,
+        newCategory
+    );
+
+    refreshCategoryDropdown();
+
+    category.value=newCategory;
+
+    closeCategoryPopup();
+
+}
+
+/* =====================================================
+            TYPE CHANGE
+===================================================== */
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+    const type =
+    document.getElementById("type");
+
+    if(type){
+
+        type.addEventListener(
+            "change",
+            refreshCategoryDropdown
+        );
+
+    }
+
+    const category =
+    document.getElementById("category");
+
+    if(category){
+
+        category.addEventListener(
+            "change",
+            handleCategorySelection
+        );
+
+    }
+
+    document
+    .getElementById("cancelCategoryBtn")
+    .addEventListener(
+        "click",
+        closeCategoryPopup
+    );
+
+    document
+    .getElementById("saveCategoryBtn")
+    .addEventListener(
+        "click",
+        saveNewCategory
+    );
+
+    document
+    .getElementById("newCategoryInput")
+    .addEventListener(
+        "keydown",
+        function(e){
+
+            if(e.key==="Enter"){
+
+                saveNewCategory();
+
+            }
+
+        }
+    );
+
+    refreshCategoryDropdown();
 
 });

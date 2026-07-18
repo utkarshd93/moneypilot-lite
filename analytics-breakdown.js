@@ -75,6 +75,23 @@ function renderAnalyticsTransactions() {
 
     }
 
+  filtered.sort((a, b) => {
+
+    // Newest transaction date first
+    const dateDiff = new Date(b.date) - new Date(a.date);
+
+    if (dateDiff !== 0) {
+
+        return dateDiff;
+
+    }
+
+    // Same date -> newest added transaction first
+    return Number(b.id || 0) - Number(a.id || 0);
+
+});
+   
+
     if (filtered.length === 0) {
 
         container.innerHTML = `
@@ -91,15 +108,51 @@ function renderAnalyticsTransactions() {
 
     filtered.forEach(t => {
 
-    const shortDate = new Date(t.date).toLocaleDateString(
+    console.log(t);
+
+    const created = t.createdAt
+
+    ? new Date(t.createdAt)
+
+    : null;
+
+const shortDate = new Date(t.date)
+
+    .toLocaleDateString(
+
         "en-GB",
+
         {
+
             day: "2-digit",
+
             month: "short"
+
         }
+
     );
 
-    const icon = getCategoryEmoji(t.category);
+const shortTime = created
+
+    ? created.toLocaleTimeString(
+
+        "en-GB",
+
+        {
+
+            hour: "2-digit",
+
+            minute: "2-digit",
+
+            hour12: false
+
+        }
+
+    )
+
+    : "";
+
+const icon = getCategoryEmoji(t.category);
 
     html += `
 
@@ -111,23 +164,25 @@ function renderAnalyticsTransactions() {
 
             </span>
 
-            <span class="analyticsCategory">
+           <span class="analyticsCategory">
 
-                ${t.category}
+    ${t.category}
 
-            </span>
+</span>
 
-            <span class="analyticsDate">
+<span class="analyticsDate">
 
-                ${shortDate}
+    ${shortDate}
 
-            </span>
+    ${shortTime ? `<br><small>${shortTime}</small>` : ""}
 
-            <span class="analyticsAmount">
+</span>
 
-                ₹${Number(t.amount).toLocaleString("en-IN")}
+<span class="analyticsAmount">
 
-            </span>
+    ₹${Number(t.amount).toLocaleString("en-IN")}
+
+</span>
 
         </div>
 
@@ -154,32 +209,6 @@ document.addEventListener(
 
 function getCategoryEmoji(category){
 
-    const icons = {
-
-        Food:"🍔",
-
-        Fuel:"⛽",
-
-        Shopping:"🛍️",
-
-        Health:"🏥",
-
-        Entertainment:"🎬",
-
-        Salary:"💼",
-
-        Investment:"📈",
-
-        Rent:"🏠",
-
-        Travel:"✈️",
-
-        Education:"📚",
-
-        Other:"📦"
-
-    };
-
-    return icons[category] || "💳";
+    return getCategoryIcon(category);
 
 }
