@@ -99,15 +99,43 @@ function renderAnalyticsTransactions() {
 
     filtered.forEach(t => {
 
-    const shortDate = new Date(t.date).toLocaleDateString(
-        "en-GB",
-        {
-            day: "2-digit",
-            month: "short"
-        }
-    );
+    const created = new Date(
 
-    const icon = getCategoryEmoji(t.category);
+    t.createdAt || t.date
+
+);
+
+const shortDate = created.toLocaleDateString(
+
+    "en-GB",
+
+    {
+
+        day: "2-digit",
+
+        month: "short"
+
+    }
+
+);
+
+const shortTime = created.toLocaleTimeString(
+
+    "en-GB",
+
+    {
+
+        hour: "2-digit",
+
+        minute: "2-digit",
+
+        hour12: false
+
+    }
+
+);
+
+const icon = getCategoryEmoji(t.category);
 
     html += `
 
@@ -125,11 +153,7 @@ function renderAnalyticsTransactions() {
 
             </span>
 
-            <span class="analyticsDate">
-
-                ${shortDate}
-
-            </span>
+            analyticsDate
 
             <span class="analyticsAmount">
 
