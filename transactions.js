@@ -253,13 +253,24 @@ function renderTransactions(){
         });
 
     }
-            filtered.sort(
+        
+filtered.sort((a, b) => {
 
-        (a,b)=>
+    // Newest transaction date first
+    const dateDiff =
+        new Date(b.date) - new Date(a.date);
 
-        new Date(b.date)-new Date(a.date)
+    if (dateDiff !== 0) {
 
-    );
+        return dateDiff;
+
+    }
+
+    // Same date -> newest transaction first
+    return Number(b.id || 0) - Number(a.id || 0);
+
+});
+        
             if(filtered.length===0){
 
         container.innerHTML=
