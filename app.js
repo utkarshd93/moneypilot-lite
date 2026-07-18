@@ -256,31 +256,32 @@ document.getElementById("saveButton");
 
 if(saveButton){
 
-saveButton.onclick=function(){
+saveButton.onclick = function(){
 
-    if(typeof addTransaction==="function"){
+    let success = false;
 
-        addTransaction();
+    if(typeof addTransaction === "function"){
+
+        success = addTransaction();
 
     }
 
-    else if(typeof saveTransaction==="function"){
+    else if(typeof saveTransaction === "function"){
 
-        saveTransaction();
+        success = saveTransaction();
 
+    }
+
+    if(!success){
+
+        return;
     }
 
     refreshApp();
 
-    if(typeof closeBottomSheet==="function"){
+    if(typeof closeBottomSheet === "function"){
 
         closeBottomSheet();
-
-    }
-
-    if(typeof showToast==="function"){
-
-        showToast("Transaction Added");
 
     }
 
