@@ -575,39 +575,238 @@ function formatDisplayDate(date){
 
 function getCategoryIcon(category){
 
-    const icons={
+    if(!category) return "💳";
 
-        Salary:"💼",
+    const text = category.toLowerCase();
 
-        Food:"🍔",
+    /* Income */
 
-        Fuel:"⛽",
+    if(
+        text.includes("salary") ||
+        text.includes("bonus") ||
+        text.includes("incentive") ||
+        text.includes("income") ||
+        text.includes("freelance") ||
+        text.includes("commission")
+    ){
+        return "💼";
+    }
 
-        Shopping:"🛍️",
+    /* Investments */
 
-        Investment:"📈",
+    if(
+        text.includes("stock") ||
+        text.includes("share") ||
+        text.includes("mutual") ||
+        text.includes("sip") ||
+        text.includes("investment") ||
+        text.includes("crypto") ||
+        text.includes("bitcoin")
+    ){
+        return "📈";
+    }
 
-        EMI:"🏦",
+    if(
+        text.includes("gold") ||
+        text.includes("silver")
+    ){
+        return "🪙";
+    }
 
-        Rent:"🏠",
+    /* Fuel */
 
-        Health:"🏥",
+    if(
+        text.includes("fuel") ||
+        text.includes("petrol") ||
+        text.includes("diesel") ||
+        text.includes("cng")
+    ){
+        return "⛽";
+    }
 
-        Travel:"✈️",
+    /* Food */
 
-        Entertainment:"🎬",
+    if(
+        text.includes("food") ||
+        text.includes("restaurant") ||
+        text.includes("hotel") ||
+        text.includes("dinner") ||
+        text.includes("lunch") ||
+        text.includes("breakfast") ||
+        text.includes("pizza") ||
+        text.includes("burger")
+    ){
+        return "🍽️";
+    }
 
-        Bills:"📄",
+    if(text.includes("milk")){
+        return "🥛";
+    }
 
-        Gift:"🎁",
+    if(
+        text.includes("tea") ||
+        text.includes("coffee")
+    ){
+        return "☕";
+    }
 
-        Other:"📦"
+    if(
+        text.includes("fruit") ||
+        text.includes("vegetable") ||
+        text.includes("grocery")
+    ){
+        return "🛒";
+    }
 
-    };
+    /* Shopping */
 
-    return icons[category] || "💳";
+    if(
+        text.includes("shopping") ||
+        text.includes("amazon") ||
+        text.includes("flipkart") ||
+        text.includes("clothes")
+    ){
+        return "🛍️";
+    }
+
+    /* Entertainment */
+
+    if(
+        text.includes("movie") ||
+        text.includes("cinema") ||
+        text.includes("netflix") ||
+        text.includes("prime") ||
+        text.includes("hotstar") ||
+        text.includes("entertainment")
+    ){
+        return "🎬";
+    }
+
+    /* Health */
+
+    if(
+        text.includes("health") ||
+        text.includes("doctor") ||
+        text.includes("hospital")
+    ){
+        return "🏥";
+    }
+
+    if(
+        text.includes("medicine") ||
+        text.includes("medical") ||
+        text.includes("pharmacy")
+    ){
+        return "💊";
+    }
+
+    if(
+        text.includes("gym") ||
+        text.includes("fitness")
+    ){
+        return "💪";
+    }
+
+    /* Home */
+
+    if(text.includes("rent")){
+        return "🏠";
+    }
+
+    if(
+        text.includes("emi") ||
+        text.includes("loan")
+    ){
+        return "🏦";
+    }
+
+    /* Travel */
+
+    if(
+        text.includes("flight") ||
+        text.includes("air")
+    ){
+        return "✈️";
+    }
+
+    if(
+        text.includes("uber") ||
+        text.includes("ola") ||
+        text.includes("cab") ||
+        text.includes("taxi")
+    ){
+        return "🚕";
+    }
+
+    if(text.includes("train")){
+        return "🚆";
+    }
+
+    if(text.includes("bus")){
+        return "🚌";
+    }
+
+    /* Utilities */
+
+    if(text.includes("electricity")){
+        return "⚡";
+    }
+
+    if(text.includes("water")){
+        return "🚰";
+    }
+
+    if(
+        text.includes("mobile") ||
+        text.includes("recharge")
+    ){
+        return "📱";
+    }
+
+    if(
+        text.includes("internet") ||
+        text.includes("wifi")
+    ){
+        return "🌐";
+    }
+
+    /* Finance */
+
+    if(
+        text.includes("credit") ||
+        text.includes("card")
+    ){
+        return "💳";
+    }
+
+    /* Gifts */
+
+    if(text.includes("gift")){
+        return "🎁";
+    }
+
+    if(
+        text.includes("donation") ||
+        text.includes("charity")
+    ){
+        return "❤️";
+    }
+
+    /* Education */
+
+    if(
+        text.includes("school") ||
+        text.includes("college") ||
+        text.includes("education") ||
+        text.includes("course")
+    ){
+        return "📚";
+    }
+
+    return "💳";
 
 }
+
 /* =====================================================
         Edit Transaction
 ===================================================== */
