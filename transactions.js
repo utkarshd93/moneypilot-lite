@@ -1341,6 +1341,84 @@ function refreshCategoryDropdown(){
 
 }
 
+
+/* =====================================================
+            ADD CUSTOM CATEGORY
+===================================================== */
+
+function handleCategorySelection(){
+
+    const category =
+    document.getElementById("category");
+
+    const type =
+    document.getElementById("type");
+
+    if(!category || !type){
+
+        return;
+
+    }
+
+    if(category.value !== "__add__"){
+
+        return;
+
+    }
+
+    const name = prompt("Enter new category");
+
+    if(name===null){
+
+        refreshCategoryDropdown();
+
+        return;
+
+    }
+
+    const newCategory = name.trim();
+
+    if(newCategory===""){
+
+        alert("Category cannot be empty");
+
+        refreshCategoryDropdown();
+
+        return;
+
+    }
+
+    const allCategories =
+    getAllCategories(type.value);
+
+    const exists = allCategories.some(c =>
+        c.toLowerCase() === newCategory.toLowerCase()
+    );
+
+    if(exists){
+
+        alert("Category already exists");
+
+        refreshCategoryDropdown();
+
+        return;
+
+    }
+
+    saveCustomCategory(
+
+        type.value,
+
+        newCategory
+
+    );
+
+    refreshCategoryDropdown();
+
+    category.value = newCategory;
+
+}
+
 /* =====================================================
             TYPE CHANGE
 ===================================================== */
@@ -1364,6 +1442,22 @@ function(){
             refreshCategoryDropdown
 
         );
+
+            const category =
+
+document.getElementById("category");
+
+if(category){
+
+    category.addEventListener(
+
+        "change",
+
+        handleCategorySelection
+
+    );
+
+}
 
     }
 
