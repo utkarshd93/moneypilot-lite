@@ -77,31 +77,17 @@ function renderAnalyticsTransactions() {
 
   filtered.sort((a, b) => {
 
-    // Compare transaction date first
-    const dateDiff =
-        new Date(b.date) - new Date(a.date);
+    // Newest transaction date first
+    const dateDiff = new Date(b.date) - new Date(a.date);
 
     if (dateDiff !== 0) {
+
         return dateDiff;
+
     }
 
-    // Same date:
-    // If only one has createdAt, show it first
-    if (a.createdAt && !b.createdAt) {
-        return 1;
-    }
-
-    if (!a.createdAt && b.createdAt) {
-        return -1;
-    }
-
-    // If both have createdAt, compare time
-    if (a.createdAt && b.createdAt) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-    }
-
-    // Both are old transactions
-    return (b.id || 0) - (a.id || 0);
+    // Same date -> newest added transaction first
+    return Number(b.id || 0) - Number(a.id || 0);
 
 });
    
