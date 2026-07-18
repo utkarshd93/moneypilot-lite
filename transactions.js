@@ -122,15 +122,7 @@ function saveTransaction(){
 
     else{
 
-        if(isDuplicateTransaction(transaction)){
-
-    showToast("Duplicate Transaction");
-
-    return;
-
-}
-
-transactions.push(transaction);
+        transactions.push(transaction);
 
     }
         
@@ -717,27 +709,7 @@ function getExpenseTransactions(){
     );
 
 }
-/* =====================================================
-        Duplicate Check
-===================================================== */
 
-function isDuplicateTransaction(transaction){
-
-    return transactions.some(t=>
-
-        t.amount===transaction.amount &&
-
-        t.date===transaction.date &&
-
-        t.type===transaction.type &&
-
-        t.category===transaction.category &&
-
-        t.note===transaction.note
-
-    );
-
-}
 /* =====================================================
         Auto Save Hook
 ===================================================== */
