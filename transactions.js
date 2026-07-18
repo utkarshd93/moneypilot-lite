@@ -1351,71 +1351,84 @@ function handleCategorySelection(){
     const category =
     document.getElementById("category");
 
+    if(category.value !== "__add__"){
+
+        openCategoryPopup();
+
+    }
+
+}
+
+
+function openCategoryPopup(){
+
+    document
+    .getElementById("categoryPopup")
+    .classList.add("show");
+
+    const input =
+    document.getElementById("newCategoryInput");
+
+    input.value="";
+
+    setTimeout(()=>input.focus(),100);
+
+}
+
+function closeCategoryPopup(){
+
+    document
+    .getElementById("categoryPopup")
+    .classList.remove("show");
+
+    refreshCategoryDropdown();
+
+}
+
+function saveNewCategory(){
+
+    const input =
+    document.getElementById("newCategoryInput");
+
     const type =
     document.getElementById("type");
 
-    if(!category || !type){
+    const category =
+    document.getElementById("category");
 
-        return;
-
-    }
-
-    if(category.value !== "__add__"){
-
-        return;
-
-    }
-
-    const name = prompt("Enter new category");
-
-    if(name===null){
-
-        refreshCategoryDropdown();
-
-        return;
-
-    }
-
-    const newCategory = name.trim();
+    const newCategory =
+    input.value.trim();
 
     if(newCategory===""){
 
-        alert("Category cannot be empty");
-
-        refreshCategoryDropdown();
+        showToast("Enter category name");
 
         return;
 
     }
 
-    const allCategories =
-    getAllCategories(type.value);
-
-    const exists = allCategories.some(c =>
-        c.toLowerCase() === newCategory.toLowerCase()
-    );
+    const exists =
+    getAllCategories(type.value)
+    .some(c=>c.toLowerCase()===newCategory.toLowerCase());
 
     if(exists){
 
-        alert("Category already exists");
-
-        refreshCategoryDropdown();
+        showToast("Category already exists");
 
         return;
 
     }
 
     saveCustomCategory(
-
         type.value,
-
         newCategory
-
     );
 
     refreshCategoryDropdown();
 
-    category.value = newCategory;
+    category.value=newCategory;
+
+    closeCategoryPopup();
 
 }
 
@@ -1430,36 +1443,57 @@ document.addEventListener(
 function(){
 
     const type =
-
     document.getElementById("type");
 
     if(type){
 
         type.addEventListener(
-
             "change",
-
             refreshCategoryDropdown
-
         );
 
-            const category =
+    }
 
-document.getElementById("category");
+    const category =
+    document.getElementById("category");
 
-if(category){
+    if(category){
 
-    category.addEventListener(
-
-        "change",
-
-        handleCategorySelection
-
-    );
-
-}
+        category.addEventListener(
+            "change",
+            handleCategorySelection
+        );
 
     }
+
+    document
+    .getElementById("cancelCategoryBtn")
+    .addEventListener(
+        "click",
+        closeCategoryPopup
+    );
+
+    document
+    .getElementById("saveCategoryBtn")
+    .addEventListener(
+        "click",
+        saveNewCategory
+    );
+
+    document
+    .getElementById("newCategoryInput")
+    .addEventListener(
+        "keydown",
+        function(e){
+
+            if(e.key==="Enter"){
+
+                saveNewCategory();
+
+            }
+
+        }
+    );
 
     refreshCategoryDropdown();
 
