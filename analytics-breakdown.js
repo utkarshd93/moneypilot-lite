@@ -75,13 +75,36 @@ function renderAnalyticsTransactions() {
 
     }
 
-   filtered.sort((a, b) => {
+  filtered.sort((a, b) => {
 
-    return new Date(b.createdAt || b.date) -
+    // Compare transaction date first
+    const dateDiff =
+        new Date(b.date) - new Date(a.date);
 
-           new Date(a.createdAt || a.date);
+    if (dateDiff !== 0) {
+        return dateDiff;
+    }
+
+    // Same date:
+    // If only one has createdAt, show it first
+    if (a.createdAt && !b.createdAt) {
+        return 1;
+    }
+
+    if (!a.createdAt && b.createdAt) {
+        return -1;
+    }
+
+    // If both have createdAt, compare time
+    if (a.createdAt && b.createdAt) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+    }
+
+    // Both are old transactions
+    return (b.id || 0) - (a.id || 0);
 
 });
+   
 
     if (filtered.length === 0) {
 
@@ -99,41 +122,49 @@ function renderAnalyticsTransactions() {
 
     filtered.forEach(t => {
 
-    const created = new Date(
+    console.log(t);
 
-    t.createdAt || t.date
+    const created = t.createdAt
 
-);
+    ? new Date(t.createdAt)
 
-const shortDate = created.toLocaleDateString(
+    : null;
 
-    "en-GB",
+const shortDate = new Date(t.date)
 
-    {
+    .toLocaleDateString(
 
-        day: "2-digit",
+        "en-GB",
 
-        month: "short"
+        {
 
-    }
+            day: "2-digit",
 
-);
+            month: "short"
 
-const shortTime = created.toLocaleTimeString(
+        }
 
-    "en-GB",
+    );
 
-    {
+const shortTime = created
 
-        hour: "2-digit",
+    ? created.toLocaleTimeString(
 
-        minute: "2-digit",
+        "en-GB",
 
-        hour12: false
+        {
 
-    }
+            hour: "2-digit",
 
-);
+            minute: "2-digit",
+
+            hour12: false
+
+        }
+
+    )
+
+    : "";
 
 const icon = getCategoryEmoji(t.category);
 
@@ -147,19 +178,25 @@ const icon = getCategoryEmoji(t.category);
 
             </span>
 
-            <span class="analyticsCategory">
+           <span class="analyticsCategory">
 
-                ${t.category}
+    ${t.category}
 
-            </span>
+</span>
 
-            analyticsDate
+<span class="analyticsDate">
 
-            <span class="analyticsAmount">
+    ${shortDate}
 
-                ₹${Number(t.amount).toLocaleString("en-IN")}
+    ${shortTime ? `<br><small>${shortTime}</small>` : ""}
 
-            </span>
+</span>
+
+<span class="analyticsAmount">
+
+    ₹${Number(t.amount).toLocaleString("en-IN")}
+
+</span>
 
         </div>
 
