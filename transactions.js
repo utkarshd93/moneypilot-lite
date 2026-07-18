@@ -239,6 +239,8 @@ function saveTransaction(){
 
         const day = selectedDate.getDate();
 
+        let transactionAdded = false;
+
         for(let month=startMonth; month<=11; month++){
 
             const repeatTransaction={
@@ -302,7 +304,17 @@ String(repeatDate.getDate()).padStart(2,"0")
 
             transactions.push(repeatTransaction);
 
+           transactionAdded = true;
+
         }
+
+            if(!transactionAdded){
+
+    showToast("This fixed monthly expense already exists.");
+
+    return false;
+
+}
 
     }
 
