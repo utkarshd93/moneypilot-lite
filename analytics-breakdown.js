@@ -209,32 +209,6 @@ document.addEventListener(
 
 function getCategoryEmoji(category){
 
-    const icons = {
-
-        Food:"🍔",
-
-        Fuel:"⛽",
-
-        Shopping:"🛍️",
-
-        Health:"🏥",
-
-        Entertainment:"🎬",
-
-        Salary:"💼",
-
-        Investment:"📈",
-
-        Rent:"🏠",
-
-        Travel:"✈️",
-
-        Education:"📚",
-
-        Other:"📦"
-
-    };
-
-    return icons[category] || "💳";
+    return getCategoryIcon(category);
 
 }
