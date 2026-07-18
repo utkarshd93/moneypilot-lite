@@ -7,6 +7,83 @@ let transactions = [];
 
 let editingTransactionId = null;
 
+
+/* =====================================================
+        Categories
+===================================================== */
+
+const DEFAULT_CATEGORIES = {
+
+    income: [
+
+        "Salary",
+        "Stock Market",
+        "Other"
+
+    ],
+
+    expense: [
+
+        "Food",
+        "Milk",
+        "Tea",
+        "Fuel",
+        "Shopping",
+        "Health",
+        "Entertainment",
+        "Rent",
+        "Travel",
+        "Education",
+        "Credit Card",
+        "Share Market",
+        "Gym",
+        "Other"
+
+    ],
+
+    investment: [
+
+        "Investment",
+        "Other"
+
+    ]
+
+};
+
+function getCustomCategories(type){
+
+    return JSON.parse(
+
+        localStorage.getItem(
+
+            "customCategories_" + type
+
+        ) || "[]"
+
+    );
+
+}
+
+function saveCustomCategory(type,name){
+
+    let list=getCustomCategories(type);
+
+    if(!list.includes(name)){
+
+        list.push(name);
+
+        localStorage.setItem(
+
+            "customCategories_"+type,
+
+            JSON.stringify(list)
+
+        );
+
+    }
+
+}
+
 /* =====================================================
         Transaction Model
 ===================================================== */
