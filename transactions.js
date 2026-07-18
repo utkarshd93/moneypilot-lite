@@ -145,6 +145,10 @@ function validateTransaction(){
 
     document.getElementById("date").value;
 
+    const category =
+
+    document.getElementById("category").value;
+
     if(amount==="" || Number(amount)<=0){
 
         showToast("Enter valid amount");
@@ -158,6 +162,14 @@ function validateTransaction(){
         showToast("Select transaction date");
 
         return false;
+
+    }
+
+     if(category===""){
+
+    showToast("Please select category");
+
+    return false;
 
     }
 
@@ -684,7 +696,7 @@ function clearTransactionForm(){
 
     document.getElementById("type").value = "expense";
 
-    document.getElementById("category").value = "Food";
+    document.getElementById("category").value = "";
         if(typeof syncTransactionDate==="function"){
 
             syncTransactionDate();
