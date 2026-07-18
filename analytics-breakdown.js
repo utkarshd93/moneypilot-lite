@@ -172,7 +172,9 @@ const icon = getCategoryEmoji(t.category);
 
 <span class="analyticsDate">
 
-    ${shortDate}${shortTime ? ` • ${shortTime}` : ""}
+    ${shortDate}
+
+    ${shortTime ? `<br><small>${shortTime}</small>` : ""}
 
 </span>
 
