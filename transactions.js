@@ -252,8 +252,12 @@ if(month === startMonth){
 
 }
 
-            repeatTransaction.date=
-            repeatDate.toISOString().split("T")[0];
+            repeatTransaction.date =
+`${repeatDate.getFullYear()}-${
+String(repeatDate.getMonth()+1).padStart(2,"0")
+}-${
+String(repeatDate.getDate()).padStart(2,"0")
+}`;
 
             if(transaction.fixed){
 
