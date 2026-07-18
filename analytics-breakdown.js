@@ -75,6 +75,12 @@ function renderAnalyticsTransactions() {
 
     }
 
+   filtered.sort((a, b) => {
+
+    return new Date(b.date) - new Date(a.date);
+
+});
+
     if (filtered.length === 0) {
 
         container.innerHTML = `
