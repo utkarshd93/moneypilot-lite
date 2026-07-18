@@ -77,7 +77,9 @@ function renderAnalyticsTransactions() {
 
    filtered.sort((a, b) => {
 
-    return new Date(b.date) - new Date(a.date);
+    return new Date(b.createdAt || b.date) -
+
+           new Date(a.createdAt || a.date);
 
 });
 
