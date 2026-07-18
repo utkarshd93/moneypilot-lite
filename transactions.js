@@ -189,9 +189,9 @@ function saveTransaction(){
 
     if(!validateTransaction()){
 
-        return;
+    return false;
 
-    }
+}
 
     const transaction =
 
@@ -339,6 +339,8 @@ if(typeof transactionMiniBar!=="undefined"){
 }
 
 showToast("Transaction Saved");
+
+        return true;
 
 }
 /* =====================================================
