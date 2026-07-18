@@ -35,7 +35,7 @@ const DEFAULT_CATEGORIES = {
     ],
 
     investment: [
-        "Investment",
+        "Stock Market",
         "Other"
     ]
 
