@@ -196,6 +196,14 @@ function saveTransaction(){
     const transaction =
 
     createTransactionObject();
+
+        if(transaction.category === "__add__"){
+
+    showToast("Please select a category");
+
+    return;
+
+}
         
             if(editingTransactionId){
 
