@@ -268,6 +268,24 @@ function loadAssetCategories(selected = ""){
 
 }
 
+addAssetBtn.onclick = function () {
+
+    isLiabilityMode = false;
+
+    netWorthSheet.classList.remove("show");
+
+    document.getElementById("assetSheetTitle").textContent = "Add Asset";
+
+    saveAssetBtn.textContent = "Save Asset";
+
+    loadAssetCategories();
+
+    resetAssetForm();
+
+    assetSheet.classList.add("show");
+
+};
+
 addLiabilityBtn.onclick = function () {
 
     isLiabilityMode = true;
