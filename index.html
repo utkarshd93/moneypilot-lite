@@ -1064,6 +1064,160 @@ class="actionSheetOverlay">
     </div>
 
 </div>
+
+
+<!-- =======================================
+        ADD ASSET SHEET
+======================================= -->
+
+<div id="assetSheet" class="bottomSheet">
+
+    <div class="sheetHandle"></div>
+
+    <div class="sheetHeader">
+
+        <h2 id="assetSheetTitle">
+
+            Add Asset
+
+        </h2>
+
+        <button id="closeAssetSheet">
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <div class="sheetContent">
+
+        <label>Category</label>
+
+        <select id="assetCategory">
+
+            <option value="">Select Category</option>
+
+            <option value="__new__">➕ Add New Category</option>
+
+            <option>Land</option>
+
+            <option>House</option>
+
+            <option>Flat</option>
+
+            <option>Plot</option>
+
+            <option>Mutual Fund</option>
+
+            <option>Stocks</option>
+
+            <option>Gold</option>
+
+            <option>Silver</option>
+
+            <option>FD</option>
+
+            <option>Savings Account</option>
+
+            <option>Current Account</option>
+
+            <option>Cash</option>
+
+            <option>Business</option>
+
+            <option>Vehicle</option>
+
+            <option>Other</option>
+
+        </select>
+
+        <label>Amount</label>
+
+        <input
+            id="assetAmount"
+            type="number"
+            inputmode="decimal"
+            placeholder="₹ Enter Amount">
+
+        <label>Description</label>
+
+        <input
+            id="assetDescription"
+            type="text"
+            maxlength="60"
+            placeholder="Optional">
+
+        <div class="sheetButtons">
+
+            <button
+                id="cancelAssetBtn"
+                class="secondaryButton">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="saveAssetBtn"
+                class="primaryButton">
+
+                Save Asset
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =======================================
+      ADD ASSET CATEGORY POPUP
+======================================= -->
+
+<div
+id="assetCategoryPopup"
+class="popupOverlay">
+
+    <div class="popupCard">
+
+        <h3>
+
+            Add Asset Category
+
+        </h3>
+
+        <input
+            id="newAssetCategoryInput"
+            type="text"
+            maxlength="30"
+            placeholder="Category Name">
+
+        <div class="popupButtons">
+
+            <button
+                id="cancelAssetCategoryBtn"
+                class="popupCancel">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="saveAssetCategoryBtn"
+                class="popupSave">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+    
     
 <div
 
