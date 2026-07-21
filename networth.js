@@ -268,142 +268,6 @@ function loadAssetCategories(selected = ""){
 
 }
 
-saveAssetBtn.onclick = function () {
-
-    const category = assetCategory.value.trim();
-    const amount = Number(assetAmount.value);
-    const description = assetDescription.value.trim();
-
-    // Validation
-
-    if (!category) {
-        alert("Please select a Category.");
-        assetCategory.focus();
-        return;
-    }
-
-    if (category === "__new__") {
-        alert("Please add a category first.");
-        assetCategory.focus();
-        return;
-    }
-
-    if (assetAmount.value.trim() === "") {
-        alert("Please enter Amount.");
-        assetAmount.focus();
-        return;
-    }
-
-    if (isNaN(amount) || amount <= 0) {
-        alert("Amount should be greater than ₹0.");
-        assetAmount.focus();
-        return;
-    }
-
-    // =========================
-    // LIABILITY MODE
-    // =========================
-
-    if (isLiabilityMode) {
-
-        const liabilities = JSON.parse(
-            localStorage.getItem("MP_LIABILITIES") || "[]"
-        );
-
-        liabilities.push({
-
-            id: crypto.randomUUID(),
-
-            category,
-
-            amount,
-
-            description,
-
-            createdAt: Date.now(),
-
-            updatedAt: Date.now()
-
-        });
-
-        localStorage.setItem(
-            "MP_LIABILITIES",
-            JSON.stringify(liabilities)
-        );
-
-    }
-
-    // =========================
-    // EDIT ASSET
-    // =========================
-
-    else if (isEditMode) {
-
-        const assets = getAssets();
-
-        const asset = assets.find(
-
-            item => item.id === editingAssetId
-
-        );
-
-        if (asset) {
-
-            asset.category = category;
-            asset.amount = amount;
-            asset.description = description;
-            asset.updatedAt = Date.now();
-
-            saveAssets(assets);
-
-        }
-
-    }
-
-    // =========================
-    // NEW ASSET
-    // =========================
-
-    else {
-
-        const assets = getAssets();
-
-        assets.push({
-
-            id: crypto.randomUUID(),
-
-            category,
-
-            amount,
-
-            description,
-
-            createdAt: Date.now(),
-
-            updatedAt: Date.now()
-
-        });
-
-        saveAssets(assets);
-
-    }
-
-    resetAssetForm();
-
-    assetSheet.classList.remove("show");
-
-    loadNetWorthSummary();
-
-    renderAssets();
-
-    if (typeof renderLiabilities === "function") {
-
-        renderLiabilities();
-
-    }
-
-};
-
 addLiabilityBtn.onclick = function () {
 
     isLiabilityMode = true;
@@ -578,68 +442,54 @@ saveAssetBtn.onclick = function () {
 
     const assets = getAssets();
 
-if (isEditMode) {
-
-    const asset = assets.find(
-
-        item => item.id === editingAssetId
-
-    );
-
-    asset.category = category;
-
-    asset.amount = amount;
-
-    asset.description = description;
-
-    asset.updatedAt = Date.now();
-
-} if (isLiabilityMode) {
+if (isLiabilityMode) {
 
     const liabilities = JSON.parse(
-
-        localStorage.getItem("MP_LIABILITIES") || "[]"
-
+        localStorage.getItem(LIABILITY_KEY) || "[]"
     );
 
     liabilities.push({
 
         id: crypto.randomUUID(),
-
         category,
-
         amount,
-
         description,
-
         createdAt: Date.now(),
-
         updatedAt: Date.now()
 
     });
 
     localStorage.setItem(
-
-        "MP_LIABILITIES",
-
+        LIABILITY_KEY,
         JSON.stringify(liabilities)
-
     );
 
-} else {
+}
+else if (isEditMode) {
+
+    const asset = assets.find(
+        item => item.id === editingAssetId
+    );
+
+    if(asset){
+
+        asset.category = category;
+        asset.amount = amount;
+        asset.description = description;
+        asset.updatedAt = Date.now();
+
+    }
+
+}
+else {
 
     assets.push({
 
         id: crypto.randomUUID(),
-
         category,
-
         amount,
-
         description,
-
         createdAt: Date.now(),
-
         updatedAt: Date.now()
 
     });
@@ -660,6 +510,12 @@ assetSheet.classList.remove("show");
 loadNetWorthSummary();
 
 renderAssets();
+
+if (typeof renderLiabilities === "function") {
+
+    renderLiabilities();
+
+}
 
 };
 
@@ -886,5 +742,13 @@ function getAssetIcon(category){
         default: return "📦";
 
     }
+
+}
+
+function getLiabilities(){
+
+    const saved = localStorage.getItem(LIABILITY_KEY);
+
+    return saved ? JSON.parse(saved) : [];
 
 }
