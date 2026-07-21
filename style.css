@@ -380,31 +380,39 @@ color:white;
             INCOME EXPENSE ROW
 ===================================================== */
 
-.incomeExpense{
+.summaryGrid{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,minmax(0,1fr));
 
-gap:14px;
+    gap:14px;
 
-margin-top:16px;
+    margin-top:18px;
+
+    width:100%;
 
 }
 
 .smallCard{
 
-display:flex;
+    display:flex;
 
-align-items:center;
+    align-items:center;
 
-gap:14px;
+    gap:14px;
 
-padding:10px;
+    padding:12px;
 
-border-radius:18px;
+    border-radius:18px;
 
-background:rgba(255,255,255,.10);
+    background:rgba(255,255,255,.10);
+
+    width:100%;
+
+    min-width:0;
+
+    box-sizing:border-box;
 
 }
 
@@ -1532,12 +1540,6 @@ justify-content:space-between;
 }
 
 .statsGrid{
-
-grid-template-columns:1fr;
-
-}
-
-.incomeExpense{
 
 grid-template-columns:1fr;
 
@@ -3391,6 +3393,17 @@ transform:scale(1);
     box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
 
+.summaryGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+
+    margin-top:20px;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
