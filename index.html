@@ -355,126 +355,117 @@ class="monthButton">
 </div>
 
 </header>
+    
 <!-- =======================================
             BALANCE CARD
 ======================================= -->
 
-<section
+<section class="balanceCard">
 
-class="balanceCard">
+    <p>💰 Cash Balance</p>
 
-<p>
+    <h1 id="cashBalance">₹0</h1>
 
-💰 Cash Balance
+    <!-- Row 1 -->
+   <div class="summaryGrid">
 
-</p>
+    <!-- Income -->
+    <div class="smallCard incomeCard">
 
-<h1
+        <div class="cardTop">
 
-id="cashBalance">
+            <span class="emoji">💰</span>
 
-₹0
+            <span class="cardTitle">Income</span>
 
-</h1>
+        </div>
 
-<div class="incomeExpense">
+        <h3 id="incomeValue">₹ 0</h3>
 
-<div class="smallCard incomeCard">
+    </div>
 
-<div class="emoji">
+    <!-- Expense -->
+    <div class="smallCard expenseCard">
 
-💰
+        <div class="cardTop">
 
-</div>
+            <span class="emoji">💸</span>
 
-<div>
+            <span class="cardTitle">Expense</span>
 
-<p>
+        </div>
 
-Income
+        <h3 id="expenseValue">₹ 0</h3>
 
-</p>
+    </div>
 
-<h3
+    <!-- Monthly Investment -->
+    <div class="smallCard investmentCard">
 
-id="incomeValue">
+        <div class="cardTop">
 
-₹0
+            <span class="emoji">📈</span>
 
-</h3>
+            <span class="cardTitle">Monthly Investment</span>
 
-</div>
+        </div>
 
-</div>
+        <h3 id="investmentTotal">₹ 0</h3>
 
-<div class="smallCard expenseCard">
+    </div>
 
-<div class="emoji">
+    <!-- Monthly Saving -->
+    <div class="smallCard savingCard">
 
-💸
+        <div class="cardTop">
 
-</div>
+            <span class="emoji">💵</span>
 
-<div>
+            <span class="cardTitle">Monthly Saving</span>
 
-<p>
+        </div>
 
-Expense
+        <h3 id="netWorth">₹ 0</h3>
 
-</p>
-
-<h3
-
-id="expenseValue">
-
-₹0
-
-</h3>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 </section>
-<!-- =======================================
-            QUICK STATS
-======================================= -->
 
-<section class="statsGrid">
+<section class="netWorthNavigation">
 
-<div class="statCard">
+    <div id="openNetWorthPage" class="netWorthCard">
 
-<p>
+        <div class="left">
 
-Investment
+            <div class="diamond">
 
-</p>
+                💎
 
-<h2 id="investmentTotal">
+            </div>
 
-₹0
+            <div class="netWorthText">
 
-</h2>
+                <h3>Total Net Worth</h3>
 
-</div>
+                <span>
 
-<div class="statCard">
+                    View Assets & Liabilities
 
-<p>
+                </span>
 
-Net Worth
+            </div>
 
-</p>
+        </div>
 
-<h2 id="netWorth">
+        <div class="arrow">
 
-₹0
+            ❯
 
-</h2>
+        </div>
 
-</div>
+    </div>
 
 </section>
 <!-- =======================================
@@ -680,6 +671,143 @@ id="categorySummary">
 </div>
 
 </section>
+
+<section id="netWorthPage" class="page">
+
+<header class="pageHeader">
+
+<button id="backFromNetWorth">
+
+←
+
+</button>
+
+<h2>
+
+Total Net Worth
+
+</h2>
+
+<button id="addNetWorth">
+
++ Add
+
+</button>
+
+</header>
+
+<div class="netWorthSummary">
+
+<div class="summaryCard">
+
+<p>Total Net Worth</p>
+
+<h2 id="totalWorthValue">
+
+₹0
+
+</h2>
+
+</div>
+
+</div>
+
+<div class="netWorthGrid">
+
+<div id="assetSummaryCard" class="summaryCard expandableCard">
+
+    <div class="summaryCardTop">
+
+        <p>Assets</p>
+
+        <span id="assetExpandIcon">▼</span>
+
+    </div>
+
+    <h3 id="assetTotal">₹0</h3>
+
+</div>
+
+<div id="liabilitySummaryCard" class="summaryCard expandableCard">
+
+    <div class="summaryCardTop">
+
+        <p>Liabilities</p>
+
+        <span id="liabilityExpandIcon">▼</span>
+
+    </div>
+
+    <h3 id="liabilityTotal">₹0</h3>
+
+</div>
+
+<div class="summaryCard">
+
+<p>Cash Balance</p>
+
+<h3 id="cashBalanceWorth">
+
+₹0
+
+</h3>
+
+</div>
+
+<div class="summaryCard">
+
+<p>Monthly Investment</p>
+
+<h3 id="investmentWorth">
+
+₹0
+
+</h3>
+
+</div>
+
+</div>
+
+<div id="assetListContainer" class="assetListContainer">
+
+    <h3 class="expandTitle">
+
+        🏦 Assets
+
+    </h3>
+
+    <div id="assetList"></div>
+
+</div>
+
+
+<div id="liabilityListContainer" class="assetListContainer">
+
+    <h3 class="expandTitle">
+
+        💳 Liabilities
+
+    </h3>
+
+    <div id="liabilityList">
+
+        <div class="emptyState">
+
+            <div class="emptyIcon">💳</div>
+
+            <p>No Liabilities Yet</p>
+
+            <span>Add your first liability.</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+    
 <!-- =======================================
             SETTINGS PAGE
 ======================================= -->
@@ -919,6 +1047,228 @@ id="saveButton">
 
 </div>
 
+    <!-- =======================================
+        NET WORTH ACTION SHEET
+======================================= -->
+
+<div
+id="netWorthActionSheet"
+class="actionSheetOverlay">
+
+    <div class="actionSheet">
+
+        <div class="sheetHandle"></div>
+
+        <button id="addAssetBtn">
+
+            🟢 Add Asset
+
+        </button>
+
+        <button id="addLiabilityBtn">
+
+            🔴 Add Liability
+
+        </button>
+
+        <button
+        id="cancelNetWorthSheet"
+        class="cancelAction">
+
+            ✖ Cancel
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================
+        ADD ASSET SHEET
+======================================= -->
+
+<div id="assetSheet" class="bottomSheet">
+
+    <div class="sheetHandle"></div>
+
+    <div class="sheetHeader">
+
+        <h2 id="assetSheetTitle">
+
+            Add Asset
+
+        </h2>
+
+        <button id="closeAssetSheet">
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <div class="sheetContent">
+
+        <label>Category</label>
+
+        <select id="assetCategory">
+
+            <option value="">Select Category</option>
+
+            <option value="__new__">➕ Add New Category</option>
+
+            <option>Land</option>
+
+            <option>House</option>
+
+            <option>Flat</option>
+
+            <option>Plot</option>
+
+            <option>Mutual Fund</option>
+
+            <option>Stocks</option>
+
+            <option>Gold</option>
+
+            <option>Silver</option>
+
+            <option>FD</option>
+
+            <option>Savings Account</option>
+
+            <option>Current Account</option>
+
+            <option>Cash</option>
+
+            <option>Business</option>
+
+            <option>Vehicle</option>
+
+            <option>Other</option>
+
+        </select>
+
+        <label>Amount</label>
+
+        <input
+            id="assetAmount"
+            type="number"
+            inputmode="decimal"
+            placeholder="₹ Enter Amount">
+
+        <label>Description</label>
+
+        <input
+            id="assetDescription"
+            type="text"
+            maxlength="60"
+            placeholder="Optional">
+
+        <div class="assetActionButtons">
+
+    <button id="cancelAssetBtn" class="assetCancelBtn">
+
+        Cancel
+
+    </button>
+
+    <button id="saveAssetBtn" class="assetSaveBtn">
+
+        Save
+
+    </button>
+
+</div>
+
+    </div>
+
+</div>
+
+<!-- =======================================
+      ADD ASSET CATEGORY POPUP
+======================================= -->
+
+<div
+id="assetCategoryPopup"
+class="popupOverlay">
+
+    <div class="popupCard">
+
+        <h3>
+
+            Add Asset Category
+
+        </h3>
+
+        <input
+            id="newAssetCategoryInput"
+            type="text"
+            maxlength="30"
+            placeholder="Category Name">
+
+        <div class="popupButtons">
+
+            <button
+                id="cancelAssetCategoryBtn"
+                class="popupCancel">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="saveAssetCategoryBtn"
+                class="popupSave">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================
+        ASSET ACTION SHEET
+======================================= -->
+
+<div
+id="assetActionSheet"
+class="actionSheetOverlay">
+
+    <div class="actionSheet">
+
+        <div class="sheetHandle"></div>
+
+        <button id="editAssetBtn">
+
+            ✏️ Edit Asset
+
+        </button>
+
+        <button id="deleteAssetBtn">
+
+            🗑 Delete Asset
+
+        </button>
+
+        <button
+        id="cancelAssetActionBtn"
+        class="cancelAction">
+
+            Cancel
+
+        </button>
+
+    </div>
+
+</div>
+    
     
 <div
 
@@ -1093,6 +1443,8 @@ class="appVersion">
 MoneyPilot Lite V3
 
 </footer>
+
+
 <!-- =======================================
         JAVASCRIPT FILES
 ======================================= -->
@@ -1102,6 +1454,8 @@ MoneyPilot Lite V3
 <script src="transactions.js"></script>
 
 <script src="dashboard.js"></script>
+
+<script src="networth.js"></script>
 
 <script src="analytics-breakdown.js"></script>
 

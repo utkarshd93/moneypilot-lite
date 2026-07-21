@@ -11,6 +11,8 @@ transactions: document.getElementById("transactionsPage"),
 
 analytics: document.getElementById("analyticsPage"),
 
+netWorth: document.getElementById("netWorthPage"),
+
 settings: document.getElementById("settingsPage")
 
 };
@@ -541,3 +543,33 @@ if(viewAllButton){
 ===================================================== */
 
 openPage("home");
+
+/* =====================================================
+        Net Worth Navigation
+===================================================== */
+
+const netWorthCard = document.getElementById("openNetWorthPage");
+
+const backBtn = document.getElementById("backFromNetWorth");
+
+if(netWorthCard){
+
+    netWorthCard.addEventListener("click",function(){
+
+        loadNetWorthSummary();
+
+        openPage("netWorth");
+
+    });
+
+}
+
+if(backBtn){
+
+    backBtn.addEventListener("click",function(){
+
+        openPage("home");
+
+    });
+
+}

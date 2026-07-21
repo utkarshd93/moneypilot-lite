@@ -380,116 +380,124 @@ color:white;
             INCOME EXPENSE ROW
 ===================================================== */
 
-.incomeExpense{
+.summaryGrid{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,1fr);
 
-gap:16px;
+    gap:12px;
+
+    margin-top:18px;
 
 }
 
 .smallCard{
 
-display:flex;
+    background:rgba(255,255,255,.10);
 
-align-items:center;
+    border-radius:18px;
 
-gap:14px;
+    padding:14px;
 
-padding:10px;
+    display:flex;
 
-border-radius:18px;
+    flex-direction:column;
 
-background:rgba(255,255,255,.10);
+    justify-content:center;
+
+    min-height:95px;
+
+    box-sizing:border-box;
+
+}
+
+.cardTop{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:10px;
+
+}
+
+.cardTitle{
+
+    font-size:13px;
+
+    color:rgba(255,255,255,.80);
+
+    font-weight:500;
+
+    line-height:16px;
+
+}
+
+.smallCard > div{
+
+    flex:1;
+
+    min-width:0;
 
 }
 
 .emoji{
 
-font-size:24px;
+width:34px;
+
+height:34px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:18px;
+
+flex-shrink:0;
 
 }
 
 .smallCard p{
 
-font-size:12px;
+font-size:11px;
 
-margin-bottom:4px;
+margin:0 0 3px;
+
+line-height:14px;
+
+white-space:normal;
 
 }
 
 .smallCard h3{
 
-font-size:18px;
+    margin:0;
 
-font-weight:700;
+    font-size:18px;
 
-color:white;
+    font-weight:700;
 
-}
-/* =====================================================
-                    STATS GRID
-===================================================== */
+    line-height:22px;
 
-.statsGrid{
+    white-space:nowrap;
 
-display:grid;
+    overflow:hidden;
 
-grid-template-columns:repeat(2,1fr);
-
-gap:14px;
-
-margin-bottom:24px;
-
-}
-
-.statCard{
-
-padding:12px;
-
-border-radius:22px;
-
-background:rgba(255,255,255,.10);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,.12);
-
-text-align:center;
-
-transition:.25s;
-
-box-shadow:0 10px 25px rgba(0,0,0,.18);
+    text-overflow:ellipsis;
 
 }
 
 .statCard:hover{
 
-transform:translateY(-4px);
+transform:translateY(-3px);
 
 }
 
-.statCard p{
-
-font-size:13px;
-
-color:rgba(255,255,255,.70);
-
-margin-bottom:8px;
-
-}
-
-.statCard h2{
-
-font-size:22px;
-
-font-weight:700;
-
-color:white;
-
-}
 /* =====================================================
                 RECENT CARD
 ===================================================== */
@@ -1583,18 +1591,6 @@ justify-content:space-between;
 
 }
 
-.statsGrid{
-
-grid-template-columns:1fr;
-
-}
-
-.incomeExpense{
-
-grid-template-columns:1fr;
-
-}
-
 .balanceCard h1{
 
 font-size:34px;
@@ -1757,6 +1753,18 @@ display:none;
 .incomeCard{
 
 border-left:5px solid #22C55E;
+
+}
+
+.investmentCard{
+
+border-left:4px solid #3B82F6;
+
+}
+
+.savingCard{
+
+border-left:4px solid #F59E0B;
 
 }
 
@@ -1985,7 +1993,7 @@ font-size:22px;
 
 .balanceCard{
 
-padding:16px;
+padding:14px;
 
 }
 
@@ -3319,6 +3327,483 @@ transform:scale(1);
 
 }
 
+/* =========================================
+   NET WORTH PAGE
+========================================= */
+
+.netWorthNavigation{
+
+margin:18px 0 24px;
+
+}
+
+.netWorthCard{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.12);
+
+box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.netWorthCard:hover{
+
+transform:translateY(-2px);
+
+}
+
+.netWorthCard .left{
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
+}
+
+.diamond{
+
+width:58px;
+
+height:58px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.18);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+flex-shrink:0;
+
+}
+
+.netWorthText h3{
+
+margin:0;
+
+font-size:18px;
+
+font-weight:600;
+
+}
+
+.netWorthText span{
+
+display:block;
+
+margin-top:4px;
+
+font-size:13px;
+
+color:rgba(255,255,255,.70);
+
+}
+
+.arrow{
+
+font-size:26px;
+
+color:rgba(255,255,255,.70);
+
+}
+
+#netWorthPage h3{
+
+    color:#fff;
+
+    margin:22px 0 12px;
+
+    font-size:20px;
+
+}
+
+#netWorthPage .pageHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:24px;
+
+}
+
+/* ---------- Net Worth Page ---------- */
+
+.pageHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.pageHeader h2{
+    margin:0;
+}
+
+.pageHeader button{
+    border:none;
+    background:#2563EB;
+    color:white;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.netWorthSummary{
+    margin-bottom:20px;
+}
+
+.summaryCard{
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+
+    padding:16px;
+
+    color:#fff;
+
+    box-sizing:border-box;
+
+}
+
+.summaryCard p{
+
+    margin:0;
+
+    font-size:13px;
+
+    color:rgba(255,255,255,.70);
+
+}
+
+.summaryCard h2,
+.summaryCard h3{
+
+    margin:10px 0 0;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#fff;
+
+}
+
+.netWorthGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+
+    margin-top:16px;
+
+}
+
+#assetList,
+#liabilityList{
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+
+    padding:18px;
+
+    color:#fff;
+
+    min-height:70px;
+
+}
+
+.cardText{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+min-width:0;
+
+}
+
+.cardText p{
+
+margin:0 0 4px;
+
+font-size:13px;
+
+}
+
+.cardText h3{
+
+margin:0;
+
+font-size:20px;
+
+font-weight:700;
+
+}
+
+/* ==========================================
+        Asset Buttons
+========================================== */
+
+.assetActionButtons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:24px;
+
+}
+
+.assetActionButtons button{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.assetCancelBtn{
+
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.15);
+
+}
+
+.assetCancelBtn:active{
+
+    transform:scale(.98);
+
+}
+
+.assetSaveBtn{
+
+    background:linear-gradient(135deg,#4F8CFF,#2D6BFF);
+
+    color:#fff;
+
+}
+
+.assetSaveBtn:active{
+
+    transform:scale(.98);
+
+}
+
+.assetCard{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+.assetInfo h4{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:16px;
+
+}
+
+.assetInfo p{
+
+    margin-top:6px;
+
+    color:rgba(255,255,255,.65);
+
+    font-size:13px;
+
+}
+
+.assetRight{
+
+    text-align:right;
+
+}
+
+.assetRight h3{
+
+    margin:0;
+
+    color:#fff;
+
+}
+
+.assetMenuBtn{
+
+    margin-top:8px;
+
+    border:none;
+
+    background:none;
+
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+.emptyState{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+}
+
+.emptyIcon{
+
+    font-size:44px;
+
+}
+
+.emptyState p{
+
+    color:#fff;
+
+    font-size:18px;
+
+    margin:12px 0 4px;
+
+}
+
+.emptyState span{
+
+    color:rgba(255,255,255,.6);
+
+}
+
+/* ==========================================
+        Expandable Assets
+========================================== */
+
+.expandableCard{
+
+    cursor:pointer;
+
+}
+
+.summaryCardTop{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+#assetExpandIcon{
+
+    color:#fff;
+
+    font-size:18px;
+
+    transition:.25s;
+
+}
+
+.assetListContainer{
+
+    overflow:hidden;
+
+    max-height:0;
+
+    transition:max-height .30s ease;
+
+    margin-top:18px;
+
+}
+
+.assetListContainer.expanded{
+
+    max-height:2000px;
+
+    padding-top:8px;
+
+}
+
+.expandTitle{
+
+    margin:0 0 14px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#fff;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
