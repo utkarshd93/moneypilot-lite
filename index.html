@@ -714,15 +714,17 @@ Total Net Worth
 
 <div class="netWorthGrid">
 
-<div class="summaryCard">
+<div id="assetSummaryCard" class="summaryCard expandableCard">
 
-<p>Assets</p>
+    <div class="summaryCardTop">
 
-<h3 id="assetTotal">
+        <p>Assets</p>
 
-₹0
+        <span id="assetExpandIcon">▼</span>
 
-</h3>
+    </div>
+
+    <h3 id="assetTotal">₹0</h3>
 
 </div>
 
@@ -764,13 +766,11 @@ Total Net Worth
 
 </div>
 
-<h3>
+<div id="assetListContainer" class="assetListContainer">
 
-Assets
+    <div id="assetList"></div>
 
-</h3>
-
-<div id="assetList"></div>
+</div>
 
 <h3>
 
