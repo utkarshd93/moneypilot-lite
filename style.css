@@ -3332,52 +3332,103 @@ transform:scale(1);
 ========================================= */
 
 .netWorthNavigation{
-    margin-top:20px;
-    margin-bottom:20px;
+
+margin:18px 0 24px;
+
 }
 
 .netWorthCard{
-    background:#ffffff;
-    border-radius:18px;
-    padding:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
-    transition:.25s;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.12);
+
+box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+cursor:pointer;
+
+transition:.25s;
+
 }
 
 .netWorthCard:hover{
-    transform:translateY(-2px);
+
+transform:translateY(-2px);
+
 }
 
 .netWorthCard .left{
-    display:flex;
-    align-items:center;
-    gap:15px;
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
 }
 
 .diamond{
-    width:52px;
-    height:52px;
-    border-radius:50%;
-    background:#EEF4FF;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
+
+width:58px;
+
+height:58px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.18);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+flex-shrink:0;
+
 }
 
-.netWorthCard h3{
-    margin:0;
-    font-size:18px;
+.netWorthText h3{
+
+margin:0;
+
+font-size:18px;
+
+font-weight:600;
+
 }
 
-.netWorthCard p{
-    margin-top:4px;
-    color:#777;
-    font-size:13px;
+.netWorthText span{
+
+display:block;
+
+margin-top:4px;
+
+font-size:13px;
+
+color:rgba(255,255,255,.70);
+
+}
+
+.arrow{
+
+font-size:26px;
+
+color:rgba(255,255,255,.70);
+
 }
 
 /* ---------- Net Worth Page ---------- */
