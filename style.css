@@ -3393,17 +3393,7 @@ transform:scale(1);
     box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
 
-.summaryGrid{
 
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:14px;
-
-    margin-top:20px;
-
-}
 /* =====================================================
                 CSS END
 ===================================================== */
