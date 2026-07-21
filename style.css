@@ -3319,6 +3319,102 @@ transform:scale(1);
 
 }
 
+.networth-card{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:16px;
+
+margin-top:18px;
+
+border-radius:18px;
+
+background:white;
+
+cursor:pointer;
+
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.networth-icon{
+
+font-size:28px;
+
+}
+
+.networth-content{
+
+flex:1;
+
+margin-left:15px;
+
+}
+
+.networth-content h3{
+
+margin:0;
+
+}
+
+.networth-content p{
+
+margin-top:4px;
+
+font-size:13px;
+
+color:#888;
+
+}
+
+.networth-arrow{
+
+font-size:28px;
+
+color:#999;
+
+}
+
+.networth-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+.summary-box{
+
+background:white;
+
+padding:18px;
+
+border-radius:16px;
+
+box-shadow:0 8px 18px rgba(0,0,0,.08);
+
+}
+
+.page-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
