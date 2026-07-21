@@ -619,21 +619,23 @@ function resetAssetForm(){
 
 }
 
-assetSummaryCard.onclick = function(){
+assetSummaryCard.onclick = function () {
 
     assetsExpanded = !assetsExpanded;
 
-    if(assetsExpanded){
+    if (assetsExpanded) {
+
+        renderAssets();   // <-- ADD THIS
 
         assetListContainer.classList.add("expanded");
 
-        assetExpandIcon.textContent="▲";
+        assetExpandIcon.textContent = "▲";
 
-    }else{
+    } else {
 
         assetListContainer.classList.remove("expanded");
 
-        assetExpandIcon.textContent="▼";
+        assetExpandIcon.textContent = "▼";
 
     }
 
