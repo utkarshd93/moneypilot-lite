@@ -3431,6 +3431,28 @@ color:rgba(255,255,255,.70);
 
 }
 
+#netWorthPage h3{
+
+    color:#fff;
+
+    margin:22px 0 12px;
+
+    font-size:20px;
+
+}
+
+#netWorthPage .pageHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:24px;
+
+}
+
 /* ---------- Net Worth Page ---------- */
 
 .pageHeader{
@@ -3458,36 +3480,75 @@ color:rgba(255,255,255,.70);
 }
 
 .summaryCard{
-    background:white;
-    border-radius:16px;
-    padding:18px;
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+
+    padding:16px;
+
+    color:#fff;
+
+    box-sizing:border-box;
+
 }
 
 .summaryCard p{
-    color:#666;
-    margin-bottom:8px;
+
+    margin:0;
+
+    font-size:13px;
+
+    color:rgba(255,255,255,.70);
+
 }
 
 .summaryCard h2,
 .summaryCard h3{
-    margin:0;
+
+    margin:10px 0 0;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#fff;
+
 }
 
 .netWorthGrid{
+
     display:grid;
+
     grid-template-columns:repeat(2,1fr);
-    gap:16px;
-    margin-bottom:25px;
+
+    gap:14px;
+
+    margin-top:16px;
+
 }
 
 #assetList,
 #liabilityList{
-    background:white;
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+
     padding:18px;
-    border-radius:14px;
-    margin-bottom:20px;
-    box-shadow:0 6px 18px rgba(0,0,0,.06);
+
+    color:#fff;
+
+    min-height:70px;
+
 }
 
 .cardText{
