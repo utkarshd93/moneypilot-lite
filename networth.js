@@ -158,6 +158,17 @@ document.getElementById("deleteAssetBtn");
 const cancelAssetActionBtn =
 document.getElementById("cancelAssetActionBtn");
 
+const assetSummaryCard =
+document.getElementById("assetSummaryCard");
+
+const assetListContainer =
+document.getElementById("assetListContainer");
+
+const assetExpandIcon =
+document.getElementById("assetExpandIcon");
+
+let assetsExpanded = false;
+
 let selectedAssetId = null;
 
 const DEFAULT_ASSET_CATEGORIES = [
@@ -486,7 +497,7 @@ function renderAssets() {
 
                 <div class="assetInfo">
 
-                    <h4>${asset.category}</h4>
+                    <h4>${getAssetIcon(asset.category)} ${asset.category}</h4>
 
                     <p>${asset.description || "No Description"}</p>
 
@@ -605,5 +616,61 @@ function resetAssetForm(){
     assetAmount.value = "";
 
     assetDescription.value = "";
+
+}
+
+assetSummaryCard.onclick = function(){
+
+    assetsExpanded = !assetsExpanded;
+
+    if(assetsExpanded){
+
+        assetListContainer.classList.add("expanded");
+
+        assetExpandIcon.textContent="▲";
+
+    }else{
+
+        assetListContainer.classList.remove("expanded");
+
+        assetExpandIcon.textContent="▼";
+
+    }
+
+};
+
+function getAssetIcon(category){
+
+    switch(category){
+
+        case "House": return "🏠";
+
+        case "Flat": return "🏢";
+
+        case "Land": return "🌾";
+
+        case "Plot": return "📍";
+
+        case "Warehouse": return "🏭";
+
+        case "Vehicle": return "🚗";
+
+        case "Gold": return "🥇";
+
+        case "Silver": return "🩶";
+
+        case "Mutual Fund": return "📈";
+
+        case "Stocks": return "💹";
+
+        case "FD": return "🏦";
+
+        case "Cash": return "💵";
+
+        case "Business": return "💼";
+
+        default: return "📦";
+
+    }
 
 }
