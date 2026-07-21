@@ -248,7 +248,9 @@ addAssetBtn.onclick = function(){
 
 };
 
-function closeAssetForm(){
+function closeAssetForm() {
+
+    resetAssetForm();
 
     assetSheet.classList.remove("show");
 
@@ -406,6 +408,26 @@ saveAssetBtn.onclick = function () {
 
     const assets = getAssets();
 
+    const assets = getAssets();
+
+if (isEditMode) {
+
+    const asset = assets.find(
+
+        item => item.id === editingAssetId
+
+    );
+
+    asset.category = category;
+
+    asset.amount = amount;
+
+    asset.description = description;
+
+    asset.updatedAt = Date.now();
+
+} else {
+
     assets.push({
 
         id: crypto.randomUUID(),
@@ -422,19 +444,18 @@ saveAssetBtn.onclick = function () {
 
     });
 
+}
+
     saveAssets(assets);
 
-    assetCategory.selectedIndex = 0;
+// Reset form
+resetAssetForm();
 
-    assetAmount.value = "";
+assetSheet.classList.remove("show");
 
-    assetDescription.value = "";
+loadNetWorthSummary();
 
-    assetSheet.classList.remove("show");
-
-    loadNetWorthSummary();
-
-    renderAssets();
+renderAssets();
 
 };
 
@@ -552,10 +573,54 @@ deleteAssetBtn.onclick=function(){
 
 };
 
-editAssetBtn.onclick=function(){
+editAssetBtn.onclick = function () {
+
+    const asset = getAssets().find(
+
+        item => item.id === selectedAssetId
+
+    );
+
+    if (!asset) return;
+
+    editingAssetId = asset.id;
+
+    isEditMode = true;
+
+    document.getElementById("assetSheetTitle").textContent =
+
+        "Edit Asset";
+
+    saveAssetBtn.textContent =
+
+        "Update Asset";
+
+    loadAssetCategories(asset.category);
+
+    assetAmount.value = asset.amount;
+
+    assetDescription.value = asset.description;
 
     assetActionSheet.classList.remove("show");
 
-    alert("Edit Asset will be implemented next.");
+    assetSheet.classList.add("show");
 
 };
+
+function resetAssetForm(){
+
+    editingAssetId = null;
+
+    isEditMode = false;
+
+    document.getElementById("assetSheetTitle").textContent = "Add Asset";
+
+    saveAssetBtn.textContent = "Save Asset";
+
+    assetCategory.selectedIndex = 0;
+
+    assetAmount.value = "";
+
+    assetDescription.value = "";
+
+}
