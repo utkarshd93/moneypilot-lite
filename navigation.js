@@ -556,6 +556,8 @@ if(netWorthCard){
 
     netWorthCard.addEventListener("click",function(){
 
+        loadNetWorthSummary();
+
         openPage("netWorth");
 
     });
