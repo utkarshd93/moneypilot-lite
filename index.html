@@ -477,6 +477,27 @@ Monthly Savings
 </div>
 
 </section>
+
+<div class="networth-card" id="openNetWorth">
+
+    <div class="networth-icon">
+        💎
+    </div>
+
+    <div class="networth-content">
+
+        <h3>Total Net Worth</h3>
+
+        <p>View Assets & Liabilities</p>
+
+    </div>
+
+    <div class="networth-arrow">
+        ›
+    </div>
+
+</div>
+
 <!-- =======================================
         RECENT TRANSACTIONS
 ======================================= -->
@@ -1154,6 +1175,112 @@ onclick="closeTransactionActions()">
 </div>
 
 </div>
+
+    <section id="netWorthPage" class="page hidden">
+
+    <div class="page-header">
+
+        <button id="backFromNetWorth">
+
+            ←
+
+        </button>
+
+        <h2>Total Net Worth</h2>
+
+        <button id="addNetWorth">
+
+            + Add
+
+        </button>
+
+    </div>
+
+    <div class="networth-summary">
+
+        <div class="summary-box">
+
+            <span>Total Net Worth</span>
+
+            <h2 id="totalNetWorth">
+
+                ₹0
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="networth-grid">
+
+        <div class="summary-box">
+
+            <span>Assets</span>
+
+            <h3 id="assetTotal">
+
+                ₹0
+
+            </h3>
+
+        </div>
+
+        <div class="summary-box">
+
+            <span>Liabilities</span>
+
+            <h3 id="liabilityTotal">
+
+                ₹0
+
+            </h3>
+
+        </div>
+
+        <div class="summary-box">
+
+            <span>Cash Balance</span>
+
+            <h3 id="cashWorth">
+
+                ₹0
+
+            </h3>
+
+        </div>
+
+        <div class="summary-box">
+
+            <span>Monthly Investment</span>
+
+            <h3 id="investmentWorth">
+
+                ₹0
+
+            </h3>
+
+        </div>
+
+    </div>
+
+    <h3>Assets</h3>
+
+    <div id="assetList">
+
+        No Assets Added
+
+    </div>
+
+    <h3>Liabilities</h3>
+
+    <div id="liabilityList">
+
+        No Liabilities Added
+
+    </div>
+
+</section>
 
 </body>
 
