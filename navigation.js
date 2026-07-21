@@ -541,3 +541,41 @@ if(viewAllButton){
 ===================================================== */
 
 openPage("home");
+
+const netWorthCard=document.getElementById("openNetWorth");
+
+const netWorthPage=document.getElementById("netWorthPage");
+
+const backBtn=document.getElementById("backFromNetWorth");
+
+if(netWorthCard){
+
+netWorthCard.onclick=function(){
+
+document.querySelectorAll(".page").forEach(p=>{
+
+p.classList.add("hidden");
+
+});
+
+netWorthPage.classList.remove("hidden");
+
+};
+
+}
+
+if(backBtn){
+
+backBtn.onclick=function(){
+
+document.querySelectorAll(".page").forEach(p=>{
+
+p.classList.add("hidden");
+
+});
+
+document.getElementById("dashboardPage").classList.remove("hidden");
+
+};
+
+}
