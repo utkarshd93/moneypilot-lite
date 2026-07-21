@@ -140,6 +140,8 @@ const saveAssetCategoryBtn = document.getElementById("saveAssetCategoryBtn");
 
 const cancelAssetCategoryBtn = document.getElementById("cancelAssetCategoryBtn");
 
+const saveAssetBtn = document.getElementById("saveAssetBtn");
+
 const ASSET_CATEGORY_KEY = "MP_ASSET_CATEGORIES";
 
 const ASSET_KEY = "MP_ASSETS";
@@ -339,23 +341,6 @@ function saveAssets(assets) {
 
 }
 
-function getAssets() {
-
-    const saved = localStorage.getItem(ASSET_KEY);
-
-    return saved ? JSON.parse(saved) : [];
-
-}
-
-function saveAssets(assets) {
-
-    localStorage.setItem(
-        ASSET_KEY,
-        JSON.stringify(assets)
-    );
-
-}
-
 saveAssetBtn.onclick = function () {
 
     const category = assetCategory.value.trim();
@@ -405,8 +390,6 @@ saveAssetBtn.onclick = function () {
         return;
 
     }
-
-    const assets = getAssets();
 
     const assets = getAssets();
 
