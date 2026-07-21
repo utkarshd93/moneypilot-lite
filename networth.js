@@ -268,23 +268,139 @@ function loadAssetCategories(selected = ""){
 
 }
 
-addAssetBtn.onclick = function () {
+saveAssetBtn.onclick = function () {
 
-    isLiabilityMode = false;
+    const category = assetCategory.value.trim();
+    const amount = Number(assetAmount.value);
+    const description = assetDescription.value.trim();
 
-    netWorthSheet.classList.remove("show");
+    // Validation
 
-    document.getElementById("assetSheetTitle").textContent = "Add Asset";
+    if (!category) {
+        alert("Please select a Category.");
+        assetCategory.focus();
+        return;
+    }
 
-    saveAssetBtn.textContent = "Save Asset";
+    if (category === "__new__") {
+        alert("Please add a category first.");
+        assetCategory.focus();
+        return;
+    }
 
-    loadAssetCategories();
+    if (assetAmount.value.trim() === "") {
+        alert("Please enter Amount.");
+        assetAmount.focus();
+        return;
+    }
 
-    assetAmount.value = "";
+    if (isNaN(amount) || amount <= 0) {
+        alert("Amount should be greater than ₹0.");
+        assetAmount.focus();
+        return;
+    }
 
-    assetDescription.value = "";
+    // =========================
+    // LIABILITY MODE
+    // =========================
 
-    assetSheet.classList.add("show");
+    if (isLiabilityMode) {
+
+        const liabilities = JSON.parse(
+            localStorage.getItem("MP_LIABILITIES") || "[]"
+        );
+
+        liabilities.push({
+
+            id: crypto.randomUUID(),
+
+            category,
+
+            amount,
+
+            description,
+
+            createdAt: Date.now(),
+
+            updatedAt: Date.now()
+
+        });
+
+        localStorage.setItem(
+            "MP_LIABILITIES",
+            JSON.stringify(liabilities)
+        );
+
+    }
+
+    // =========================
+    // EDIT ASSET
+    // =========================
+
+    else if (isEditMode) {
+
+        const assets = getAssets();
+
+        const asset = assets.find(
+
+            item => item.id === editingAssetId
+
+        );
+
+        if (asset) {
+
+            asset.category = category;
+            asset.amount = amount;
+            asset.description = description;
+            asset.updatedAt = Date.now();
+
+            saveAssets(assets);
+
+        }
+
+    }
+
+    // =========================
+    // NEW ASSET
+    // =========================
+
+    else {
+
+        const assets = getAssets();
+
+        assets.push({
+
+            id: crypto.randomUUID(),
+
+            category,
+
+            amount,
+
+            description,
+
+            createdAt: Date.now(),
+
+            updatedAt: Date.now()
+
+        });
+
+        saveAssets(assets);
+
+    }
+
+    resetAssetForm();
+
+    assetSheet.classList.remove("show");
+
+    loadNetWorthSummary();
+
+    renderAssets();
+
+    if (typeof renderLiabilities === "function") {
+
+        renderLiabilities();
+
+    }
 
 };
 
