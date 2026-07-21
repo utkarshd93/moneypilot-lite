@@ -3743,6 +3743,52 @@ font-weight:700;
 
 }
 
+/* ==========================================
+        Expandable Assets
+========================================== */
+
+.expandableCard{
+
+    cursor:pointer;
+
+}
+
+.summaryCardTop{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+#assetExpandIcon{
+
+    color:#fff;
+
+    font-size:18px;
+
+    transition:.25s;
+
+}
+
+.assetListContainer{
+
+    overflow:hidden;
+
+    max-height:0;
+
+    transition:max-height .30s ease;
+
+}
+
+.assetListContainer.expanded{
+
+    max-height:3000px;
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
