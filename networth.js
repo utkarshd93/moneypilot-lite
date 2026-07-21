@@ -140,6 +140,20 @@ const ASSET_CATEGORY_KEY = "MP_ASSET_CATEGORIES";
 
 const ASSET_KEY = "MP_ASSETS";
 
+const assetActionSheet =
+document.getElementById("assetActionSheet");
+
+const editAssetBtn =
+document.getElementById("editAssetBtn");
+
+const deleteAssetBtn =
+document.getElementById("deleteAssetBtn");
+
+const cancelAssetActionBtn =
+document.getElementById("cancelAssetActionBtn");
+
+let selectedAssetId = null;
+
 const DEFAULT_ASSET_CATEGORIES = [
 
 "Land",
@@ -490,4 +504,54 @@ function renderAssets() {
 
     });
 
+document.querySelectorAll(".assetMenuBtn").forEach(button=>{
+
+    button.onclick=function(){
+
+        selectedAssetId=this.dataset.id;
+
+        assetActionSheet.classList.add("show");
+
+    };
+
+});
+
 }
+
+cancelAssetActionBtn.onclick=function(){
+
+    assetActionSheet.classList.remove("show");
+
+    selectedAssetId=null;
+
+};
+
+deleteAssetBtn.onclick=function(){
+
+    if(!selectedAssetId) return;
+
+    const assets=getAssets().filter(
+
+        asset=>asset.id!==selectedAssetId
+
+    );
+
+    saveAssets(assets);
+
+    assetActionSheet.classList.remove("show");
+
+    selectedAssetId=null;
+
+    renderAssets();
+
+    loadNetWorthSummary();
+
+};
+
+editAssetBtn.onclick=function(){
+
+    assetActionSheet.classList.remove("show");
+
+    alert("Edit Asset will be implemented next.");
+
+};
