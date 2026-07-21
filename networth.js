@@ -8,6 +8,8 @@ let isEditMode = false;
 
 let isLiabilityMode = false;
 
+let selectedLiabilityId = null;
+
 function loadNetWorthSummary() {
 
     const cashBalance = document.getElementById("cashBalance");
@@ -473,24 +475,47 @@ saveAssetBtn.onclick = function () {
 
 if (isLiabilityMode) {
 
-    const liabilities = JSON.parse(
-        localStorage.getItem(LIABILITY_KEY) || "[]"
-    );
+    const liabilities = getLiabilities();
 
-    liabilities.push({
+    if (isEditMode) {
 
-        id: crypto.randomUUID(),
-        category,
-        amount,
-        description,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        const liability = liabilities.find(
 
-    });
+            item => item.id === editingAssetId
+
+        );
+
+        if (liability) {
+
+            liability.category = category;
+            liability.amount = amount;
+            liability.description = description;
+            liability.updatedAt = Date.now();
+
+        }
+
+    }
+    else {
+
+        liabilities.push({
+
+            id: crypto.randomUUID(),
+            category,
+            amount,
+            description,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+
+        });
+
+    }
 
     localStorage.setItem(
+
         LIABILITY_KEY,
+
         JSON.stringify(liabilities)
+
     );
 
 }
@@ -635,36 +660,29 @@ document.querySelectorAll(".assetMenuBtn").forEach(button=>{
 
 function renderLiabilities() {
 
-    const liabilityList =
-    document.getElementById("liabilityList");
+    const liabilityList = document.getElementById("liabilityList");
 
-    if(!liabilityList) return;
+    if (!liabilityList) return;
 
     const liabilities = getLiabilities();
 
-    if(liabilities.length===0){
+    if (liabilities.length === 0) {
 
-        liabilityList.innerHTML=`
-
+        liabilityList.innerHTML = `
             <div class="emptyState">
-
                 <div class="emptyIcon">💳</div>
-
                 <p>No Liabilities Yet</p>
-
                 <span>Add your first liability.</span>
-
             </div>
-
         `;
 
         return;
 
     }
 
-    liabilityList.innerHTML="";
+    liabilityList.innerHTML = "";
 
-    liabilities.forEach(liability=>{
+    liabilities.forEach(liability => {
 
         liabilityList.innerHTML += `
 
@@ -682,11 +700,37 @@ function renderLiabilities() {
 
                 <h3>${formatCurrency(liability.amount)}</h3>
 
+                <button
+                    class="liabilityMenuBtn"
+                    data-id="${liability.id}">
+
+                    ⋮
+
+                </button>
+
             </div>
 
         </div>
 
         `;
+
+    });
+
+    document.querySelectorAll(".liabilityMenuBtn").forEach(button => {
+
+        button.onclick = function () {
+
+            selectedLiabilityId = this.dataset.id;
+
+            isLiabilityMode = true;
+
+            editAssetBtn.textContent = "✏️ Edit Liability";
+
+            deleteAssetBtn.textContent = "🗑 Delete Liability";
+
+            assetActionSheet.classList.add("show");
+
+        };
 
     });
 
@@ -701,23 +745,46 @@ cancelAssetActionBtn.onclick=function(){
 
 };
 
-deleteAssetBtn.onclick=function(){
+deleteAssetBtn.onclick = function () {
 
-    if(!selectedAssetId) return;
+    if (isLiabilityMode) {
 
-    const assets=getAssets().filter(
+        const liabilities = getLiabilities().filter(
 
-        asset=>asset.id!==selectedAssetId
+            item => item.id !== selectedLiabilityId
 
-    );
+        );
 
-    saveAssets(assets);
+        localStorage.setItem(
+
+            LIABILITY_KEY,
+
+            JSON.stringify(liabilities)
+
+        );
+
+        selectedLiabilityId = null;
+
+        renderLiabilities();
+
+    }
+    else {
+
+        const assets = getAssets().filter(
+
+            asset => asset.id !== selectedAssetId
+
+        );
+
+        saveAssets(assets);
+
+        selectedAssetId = null;
+
+        renderAssets();
+
+    }
 
     assetActionSheet.classList.remove("show");
-
-    selectedAssetId=null;
-
-    renderAssets();
 
     loadNetWorthSummary();
 
@@ -725,31 +792,75 @@ deleteAssetBtn.onclick=function(){
 
 editAssetBtn.onclick = function () {
 
-    const asset = getAssets().find(
+    if (isLiabilityMode) {
 
-        item => item.id === selectedAssetId
+        const liability = getLiabilities().find(
 
-    );
+            item => item.id === selectedLiabilityId
 
-    if (!asset) return;
+        );
 
-    editingAssetId = asset.id;
+        if (!liability) return;
 
-    isEditMode = true;
+        editingAssetId = liability.id;
 
-    document.getElementById("assetSheetTitle").textContent =
+        isEditMode = true;
 
-        "Edit Asset";
+        document.getElementById("assetSheetTitle").textContent =
 
-    saveAssetBtn.textContent =
+            "Edit Liability";
 
-        "Update Asset";
+        saveAssetBtn.textContent =
 
-    loadAssetCategories(asset.category);
+            "Update Liability";
 
-    assetAmount.value = asset.amount;
+        assetCategory.innerHTML = "";
 
-    assetDescription.value = asset.description;
+        assetCategory.add(new Option("Select Category", ""));
+
+        assetCategory.add(new Option("Home Loan", "Home Loan"));
+        assetCategory.add(new Option("Car Loan", "Car Loan"));
+        assetCategory.add(new Option("Personal Loan", "Personal Loan"));
+        assetCategory.add(new Option("Business Loan", "Business Loan"));
+        assetCategory.add(new Option("Credit Card", "Credit Card"));
+        assetCategory.add(new Option("Other", "Other"));
+
+        assetCategory.value = liability.category;
+
+        assetAmount.value = liability.amount;
+
+        assetDescription.value = liability.description;
+
+    }
+    else {
+
+        const asset = getAssets().find(
+
+            item => item.id === selectedAssetId
+
+        );
+
+        if (!asset) return;
+
+        editingAssetId = asset.id;
+
+        isEditMode = true;
+
+        document.getElementById("assetSheetTitle").textContent =
+
+            "Edit Asset";
+
+        saveAssetBtn.textContent =
+
+            "Update Asset";
+
+        loadAssetCategories(asset.category);
+
+        assetAmount.value = asset.amount;
+
+        assetDescription.value = asset.description;
+
+    }
 
     assetActionSheet.classList.remove("show");
 
