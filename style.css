@@ -382,15 +382,15 @@ color:white;
 
 .summaryGrid{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:repeat(2,minmax(0,1fr));
+grid-template-columns:repeat(2,minmax(0,1fr));
 
-    gap:14px;
+gap:10px;
 
-    margin-top:18px;
+margin-top:16px;
 
-    width:100%;
+width:100%;
 
 }
 
@@ -400,29 +400,33 @@ display:flex;
 
 align-items:center;
 
-gap:12px;
+gap:8px;
 
-padding:12px;
+padding:10px;
 
-border-radius:18px;
+border-radius:16px;
 
 background:rgba(255,255,255,.10);
 
-width:100%;
-
 min-width:0;
 
-height:86px;
+overflow:hidden;
 
-box-sizing:border-box;
+}
+
+.smallCard > div{
+
+    flex:1;
+
+    min-width:0;
 
 }
 
 .emoji{
 
-width:40px;
+width:34px;
 
-height:40px;
+height:34px;
 
 display:flex;
 
@@ -430,7 +434,7 @@ align-items:center;
 
 justify-content:center;
 
-font-size:22px;
+font-size:20px;
 
 flex-shrink:0;
 
@@ -438,19 +442,31 @@ flex-shrink:0;
 
 .smallCard p{
 
-font-size:12px;
+font-size:11px;
 
-margin-bottom:4px;
+margin:0 0 3px;
+
+line-height:14px;
+
+white-space:normal;
 
 }
 
 .smallCard h3{
 
-font-size:18px;
+font-size:15px;
 
 font-weight:700;
 
-color:white;
+line-height:18px;
+
+margin:0;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
 
 }
 
@@ -1553,12 +1569,6 @@ justify-content:space-between;
 
 }
 
-.summaryGrid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
 .balanceCard h1{
 
 font-size:34px;
@@ -1961,7 +1971,7 @@ font-size:22px;
 
 .balanceCard{
 
-padding:16px;
+padding:14px;
 
 }
 
