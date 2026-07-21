@@ -188,6 +188,17 @@ document.getElementById("assetListContainer");
 const assetExpandIcon =
 document.getElementById("assetExpandIcon");
 
+const liabilitySummaryCard =
+document.getElementById("liabilitySummaryCard");
+
+const liabilityListContainer =
+document.getElementById("liabilityListContainer");
+
+const liabilityExpandIcon =
+document.getElementById("liabilityExpandIcon");
+
+let liabilitiesExpanded = false;
+
 let assetsExpanded = false;
 
 let selectedAssetId = null;
@@ -621,6 +632,67 @@ document.querySelectorAll(".assetMenuBtn").forEach(button=>{
 
 }
 
+
+function renderLiabilities() {
+
+    const liabilityList =
+    document.getElementById("liabilityList");
+
+    if(!liabilityList) return;
+
+    const liabilities = getLiabilities();
+
+    if(liabilities.length===0){
+
+        liabilityList.innerHTML=`
+
+            <div class="emptyState">
+
+                <div class="emptyIcon">💳</div>
+
+                <p>No Liabilities Yet</p>
+
+                <span>Add your first liability.</span>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    liabilityList.innerHTML="";
+
+    liabilities.forEach(liability=>{
+
+        liabilityList.innerHTML += `
+
+        <div class="assetCard">
+
+            <div class="assetInfo">
+
+                <h4>${getLiabilityIcon(liability.category)} ${liability.category}</h4>
+
+                <p>${liability.description || "No Description"}</p>
+
+            </div>
+
+            <div class="assetRight">
+
+                <h3>${formatCurrency(liability.amount)}</h3>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
 cancelAssetActionBtn.onclick=function(){
 
     assetActionSheet.classList.remove("show");
@@ -762,6 +834,56 @@ function getAssetIcon(category){
     }
 
 }
+
+function getLiabilityIcon(category){
+
+    switch(category){
+
+        case "Home Loan":
+            return "🏠";
+
+        case "Car Loan":
+            return "🚗";
+
+        case "Personal Loan":
+            return "💰";
+
+        case "Business Loan":
+            return "🏢";
+
+        case "Credit Card":
+            return "💳";
+
+        default:
+            return "📄";
+
+    }
+
+}
+
+liabilitySummaryCard.onclick=function(){
+
+    liabilitiesExpanded=!liabilitiesExpanded;
+
+    if(liabilitiesExpanded){
+
+        renderLiabilities();
+
+        liabilityListContainer.classList.add("expanded");
+
+        liabilityExpandIcon.textContent="▲";
+
+    }
+    else{
+
+        liabilityListContainer.classList.remove("expanded");
+
+        liabilityExpandIcon.textContent="▼";
+
+    }
+
+};
+
 
 function getLiabilities(){
 
