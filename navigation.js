@@ -11,6 +11,8 @@ transactions: document.getElementById("transactionsPage"),
 
 analytics: document.getElementById("analyticsPage"),
 
+netWorth: document.getElementById("netWorthPage"),
+
 settings: document.getElementById("settingsPage")
 
 };
@@ -548,19 +550,13 @@ openPage("home");
 
 const netWorthCard = document.getElementById("openNetWorthPage");
 
-const netWorthPage = document.getElementById("netWorthPage");
-
 const backBtn = document.getElementById("backFromNetWorth");
 
 if(netWorthCard){
 
     netWorthCard.addEventListener("click",function(){
 
-        hideAllPages();
-
-        netWorthPage.style.display="block";
-
-        netWorthPage.classList.add("active");
+        openPage("netWorth");
 
     });
 
@@ -569,8 +565,6 @@ if(netWorthCard){
 if(backBtn){
 
     backBtn.addEventListener("click",function(){
-
-        netWorthPage.style.display="none";
 
         openPage("home");
 
