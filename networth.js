@@ -26,3 +26,50 @@ function loadNetWorthSummary() {
         cashBalance.textContent;
 
 }
+
+/* =====================================================
+        Net Worth Action Sheet
+===================================================== */
+
+const addNetWorthBtn =
+document.getElementById("addNetWorth");
+
+const netWorthSheet =
+document.getElementById("netWorthActionSheet");
+
+const cancelNetWorthSheet =
+document.getElementById("cancelNetWorthSheet");
+
+if(addNetWorthBtn){
+
+    addNetWorthBtn.onclick=function(){
+
+        netWorthSheet.classList.add("show");
+
+    };
+
+}
+
+if(cancelNetWorthSheet){
+
+    cancelNetWorthSheet.onclick=function(){
+
+        netWorthSheet.classList.remove("show");
+
+    };
+
+}
+
+window.addEventListener(
+
+"click",
+
+function(e){
+
+    if(e.target===netWorthSheet){
+
+        netWorthSheet.classList.remove("show");
+
+    }
+
+});
