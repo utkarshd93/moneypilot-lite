@@ -3643,6 +3643,106 @@ font-weight:700;
 
 }
 
+.assetCard{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+.assetInfo h4{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:16px;
+
+}
+
+.assetInfo p{
+
+    margin-top:6px;
+
+    color:rgba(255,255,255,.65);
+
+    font-size:13px;
+
+}
+
+.assetRight{
+
+    text-align:right;
+
+}
+
+.assetRight h3{
+
+    margin:0;
+
+    color:#fff;
+
+}
+
+.assetMenuBtn{
+
+    margin-top:8px;
+
+    border:none;
+
+    background:none;
+
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+.emptyState{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+}
+
+.emptyIcon{
+
+    font-size:44px;
+
+}
+
+.emptyState p{
+
+    color:#fff;
+
+    font-size:18px;
+
+    margin:12px 0 4px;
+
+}
+
+.emptyState span{
+
+    color:rgba(255,255,255,.6);
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
