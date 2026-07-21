@@ -46,7 +46,16 @@ function loadNetWorthSummary() {
 
     // Liabilities (will be implemented next)
 
-    const totalLiabilities = 0;
+    const liabilities = getLiabilities();
+
+const totalLiabilities =
+    liabilities.reduce(
+
+        (sum,item)=>sum+Number(item.amount),
+
+        0
+
+    );
 
     liabilityTotal.textContent = formatCurrency(totalLiabilities);
 
@@ -145,6 +154,8 @@ const saveAssetBtn = document.getElementById("saveAssetBtn");
 const ASSET_CATEGORY_KEY = "MP_ASSET_CATEGORIES";
 
 const ASSET_KEY = "MP_ASSETS";
+
+const LIABILITY_KEY = "MP_LIABILITIES";
 
 const assetActionSheet =
 document.getElementById("assetActionSheet");
