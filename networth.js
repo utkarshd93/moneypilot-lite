@@ -6,6 +6,8 @@ let editingAssetId = null;
 
 let isEditMode = false;
 
+let isLiabilityMode = false;
+
 function loadNetWorthSummary() {
 
     const cashBalance = document.getElementById("cashBalance");
@@ -157,6 +159,9 @@ const ASSET_KEY = "MP_ASSETS";
 
 const LIABILITY_KEY = "MP_LIABILITIES";
 
+const addLiabilityBtn =
+document.getElementById("addLiabilityBtn");
+
 const assetActionSheet =
 document.getElementById("assetActionSheet");
 
@@ -258,15 +263,52 @@ function loadAssetCategories(selected = ""){
 
 }
 
-addAssetBtn.onclick = function(){
+addAssetBtn.onclick = function () {
+
+    isLiabilityMode = false;
 
     netWorthSheet.classList.remove("show");
+
+    document.getElementById("assetSheetTitle").textContent = "Add Asset";
+
+    saveAssetBtn.textContent = "Save Asset";
+
+    loadAssetCategories();
 
     assetAmount.value = "";
 
     assetDescription.value = "";
 
-    loadAssetCategories();
+    assetSheet.classList.add("show");
+
+};
+
+addLiabilityBtn.onclick = function () {
+
+    isLiabilityMode = true;
+
+    netWorthSheet.classList.remove("show");
+
+    document.getElementById("assetSheetTitle").textContent = "Add Liability";
+
+    saveAssetBtn.textContent = "Save Liability";
+
+    // Temporary categories until we build liability categories
+
+    assetCategory.innerHTML = "";
+
+    assetCategory.add(new Option("Select Category",""));
+
+    assetCategory.add(new Option("Home Loan","Home Loan"));
+    assetCategory.add(new Option("Car Loan","Car Loan"));
+    assetCategory.add(new Option("Personal Loan","Personal Loan"));
+    assetCategory.add(new Option("Business Loan","Business Loan"));
+    assetCategory.add(new Option("Credit Card","Credit Card"));
+    assetCategory.add(new Option("Other","Other"));
+
+    assetAmount.value = "";
+
+    assetDescription.value = "";
 
     assetSheet.classList.add("show");
 
