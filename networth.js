@@ -2,6 +2,10 @@
             Net Worth
 ===================================================== */
 
+let editingAssetId = null;
+
+let isEditMode = false;
+
 function loadNetWorthSummary() {
 
     const cashBalance = document.getElementById("cashBalance");
