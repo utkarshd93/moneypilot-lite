@@ -73,3 +73,196 @@ function(e){
     }
 
 });
+
+
+/* ==========================================
+        Asset Sheet Elements
+========================================== */
+
+const assetSheet = document.getElementById("assetSheet");
+
+const addAssetBtn = document.getElementById("addAssetBtn");
+
+const closeAssetSheet = document.getElementById("closeAssetSheet");
+
+const cancelAssetBtn = document.getElementById("cancelAssetBtn");
+
+const assetCategory = document.getElementById("assetCategory");
+
+const assetAmount = document.getElementById("assetAmount");
+
+const assetDescription = document.getElementById("assetDescription");
+
+const assetCategoryPopup = document.getElementById("assetCategoryPopup");
+
+const newAssetCategoryInput = document.getElementById("newAssetCategoryInput");
+
+const saveAssetCategoryBtn = document.getElementById("saveAssetCategoryBtn");
+
+const cancelAssetCategoryBtn = document.getElementById("cancelAssetCategoryBtn");
+
+const ASSET_CATEGORY_KEY = "MP_ASSET_CATEGORIES";
+
+const DEFAULT_ASSET_CATEGORIES = [
+
+"Land",
+"House",
+"Flat",
+"Plot",
+"Mutual Fund",
+"Stocks",
+"Gold",
+"Silver",
+"FD",
+"Savings Account",
+"Current Account",
+"Cash",
+"Business",
+"Vehicle",
+"Other"
+
+];
+
+function getAssetCategories(){
+
+    const saved = localStorage.getItem(ASSET_CATEGORY_KEY);
+
+    if(saved){
+
+        return JSON.parse(saved);
+
+    }
+
+    return DEFAULT_ASSET_CATEGORIES;
+
+}
+
+function saveAssetCategories(categories){
+
+    localStorage.setItem(
+
+        ASSET_CATEGORY_KEY,
+
+        JSON.stringify(categories)
+
+    );
+
+}
+
+function loadAssetCategories(selected = ""){
+
+    assetCategory.innerHTML = "";
+
+    assetCategory.add(
+
+        new Option("Select Category","")
+
+    );
+
+    assetCategory.add(
+
+        new Option("➕ Add New Category","__new__")
+
+    );
+
+    getAssetCategories().forEach(category=>{
+
+        assetCategory.add(
+
+            new Option(category,category)
+
+        );
+
+    });
+
+    assetCategory.value = selected;
+
+}
+
+addAssetBtn.onclick = function(){
+
+    netWorthSheet.classList.remove("show");
+
+    assetAmount.value = "";
+
+    assetDescription.value = "";
+
+    loadAssetCategories();
+
+    assetSheet.classList.add("show");
+
+};
+
+function closeAssetForm(){
+
+    assetSheet.classList.remove("show");
+
+}
+
+closeAssetSheet.onclick = closeAssetForm;
+
+cancelAssetBtn.onclick = closeAssetForm;
+
+assetCategory.addEventListener(
+
+"change",
+
+function(){
+
+    if(this.value==="__new__"){
+
+        newAssetCategoryInput.value="";
+
+        assetCategoryPopup.classList.add("show");
+
+    }
+
+});
+
+cancelAssetCategoryBtn.onclick=function(){
+
+    assetCategoryPopup.classList.remove("show");
+
+    loadAssetCategories();
+
+};
+
+saveAssetCategoryBtn.onclick=function(){
+
+    const category =
+
+    newAssetCategoryInput.value.trim();
+
+    if(category===""){
+
+        alert("Please enter category.");
+
+        return;
+
+    }
+
+    const categories = getAssetCategories();
+
+    const exists = categories.some(
+
+        item =>
+
+        item.toLowerCase()===category.toLowerCase()
+
+    );
+
+    if(!exists){
+
+        categories.push(category);
+
+        saveAssetCategories(categories);
+
+    }
+
+    assetCategoryPopup.classList.remove("show");
+
+    loadAssetCategories(category);
+
+};
+
+
