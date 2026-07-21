@@ -542,40 +542,38 @@ if(viewAllButton){
 
 openPage("home");
 
-const netWorthCard=document.getElementById("openNetWorth");
+/* =====================================================
+        Net Worth Navigation
+===================================================== */
 
-const netWorthPage=document.getElementById("netWorthPage");
+const netWorthCard = document.getElementById("openNetWorthPage");
 
-const backBtn=document.getElementById("backFromNetWorth");
+const netWorthPage = document.getElementById("netWorthPage");
+
+const backBtn = document.getElementById("backFromNetWorth");
 
 if(netWorthCard){
 
-netWorthCard.onclick=function(){
+    netWorthCard.addEventListener("click",function(){
 
-document.querySelectorAll(".page").forEach(p=>{
+        hideAllPages();
 
-p.classList.add("hidden");
+        netWorthPage.style.display="block";
 
-});
+        netWorthPage.classList.add("active");
 
-netWorthPage.classList.remove("hidden");
-
-};
+    });
 
 }
 
 if(backBtn){
 
-backBtn.onclick=function(){
+    backBtn.addEventListener("click",function(){
 
-document.querySelectorAll(".page").forEach(p=>{
+        netWorthPage.style.display="none";
 
-p.classList.add("hidden");
+        openPage("home");
 
-});
-
-document.getElementById("dashboardPage").classList.remove("hidden");
-
-};
+    });
 
 }
