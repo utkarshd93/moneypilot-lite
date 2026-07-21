@@ -416,10 +416,78 @@ saveAssetBtn.onclick = function () {
 
     loadNetWorthSummary();
 
+    renderAssets();
+
 };
 
 function formatCurrency(amount) {
 
     return "₹" + Number(amount).toLocaleString("en-IN");
+
+}
+
+function renderAssets() {
+
+    const assetList = document.getElementById("assetList");
+
+    if (!assetList) return;
+
+    const assets = getAssets();
+
+    if (assets.length === 0) {
+
+        assetList.innerHTML = `
+
+            <div class="emptyState">
+
+                <div class="emptyIcon">🏦</div>
+
+                <p>No Assets Yet</p>
+
+                <span>Add your first asset.</span>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    assetList.innerHTML = "";
+
+    assets.forEach(asset => {
+
+        assetList.innerHTML += `
+
+            <div class="assetCard" data-id="${asset.id}">
+
+                <div class="assetInfo">
+
+                    <h4>${asset.category}</h4>
+
+                    <p>${asset.description || "No Description"}</p>
+
+                </div>
+
+                <div class="assetRight">
+
+                    <h3>${formatCurrency(asset.amount)}</h3>
+
+                    <button
+                        class="assetMenuBtn"
+                        data-id="${asset.id}">
+
+                        ⋮
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
 
 }
