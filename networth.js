@@ -10,20 +10,55 @@ function loadNetWorthSummary() {
     const cashBalanceWorth = document.getElementById("cashBalanceWorth");
     const investmentWorth = document.getElementById("investmentWorth");
 
+    const assetTotal = document.getElementById("assetTotal");
+    const liabilityTotal = document.getElementById("liabilityTotal");
+    const totalWorthValue = document.getElementById("totalWorthValue");
+
+    // Copy values from Dashboard
+
     if (cashBalance && cashBalanceWorth) {
+
         cashBalanceWorth.textContent = cashBalance.textContent;
+
     }
 
     if (investment && investmentWorth) {
+
         investmentWorth.textContent = investment.textContent;
+
     }
 
-    document.getElementById("assetTotal").textContent = "₹0";
+    // Calculate Assets
 
-    document.getElementById("liabilityTotal").textContent = "₹0";
+    const assets = getAssets();
 
-    document.getElementById("totalWorthValue").textContent =
-        cashBalance.textContent;
+    const totalAssets = assets.reduce((sum, asset) => {
+
+        return sum + Number(asset.amount);
+
+    }, 0);
+
+    assetTotal.textContent = formatCurrency(totalAssets);
+
+    // Liabilities (will be implemented next)
+
+    const totalLiabilities = 0;
+
+    liabilityTotal.textContent = formatCurrency(totalLiabilities);
+
+    // Total Net Worth
+
+    const cash = cashBalance
+        ? Number(cashBalance.textContent.replace(/[₹,]/g, ""))
+        : 0;
+
+    totalWorthValue.textContent = formatCurrency(
+
+        cash +
+        totalAssets -
+        totalLiabilities
+
+    );
 
 }
 
@@ -102,6 +137,8 @@ const saveAssetCategoryBtn = document.getElementById("saveAssetCategoryBtn");
 const cancelAssetCategoryBtn = document.getElementById("cancelAssetCategoryBtn");
 
 const ASSET_CATEGORY_KEY = "MP_ASSET_CATEGORIES";
+
+const ASSET_KEY = "MP_ASSETS";
 
 const DEFAULT_ASSET_CATEGORIES = [
 
@@ -265,4 +302,124 @@ saveAssetCategoryBtn.onclick=function(){
 
 };
 
+function getAssets() {
 
+    const saved = localStorage.getItem(ASSET_KEY);
+
+    return saved ? JSON.parse(saved) : [];
+
+}
+
+function saveAssets(assets) {
+
+    localStorage.setItem(
+        ASSET_KEY,
+        JSON.stringify(assets)
+    );
+
+}
+
+function getAssets() {
+
+    const saved = localStorage.getItem(ASSET_KEY);
+
+    return saved ? JSON.parse(saved) : [];
+
+}
+
+function saveAssets(assets) {
+
+    localStorage.setItem(
+        ASSET_KEY,
+        JSON.stringify(assets)
+    );
+
+}
+
+saveAssetBtn.onclick = function () {
+
+    const category = assetCategory.value.trim();
+
+    const amount = Number(assetAmount.value);
+
+    const description = assetDescription.value.trim();
+
+    // Validation
+
+    if (!category) {
+
+        alert("Please select an Asset Category.");
+
+        assetCategory.focus();
+
+        return;
+
+    }
+
+    if (category === "__new__") {
+
+        alert("Please add a category first.");
+
+        assetCategory.focus();
+
+        return;
+
+    }
+
+    if (assetAmount.value.trim() === "") {
+
+        alert("Please enter the Asset Amount.");
+
+        assetAmount.focus();
+
+        return;
+
+    }
+
+    if (isNaN(amount) || amount <= 0) {
+
+        alert("Amount should be greater than ₹0.");
+
+        assetAmount.focus();
+
+        return;
+
+    }
+
+    const assets = getAssets();
+
+    assets.push({
+
+        id: crypto.randomUUID(),
+
+        category,
+
+        amount,
+
+        description,
+
+        createdAt: Date.now(),
+
+        updatedAt: Date.now()
+
+    });
+
+    saveAssets(assets);
+
+    assetCategory.selectedIndex = 0;
+
+    assetAmount.value = "";
+
+    assetDescription.value = "";
+
+    assetSheet.classList.remove("show");
+
+    loadNetWorthSummary();
+
+};
+
+function formatCurrency(amount) {
+
+    return "₹" + Number(amount).toLocaleString("en-IN");
+
+}
