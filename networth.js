@@ -48,16 +48,21 @@ function loadNetWorthSummary() {
 
     // Liabilities (will be implemented next)
 
+    let totalLiabilities = 0;
+
+if (typeof getLiabilities === "function") {
+
     const liabilities = getLiabilities();
 
-const totalLiabilities =
-    liabilities.reduce(
+    totalLiabilities = liabilities.reduce(
 
-        (sum,item)=>sum+Number(item.amount),
+        (sum, item) => sum + Number(item.amount),
 
         0
 
     );
+
+}
 
     liabilityTotal.textContent = formatCurrency(totalLiabilities);
 
@@ -473,6 +478,38 @@ if (isEditMode) {
 
     asset.updatedAt = Date.now();
 
+} if (isLiabilityMode) {
+
+    const liabilities = JSON.parse(
+
+        localStorage.getItem("MP_LIABILITIES") || "[]"
+
+    );
+
+    liabilities.push({
+
+        id: crypto.randomUUID(),
+
+        category,
+
+        amount,
+
+        description,
+
+        createdAt: Date.now(),
+
+        updatedAt: Date.now()
+
+    });
+
+    localStorage.setItem(
+
+        "MP_LIABILITIES",
+
+        JSON.stringify(liabilities)
+
+    );
+
 } else {
 
     assets.push({
@@ -493,7 +530,11 @@ if (isEditMode) {
 
 }
 
+    if (!isLiabilityMode) {
+
     saveAssets(assets);
+
+}
 
 // Reset form
 resetAssetForm();
@@ -669,6 +710,8 @@ function resetAssetForm(){
     assetAmount.value = "";
 
     assetDescription.value = "";
+
+    isLiabilityMode = false;
 
 }
 
