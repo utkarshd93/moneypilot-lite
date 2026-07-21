@@ -386,7 +386,9 @@ display:grid;
 
 grid-template-columns:1fr 1fr;
 
-gap:16px;
+gap:14px;
+
+margin-top:16px;
 
 }
 
@@ -429,43 +431,6 @@ font-weight:700;
 color:white;
 
 }
-/* =====================================================
-                    STATS GRID
-===================================================== */
-
-.statsGrid{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:14px;
-
-margin-top:14px;
-
-margin-bottom:0;
-
-}
-
-.statCard{
-
-padding:16px 12px;
-
-border-radius:22px;
-
-background:rgba(255,255,255,.10);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,.12);
-
-text-align:center;
-
-transition:.25s;
-
-box-shadow:0 10px 25px rgba(0,0,0,.18);
-
-}
 
 .statCard:hover{
 
@@ -473,37 +438,6 @@ transform:translateY(-3px);
 
 }
 
-.statCard p{
-
-font-size:13px;
-
-font-weight:500;
-
-margin-bottom:8px;
-
-opacity:.85;
-
-min-height:34px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
-
-}
-
-.statCard h2{
-
-font-size:22px;
-
-font-weight:700;
-
-color:white;
-
-}
 /* =====================================================
                 RECENT CARD
 ===================================================== */
@@ -1771,6 +1705,18 @@ display:none;
 .incomeCard{
 
 border-left:5px solid #22C55E;
+
+}
+
+.investmentCard{
+
+border-left:4px solid #3B82F6;
+
+}
+
+.savingCard{
+
+border-left:4px solid #F59E0B;
 
 }
 
