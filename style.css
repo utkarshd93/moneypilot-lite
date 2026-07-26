@@ -3845,7 +3845,23 @@ font-weight:700;
 
     font-weight:700;
 
-    color:#0f9d58;
+}
+
+.analyticsTxnAmount.expense{
+
+    color:#e53935;
+
+}
+
+.analyticsTxnAmount.income{
+
+    color:#16a34a;
+
+}
+
+.analyticsTxnAmount.investment{
+
+    color:#2563eb;
 
 }
 
