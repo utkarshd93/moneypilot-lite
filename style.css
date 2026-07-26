@@ -746,9 +746,9 @@ background:rgba(255,255,255,.12);
 
 .transactionInfo h3{
 
-font-size:15px;
+font-size:16px;
 
-font-weight:600;
+font-weight:700;
 
 margin-bottom:3px;
 
@@ -760,7 +760,7 @@ font-size:13px;
 
 color:rgba(255,255,255,.72);
 
-margin:4px 0;
+margin:6px 0 8px;
 
 display:-webkit-box;
 
@@ -806,7 +806,7 @@ align-items:center;
 
 .transactionAmount{
 
-    min-width:100px;
+    min-width:88px;
 
     text-align:right;
 
@@ -2664,17 +2664,11 @@ display:block;
 }
 
 .transactionMenu{
-
     display:flex;
-
-    align-items:flex-start;
-
-    gap:14px;
-
+    align-items:center;
+    gap:10px;
     margin-left:18px;
-
     flex-shrink:0;
-
 }
 
 .menuButton{
@@ -3959,7 +3953,7 @@ font-weight:700;
 
 .swipeIndicator span{
 
-    color:rgba(255,255,255,.40);
+    color:rgba(255,255,255,.75);
 
     font-size:16px;
 
