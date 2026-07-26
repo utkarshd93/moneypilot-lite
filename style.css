@@ -4116,27 +4116,31 @@ display:none;
 
     align-items:center;
 
-    gap:10px;
+    gap:6px;
 
-    margin-left:0;
+    margin-left:auto;
 
 }
 
 .transactionPageCard .transactionAmount{
 
-    min-width:90px;
+    min-width:auto;
+
+    width:auto;
 
     text-align:right;
 
     font-size:18px;
+
+    font-weight:700;
+
+    white-space:nowrap;
 
     display:flex;
 
     align-items:center;
 
     justify-content:flex-end;
-
-    height:24px;
 
 }
 
