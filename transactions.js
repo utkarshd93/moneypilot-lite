@@ -560,71 +560,72 @@ function drawTransactionCard(container, transaction){
 
     </div>
 
-    <div class="transactionItem" data-id="${transaction.id}">
+    <div class="transactionItem"
+     data-id="${transaction.id}">
 
-    <div class="transactionHeader">
+    <div class="transactionLeft">
 
-        <div class="transactionTitle">
+        <div class="transactionIcon">
 
-            <div class="transactionIcon">
+            ${icon}
 
-                ${icon}
+        </div>
 
-            </div>
+        <div class="transactionInfo">
 
-            <span>
+            <h3>
 
                 ${transaction.category}
 
-            </span>
+            </h3>
 
-        </div>
+            <p>
 
-        <div class="transactionMenu">
+                ${transaction.note || "-"}
 
-            <div class="transactionAmount ${amountClass}">
+            </p>
 
-                ${sign}₹${formatMoney(transaction.amount)}
+            <div class="transactionFooter">
 
-            </div>
+    <span>
 
-            <button
-                class="menuButton"
-                onclick="openTransactionActions(${transaction.id})">
+        ${formatDisplayDate(transaction.date)}
 
-                ⋮
+    </span>
 
-            </button>
+    <span class="swipeIndicator">
 
-        </div>
+        <span>‹</span>
 
-    </div>
+        <span>‹</span>
 
-    <div class="transactionDescription">
-
-        ${transaction.note || "-"}
-
-    </div>
-
-    <div class="transactionFooter">
-
-        <span>
-
-            ${formatDisplayDate(transaction.date)}
-
-        </span>
-
-        <div class="swipeIndicator">
-
-            <span>‹</span>
-
-            <span>‹</span>
-
-        </div>
-
-    </div>
+    </span>
 
 </div>
+
+        </div>
+
+    </div>
+
+    <div class="transactionMenu">
+
+    <div class="transactionAmount ${amountClass}">
+
+        ${sign}₹${formatMoney(transaction.amount)}
+
+    </div>
+
+    <button
+        class="menuButton"
+        onclick="openTransactionActions(${transaction.id})">
+
+        ⋮
+
+    </button>
+
+</div>
+
+   </div>
 
 </div>
 
