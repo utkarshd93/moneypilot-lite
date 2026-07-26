@@ -561,63 +561,59 @@ function drawTransactionCard(container, transaction){
     </div>
 
     <div class="transactionItem"
-         data-id="${transaction.id}">
+     data-id="${transaction.id}">
 
-        <div class="transactionTop">
+    <div class="transactionLeft">
 
-            <div class="transactionLeft">
+        <div class="transactionIcon">
 
-                <div class="transactionIcon">
+            ${icon}
 
-                    ${icon}
+        </div>
 
-                </div>
+        <div class="transactionInfo">
 
-                <div class="transactionContent">
+            <h3>
 
-                    <div class="transactionCategory">
+                ${transaction.category}
 
-                        ${transaction.category}
+            </h3>
 
-                    </div>
+            <p>
 
-                    <div class="transactionNote">
+                ${transaction.note || "-"}
 
-                        ${transaction.note || "-"}
+            </p>
 
-                    </div>
+            <small>
 
-                    <div class="transactionDate">
+                ${formatDisplayDate(transaction.date)}
 
-                        ${formatDisplayDate(transaction.date)}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="transactionRight">
-
-                <div class="transactionAmount ${amountClass}">
-
-                    ${sign}₹${formatMoney(transaction.amount)}
-
-                </div>
-
-                <button
-                    class="menuButton"
-                    onclick="openTransactionActions(${transaction.id})">
-
-                    ⋮
-
-                </button>
-
-            </div>
+            </small>
 
         </div>
 
     </div>
+
+    <div class="transactionMenu">
+
+        <div class="transactionAmount ${amountClass}">
+
+            ${sign}₹${formatMoney(transaction.amount)}
+
+        </div>
+
+        <button
+            class="menuButton"
+            onclick="openTransactionActions(${transaction.id})">
+
+            ⋮
+
+        </button>
+
+    </div>
+
+</div>
 
 </div>
 
