@@ -77,9 +77,21 @@ trackEvent("page_opened",{
 
 if(pageName==="analytics"){
 
-        trackEvent("analytics_opened");
+    trackEvent("analytics_opened");
+
+    /* If Analytics is opened from bottom navigation,
+       start with no filter selected */
+    if(!sessionStorage.getItem("analyticsFilter")){
+
+        analyticsMode = null;
+
+        homeAnalyticsFilter = null;
 
     }
+
+    initAnalyticsBreakdown();
+
+}
 
 }
 if(navButtons.home){
