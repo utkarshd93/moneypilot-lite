@@ -542,7 +542,7 @@ function drawTransactionCard(container, transaction){
 
     container.innerHTML += `
 
-<div class="transactionRow transactionPageCard">
+<div class="transactionRow">
 
     <div class="transactionSwipeActions">
 
@@ -560,72 +560,64 @@ function drawTransactionCard(container, transaction){
 
     </div>
 
-    <div class="transactionItem"
-     data-id="${transaction.id}">
+    <div class="transactionItem transactionPageCard"
+         data-id="${transaction.id}">
 
-    <div class="transactionLeft">
+        <div class="transactionHeader">
 
-        <div class="transactionIcon">
+            <div class="transactionTitle">
 
-            ${icon}
+                <div class="transactionIcon">
+                    ${icon}
+                </div>
+
+                <span>
+                    ${transaction.category}
+                </span>
+
+            </div>
+
+            <div class="transactionMenu">
+
+                <div class="transactionAmount ${amountClass}">
+                    ${sign}₹${formatMoney(transaction.amount)}
+                </div>
+
+                <button
+                    class="menuButton"
+                    onclick="openTransactionActions(${transaction.id})">
+                    ⋮
+                </button>
+
+            </div>
 
         </div>
 
-        <div class="transactionInfo">
+        <div class="transactionDescription">
 
-            <h3>
+            ${transaction.note || "-"}
 
-                ${transaction.category}
+        </div>
 
-            </h3>
+        <div class="transactionFooter">
 
-            <p>
+            <span>
 
-                ${transaction.note || "-"}
+                ${formatDisplayDate(transaction.date)}
 
-            </p>
+            </span>
 
-            <div class="transactionFooter">
+            <div class="swipeIndicator">
 
-    <span>
+                <span>‹</span>
 
-        ${formatDisplayDate(transaction.date)}
+                <span>‹</span>
 
-    </span>
-
-    <span class="swipeIndicator">
-
-        <span>‹</span>
-
-        <span>‹</span>
-
-    </span>
-
-</div>
+            </div>
 
         </div>
 
     </div>
-
-    <div class="transactionMenu">
-
-    <div class="transactionAmount ${amountClass}">
-
-        ${sign}₹${formatMoney(transaction.amount)}
-
-    </div>
-
-    <button
-        class="menuButton"
-        onclick="openTransactionActions(${transaction.id})">
-
-        ⋮
-
-    </button>
-
-</div>
-
-   </div>
 
 </div>
 
