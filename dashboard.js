@@ -349,23 +349,9 @@ function openAnalytics(filter){
         filter
     );
 
-    if(typeof showPage==="function"){
-
-        showPage("analytics");
-
-    }else{
-
-        document
-            .querySelector('[data-page="analytics"]')
-            ?.click();
-
-    }
-
-    if(typeof renderAnalyticsTransactions==="function"){
-
-        setTimeout(renderAnalyticsTransactions,150);
-
-    }
+    document
+        .getElementById("navAnalytics")
+        ?.click();
 
 }
 
