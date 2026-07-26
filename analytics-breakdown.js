@@ -215,15 +215,15 @@ function renderAnalyticsTransactions() {
 
     </div>
 
-    ${t.description ? `
+    ${(t.note || t.description) ? `
 
-    <div class="analyticsTxnDescription">
+<div class="analyticsTxnDescription">
 
-        📝 ${t.description}
+    📝 ${t.note || t.description}
 
-    </div>
+</div>
 
-    ` : ""}
+` : ""}
 
     <div class="analyticsTxnFooter">
 
