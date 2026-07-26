@@ -4036,9 +4036,15 @@ display:none;
 }
 
 .transactionHeader{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    align-items:center;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:12px;
+
 }
 
 .transactionTitle{
@@ -4110,11 +4116,11 @@ display:none;
 
     align-items:center;
 
-    gap:10px;
+    gap:8px;
 
     margin-left:auto;
 
-    padding-left:30px;   /* <-- adjust 20–40px to taste */
+    transform:translateX(-35px);
 
     flex-shrink:0;
 
@@ -4122,9 +4128,11 @@ display:none;
 
 .transactionPageCard .transactionAmount{
 
-    width:90px;
+    width:auto;
 
-    text-align:center;
+    min-width:85px;
+
+    text-align:right;
 
     white-space:nowrap;
 
