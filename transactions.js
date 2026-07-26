@@ -595,7 +595,11 @@ function drawTransactionCard(container, transaction){
 
         <div class="transactionDescription">
 
-            ${transaction.note || "-"}
+            ${transaction.note ? `
+<div class="transactionDescription">
+    ${transaction.note}
+</div>
+` : ""}
 
         </div>
 
