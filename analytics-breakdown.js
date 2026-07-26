@@ -78,45 +78,82 @@ function renderAnalyticsTransactions() {
 
     let filtered = [];
 
-    if (analyticsMode === "fixed") {
+    switch (analyticsMode) {
 
-        filtered = transactions.filter(t =>
-            t.type === "expense" &&
-            t.fixed === true
-        );
+        case "income":
 
-    } else {
+            filtered = transactions.filter(
+                t => t.type === "income"
+            );
 
-        filtered = transactions.filter(t =>
-            t.type === "expense" &&
-            t.fixed === false
-        );
+            break;
+
+        case "expense":
+
+            filtered = transactions.filter(
+                t => t.type === "expense"
+            );
+
+            break;
+
+        case "investment":
+
+            filtered = transactions.filter(
+                t => t.type === "investment"
+            );
+
+            break;
+
+        case "fixed":
+
+            filtered = transactions.filter(
+                t =>
+                    t.type === "expense" &&
+                    t.fixed === true
+            );
+
+            break;
+
+        case "variable":
+
+            filtered = transactions.filter(
+                t =>
+                    t.type === "expense" &&
+                    t.fixed === false
+            );
+
+            break;
+
+        default:
+
+            filtered = [];
 
     }
 
-  filtered.sort((a, b) => {
+    filtered.sort((a, b) => {
 
-    // Newest transaction date first
-    const dateDiff = new Date(b.date) - new Date(a.date);
+        const dateDiff =
+            new Date(b.date) -
+            new Date(a.date);
 
-    if (dateDiff !== 0) {
+        if (dateDiff !== 0)
+            return dateDiff;
 
-        return dateDiff;
+        return Number(b.id || 0)
+            - Number(a.id || 0);
 
-    }
+    });
 
-    // Same date -> newest added transaction first
-    return Number(b.id || 0) - Number(a.id || 0);
-
-});
-   
-
-    if (filtered.length === 0) {
+    if (!filtered.length) {
 
         container.innerHTML = `
+
             <div class="analyticsEmpty">
+
                 No Transactions
+
             </div>
+
         `;
 
         return;
@@ -127,97 +164,90 @@ function renderAnalyticsTransactions() {
 
     filtered.forEach(t => {
 
-    console.log(t);
+        const icon =
+            getCategoryEmoji(t.category);
 
-    const created = t.createdAt
+        const date =
+            new Date(t.date)
+                .toLocaleDateString(
+                    "en-GB",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    }
+                );
 
-    ? new Date(t.createdAt)
+        const created =
+            t.createdAt
+                ? new Date(t.createdAt)
+                : null;
 
-    : null;
+        const time =
+            created
+                ? created.toLocaleTimeString(
+                    "en-GB",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false
+                    }
+                )
+                : "";
 
-const shortDate = new Date(t.date)
+        html += `
 
-    .toLocaleDateString(
+<div class="analyticsTxnCard">
 
-        "en-GB",
+    <div class="analyticsTxnHeader">
 
-        {
+        <div class="analyticsTxnTitle">
 
-            day: "2-digit",
-
-            month: "short"
-
-        }
-
-    );
-
-const shortTime = created
-
-    ? created.toLocaleTimeString(
-
-        "en-GB",
-
-        {
-
-            hour: "2-digit",
-
-            minute: "2-digit",
-
-            hour12: false
-
-        }
-
-    )
-
-    : "";
-
-const icon = getCategoryEmoji(t.category);
-
-    html += `
-
-        <div class="analyticsItem">
-
-            <span class="analyticsIcon">
-
-                ${icon}
-
-            </span>
-
-           <span class="analyticsCategory">
-
-    ${t.category}
-
-</span>
-
-<span class="analyticsDate">
-
-    ${shortDate}
-
-    ${shortTime ? `<br><small>${shortTime}</small>` : ""}
-
-</span>
-
-<span class="analyticsAmount">
-
-    ₹${Number(t.amount).toLocaleString("en-IN")}
-
-</span>
+            ${icon} ${t.category}
 
         </div>
 
-    `;
+        <div class="analyticsTxnAmount">
 
-});
+            ₹${Number(t.amount).toLocaleString("en-IN")}
+
+        </div>
+
+    </div>
+
+    ${t.description ? `
+
+    <div class="analyticsTxnDescription">
+
+        📝 ${t.description}
+
+    </div>
+
+    ` : ""}
+
+    <div class="analyticsTxnFooter">
+
+        <span>📅 ${date}</span>
+
+        ${time ? `<span>🕒 ${time}</span>` : ""}
+
+    </div>
+
+</div>
+
+`;
+
+    });
 
     container.style.opacity = "0";
 
-setTimeout(()=>{
+    setTimeout(() => {
 
-    container.innerHTML = html;
+        container.innerHTML = html;
 
-    container.style.opacity = "1";
+        container.style.opacity = "1";
 
-},120);
+    }, 120);
 
 }
 
