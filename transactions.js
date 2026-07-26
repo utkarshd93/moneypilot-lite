@@ -585,11 +585,23 @@ function drawTransactionCard(container, transaction){
 
             </p>
 
-            <small>
+            <div class="transactionFooter">
 
-                ${formatDisplayDate(transaction.date)}
+    <span>
 
-            </small>
+        ${formatDisplayDate(transaction.date)}
+
+    </span>
+
+    <span class="swipeIndicator">
+
+        <span>‹</span>
+
+        <span>‹</span>
+
+    </span>
+
+</div>
 
         </div>
 
