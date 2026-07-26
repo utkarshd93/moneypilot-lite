@@ -565,49 +565,50 @@ function drawTransactionCard(container, transaction){
 
         <div class="transactionHeader">
 
-            <div class="transactionTitle">
+    <div class="transactionTitle">
 
-    <div class="transactionIcon">
-
-        ${icon}
-
-    </div>
-
-    <div class="transactionContent">
-
-        <span>
-
-            ${transaction.category}
-
-        </span>
-
-        ${transaction.note ? `
-
-        <div class="transactionDescription">
-
-            ${transaction.note}
-
+        <div class="transactionIcon">
+            ${icon}
         </div>
 
-        ` : ""}
+        <div class="transactionContent">
 
-        <div class="transactionFooter">
+            <span>${transaction.category}</span>
 
-            <span>
+            ${transaction.note ? `
+                <div class="transactionDescription">
+                    ${transaction.note}
+                </div>
+            ` : ""}
 
-                ${formatDisplayDate(transaction.date)}
+            <div class="transactionFooter">
 
-            </span>
+                <span>
+                    ${formatDisplayDate(transaction.date)}
+                </span>
 
-            <div class="swipeIndicator">
-
-                <span>‹</span>
-
-                <span>‹</span>
+                <div class="swipeIndicator">
+                    <span>‹</span>
+                    <span>‹</span>
+                </div>
 
             </div>
 
         </div>
+
+    </div>
+
+    <div class="transactionMenu">
+
+        <div class="transactionAmount ${amountClass}">
+            ${sign}₹${formatMoney(transaction.amount)}
+        </div>
+
+        <button
+            class="menuButton"
+            onclick="openTransactionActions(${transaction.id})">
+            ⋮
+        </button>
 
     </div>
 
