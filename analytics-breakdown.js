@@ -9,15 +9,34 @@ function initAnalyticsBreakdown() {
 
     const cards = document.querySelectorAll(".analyticsBox");
 
-    if (cards.length < 2) return;
+    if (cards.length >= 2) {
 
-    cards[0].addEventListener("click", () => {
-        setAnalyticsMode("fixed");
-    });
+        cards[0].addEventListener("click", () => {
+            setAnalyticsMode("fixed");
+        });
 
-    cards[1].addEventListener("click", () => {
-        setAnalyticsMode("variable");
-    });
+        cards[1].addEventListener("click", () => {
+            setAnalyticsMode("variable");
+        });
+
+    }
+
+    const startupFilter =
+        sessionStorage.getItem("analyticsFilter");
+
+    if (startupFilter) {
+
+        analyticsMode = startupFilter;
+
+        sessionStorage.removeItem("analyticsFilter");
+
+    } else {
+
+        analyticsMode = "fixed";
+
+    }
+
+    renderAnalyticsTransactions();
 
 }
 
