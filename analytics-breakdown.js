@@ -37,25 +37,19 @@ function initAnalyticsBreakdown() {
     }
 
     const filter =
-        sessionStorage.getItem("analyticsFilter");
+    sessionStorage.getItem("analyticsFilter");
 
-    if (filter) {
+if (filter) {
 
-        homeAnalyticsFilter = filter;
+    homeAnalyticsFilter = filter;
 
-        analyticsMode = null;
+    sessionStorage.removeItem("analyticsFilter");
 
-        sessionStorage.removeItem(
-            "analyticsFilter"
-        );
+} else {
 
-    } else {
+    homeAnalyticsFilter = null;
 
-        homeAnalyticsFilter = null;
-
-        analyticsMode = null;
-
-    }
+}
 
     renderAnalyticsTransactions();
 
