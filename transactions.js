@@ -567,41 +567,29 @@ function drawTransactionCard(container, transaction){
 
             <div class="transactionTitle">
 
-                <div class="transactionIcon">
-                    ${icon}
-                </div>
+    <div class="transactionIcon">
 
-                <span>
-                    ${transaction.category}
-                </span>
+        ${icon}
 
-            </div>
+    </div>
 
-            <div class="transactionMenu">
+    <div class="transactionContent">
 
-                <div class="transactionAmount ${amountClass}">
-                    ${sign}₹${formatMoney(transaction.amount)}
-                </div>
+        <span>
 
-                <button
-                    class="menuButton"
-                    onclick="openTransactionActions(${transaction.id})">
-                    ⋮
-                </button>
+            ${transaction.category}
 
-            </div>
+        </span>
 
-        </div>
+        ${transaction.note ? `
 
         <div class="transactionDescription">
 
-            ${transaction.note ? `
-<div class="transactionDescription">
-    ${transaction.note}
-</div>
-` : ""}
+            ${transaction.note}
 
         </div>
+
+        ` : ""}
 
         <div class="transactionFooter">
 
