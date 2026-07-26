@@ -613,6 +613,12 @@ function drawTransactionCard(container, transaction){
 
     </div>
 
+    <div class="swipeHint">
+
+    ← Swipe
+
+</div>
+
 </div>
 
 </div>
