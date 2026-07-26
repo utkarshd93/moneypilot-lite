@@ -686,7 +686,7 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:16px;
+padding:12px 14px;
 
 border-radius:20px;
 
@@ -726,9 +726,9 @@ gap:14px;
 
 .transactionIcon{
 
-width:52px;
-
-height:52px;
+width:42px;
+height:42px;
+font-size:20px;
 
 display:flex;
 
@@ -738,19 +738,15 @@ justify-content:center;
 
 border-radius:16px;
 
-font-size:26px;
-
 background:rgba(255,255,255,.12);
 
 }
 
 .transactionInfo h3{
 
-font-size:16px;
-
-font-weight:700;
-
-margin-bottom:3px;
+font-size:14px;
+font-weight:600;
+margin-bottom:2px;
 
 }
 
@@ -810,7 +806,7 @@ align-items:center;
 
     text-align:right;
 
-    font-size:22px;
+    font-size:18px;
 
     font-weight:700;
 
@@ -3979,19 +3975,35 @@ font-weight:700;
 
 .swipeIndicator{
 
-    display:flex;
+margin-left:auto;
 
-    gap:1px;
+display:flex;
+
+gap:2px;
+
+padding-left:10px;
 
 }
 
 .swipeIndicator span{
 
-    color:rgba(255,255,255,.75);
+color:#FFFFFF;
 
-    font-size:16px;
+font-size:15px;
 
-    animation:swipePulse 1.6s infinite;
+font-weight:700;
+
+opacity:.95;
+
+text-shadow:0 0 6px rgba(255,255,255,.55);
+
+animation:swipePulse 1.4s infinite;
+
+}
+
+.transactionDescription:empty{
+
+display:none;
 
 }
 
