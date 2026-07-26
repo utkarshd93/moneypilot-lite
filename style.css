@@ -3807,15 +3807,25 @@ font-weight:700;
 
 .analyticsTxnCard{
 
-    background:#fff;
+    background:rgba(255,255,255,.08);
 
-    border-radius:14px;
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
 
     padding:14px;
 
     margin-bottom:12px;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    transition:.25s;
+
+}
+
+.analyticsTxnCard:hover{
+
+    transform:translateY(-2px);
 
 }
 
@@ -3825,9 +3835,9 @@ font-weight:700;
 
     justify-content:space-between;
 
-    align-items:center;
+    align-items:flex-start;
 
-    margin-bottom:10px;
+    gap:10px;
 
 }
 
@@ -3837,53 +3847,47 @@ font-weight:700;
 
     font-weight:600;
 
+    color:#fff;
+
+    flex:1;
+
 }
 
 .analyticsTxnAmount{
 
-    font-size:17px;
+    font-size:18px;
 
     font-weight:700;
 
-}
-
-.analyticsTxnAmount.expense{
-
-    color:#e53935;
-
-}
-
-.analyticsTxnAmount.income{
-
-    color:#16a34a;
-
-}
-
-.analyticsTxnAmount.investment{
-
-    color:#2563eb;
+    white-space:nowrap;
 
 }
 
 .analyticsTxnDescription{
 
-    margin-bottom:10px;
+    margin-top:8px;
 
-    color:#555;
+    color:#D7D7D7;
 
-    line-height:1.4;
+    line-height:1.45;
 
     word-break:break-word;
+
+    overflow-wrap:anywhere;
 
 }
 
 .analyticsTxnFooter{
 
+    margin-top:12px;
+
     display:flex;
 
     justify-content:space-between;
 
-    color:#777;
+    align-items:center;
+
+    color:#B8B8B8;
 
     font-size:13px;
 
