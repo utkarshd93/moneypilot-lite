@@ -83,6 +83,43 @@ function setAnalyticsMode(mode) {
 
 function renderAnalyticsTransactions() {
 
+   const heading =
+    document.getElementById("analyticsHeading");
+
+const currentMode =
+    homeAnalyticsFilter || analyticsMode;
+
+if (heading) {
+
+    switch (currentMode) {
+
+        case "income":
+            heading.textContent = "Income Transactions";
+            break;
+
+        case "expense":
+            heading.textContent = "All Expense Transactions";
+            break;
+
+        case "investment":
+            heading.textContent = "Investment Transactions";
+            break;
+
+        case "fixed":
+            heading.textContent = "Fixed Expenses";
+            break;
+
+        case "variable":
+            heading.textContent = "Variable Expenses";
+            break;
+
+        default:
+            heading.textContent = "Expense Breakdown";
+
+    }
+
+}
+
     const container =
         document.getElementById("categorySummary");
 
