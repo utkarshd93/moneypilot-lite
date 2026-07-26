@@ -527,51 +527,43 @@ function drawTransactionCard(container, transaction){
     let sign = "-";
     let icon = getCategoryIcon(transaction.category);
 
-if(transaction.type==="income"){
+    if(transaction.type==="income"){
 
-    amountClass="incomeText";
-    sign="+";
+        amountClass="incomeText";
+        sign="+";
 
-}
+    }
+    else if(transaction.type==="investment"){
 
-else if(transaction.type==="investment"){
+        amountClass="investmentText";
+        sign="";
 
-    amountClass="investmentText";
-    sign="";
+    }
 
-}
-
-container.innerHTML += `
+    container.innerHTML += `
 
 <div class="transactionRow">
 
     <div class="transactionSwipeActions">
 
-        <button
-            class="swipeEdit"
+        <button class="swipeEdit"
             onclick="editTransaction(${transaction.id})">
-
             ✏️
             <span>Edit</span>
-
         </button>
 
-        <button
-            class="swipeDelete"
+        <button class="swipeDelete"
             onclick="deleteTransaction(${transaction.id})">
-
             🗑️
             <span>Delete</span>
-
         </button>
 
     </div>
 
-    <div
-        class="transactionItem"
-        data-id="${transaction.id}">
+    <div class="transactionItem"
+         data-id="${transaction.id}">
 
-        <div class="transactionHeader">
+        <div class="transactionTop">
 
             <div class="transactionLeft">
 
@@ -581,57 +573,49 @@ container.innerHTML += `
 
                 </div>
 
-                <div class="transactionInfo">
+                <div class="transactionContent">
 
-                    <h3>${transaction.category}</h3>
+                    <div class="transactionCategory">
+
+                        ${transaction.category}
+
+                    </div>
+
+                    <div class="transactionNote">
+
+                        ${transaction.note || "-"}
+
+                    </div>
+
+                    <div class="transactionDate">
+
+                        ${formatDisplayDate(transaction.date)}
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="transactionAmount ${amountClass}">
+            <div class="transactionRight">
 
-                ${sign}₹${formatMoney(transaction.amount)}
+                <div class="transactionAmount ${amountClass}">
+
+                    ${sign}₹${formatMoney(transaction.amount)}
+
+                </div>
+
+                <button
+                    class="menuButton"
+                    onclick="openTransactionActions(${transaction.id})">
+
+                    ⋮
+
+                </button>
 
             </div>
 
         </div>
-
-        ${
-            transaction.note
-            ?
-            `<div class="transactionDescription">
-
-                📝 ${transaction.note}
-
-            </div>`
-            :
-            ""
-        }
-
-        <div class="transactionFooter">
-
-            <span>
-
-                📅 ${formatDisplayDate(transaction.date)}
-
-            </span>
-
-            <span>
-
-                ${transaction.type.charAt(0).toUpperCase()+transaction.type.slice(1)}
-
-            </span>
-
-        </div>
-
-        <button
-            class="menuButton"
-            onclick="openTransactionActions(${transaction.id})">
-
-            ⋮
-
-        </button>
 
     </div>
 
