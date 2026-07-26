@@ -3944,9 +3944,9 @@ font-weight:700;
 
 .transactionPageCard .transactionFooter{
 
-    margin-top:8px;
+    margin-left:0;
 
-    margin-left:56px;
+    margin-top:6px;
 
     display:flex;
 
@@ -4079,17 +4079,15 @@ display:none;
 
 .transactionPageCard .transactionDescription{
 
-    margin-left:56px;
+    margin-top:5px;
 
-    margin-top:6px;
+    margin-left:0;
+
+    color:rgba(255,255,255,.72);
 
     font-size:13px;
 
     line-height:18px;
-
-    color:rgba(255,255,255,.72);
-
-    word-break:break-word;
 
 }
 
@@ -4150,6 +4148,18 @@ display:none;
 
 }
 
+
+.transactionContent{
+
+    display:flex;
+
+    flex-direction:column;
+
+    flex:1;
+
+    min-width:0;
+
+}
 
 
 /* =====================================================
