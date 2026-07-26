@@ -3980,7 +3980,7 @@ font-weight:700;
 
 }
 
-.transactionDescription:empty{
+.transactionPageCard .transactionDescription:empty{
 
 display:none;
 
@@ -4077,7 +4077,7 @@ display:none;
 
 }
 
-.transactionDescription{
+.transactionPageCard .transactionDescription{
 
     margin-left:56px;
 
@@ -4093,27 +4093,6 @@ display:none;
 
 }
 
-.transactionPageCard .transactionFooter{
-
-    margin-left:66px;
-
-    margin-top:10px;
-
-    display:flex;
-
-    align-items:center;
-
-}
-
-.transactionPageCard .swipeIndicator{
-
-    margin-left:auto;
-
-    display:flex;
-
-    gap:2px;
-
-}
 
 .transactionPageCard .swipeIndicator span{
 
