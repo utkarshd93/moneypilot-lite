@@ -3919,7 +3919,25 @@ font-weight:700;
 }
 
 
+.transactionFooter{
 
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:6px;
+
+}
+
+.transactionFooter span:first-child{
+
+    font-size:12px;
+
+    color:rgba(255,255,255,.60);
+
+}
 
 /* =====================================================
                 CSS END
