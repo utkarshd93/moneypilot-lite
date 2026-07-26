@@ -5,34 +5,55 @@
 
 let analyticsMode = null;
 
+/* Home page temporary filter */
+let homeAnalyticsFilter = null;
+
 function initAnalyticsBreakdown() {
 
     const cards = document.querySelectorAll(".analyticsBox");
 
+    cards.forEach(card =>
+        card.classList.remove("active")
+    );
+
     if (cards.length >= 2) {
 
-        cards[0].addEventListener("click", () => {
-            setAnalyticsMode("fixed");
-        });
+        cards[0].onclick = () => {
 
-        cards[1].addEventListener("click", () => {
+            homeAnalyticsFilter = null;
+
+            setAnalyticsMode("fixed");
+
+        };
+
+        cards[1].onclick = () => {
+
+            homeAnalyticsFilter = null;
+
             setAnalyticsMode("variable");
-        });
+
+        };
 
     }
 
-    const startupFilter =
+    const filter =
         sessionStorage.getItem("analyticsFilter");
 
-    if (startupFilter) {
+    if (filter) {
 
-        analyticsMode = startupFilter;
+        homeAnalyticsFilter = filter;
 
-        sessionStorage.removeItem("analyticsFilter");
+        analyticsMode = null;
+
+        sessionStorage.removeItem(
+            "analyticsFilter"
+        );
 
     } else {
 
-        analyticsMode = "fixed";
+        homeAnalyticsFilter = null;
+
+        analyticsMode = null;
 
     }
 
@@ -76,9 +97,12 @@ function renderAnalyticsTransactions() {
     const transactions =
         getCurrentMonthTransactions();
 
-    let filtered = [];
+    let mode =
+    homeAnalyticsFilter || analyticsMode;
 
-    switch (analyticsMode) {
+let filtered = [];
+
+switch (mode) {
 
         case "income":
 
