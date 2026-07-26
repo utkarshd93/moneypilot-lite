@@ -1148,6 +1148,47 @@ function initializeTransactions(){
 
     }
 
+showSwipeHintOnce();
+
+}
+
+function showSwipeHintOnce(){
+
+    if(localStorage.getItem("transactionSwipeHint")){
+
+        return;
+
+    }
+
+    setTimeout(()=>{
+
+        const cards = document.querySelectorAll(".transactionItem");
+
+        cards.forEach((card,index)=>{
+
+            setTimeout(()=>{
+
+                card.style.transition="transform .25s ease";
+
+                card.style.transform="translateX(-14px)";
+
+                setTimeout(()=>{
+
+                    card.style.transform="translateX(0px)";
+
+                },250);
+
+            },index*120);
+
+        });
+
+        localStorage.setItem(
+            "transactionSwipeHint",
+            "true"
+        );
+
+    },600);
+
 }
 /* =====================================================
         Transaction Statistics
