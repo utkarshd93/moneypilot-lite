@@ -4036,15 +4036,9 @@ display:none;
 }
 
 .transactionHeader{
-
-    display:flex;
-
-    align-items:flex-start;
-
-    justify-content:space-between;
-
-    gap:12px;
-
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    align-items:center;
 }
 
 .transactionTitle{
@@ -4079,15 +4073,17 @@ display:none;
 
 .transactionPageCard .transactionDescription{
 
-    margin-top:5px;
-
-    margin-left:0;
+    margin-top:4px;
 
     color:rgba(255,255,255,.72);
 
     font-size:13px;
 
-    line-height:18px;
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 
 }
 
@@ -4114,9 +4110,11 @@ display:none;
 
     align-items:center;
 
-    gap:8px;
+    gap:10px;
 
-    margin-left:16px;
+    margin-left:auto;
+
+    padding-left:30px;   /* <-- adjust 20–40px to taste */
 
     flex-shrink:0;
 
@@ -4124,9 +4122,9 @@ display:none;
 
 .transactionPageCard .transactionAmount{
 
-    min-width:72px;
+    width:90px;
 
-    text-align:right;
+    text-align:center;
 
     white-space:nowrap;
 
