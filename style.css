@@ -4029,6 +4029,141 @@ font-weight:700;
 
 }
 
+
+/* ==========================================
+   Transaction Page New Layout
+========================================== */
+
+.transactionPageCard{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:stretch;
+
+}
+
+.transactionHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.transactionTitle{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.transactionTitle span{
+
+    font-size:17px;
+
+    font-weight:700;
+
+    color:#fff;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.transactionDescription{
+
+    margin-left:66px;
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.72);
+
+    font-size:13px;
+
+    line-height:20px;
+
+    word-break:break-word;
+
+}
+
+.transactionPageCard .transactionFooter{
+
+    margin-left:66px;
+
+    margin-top:10px;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.transactionPageCard .swipeIndicator{
+
+    margin-left:auto;
+
+    display:flex;
+
+    gap:2px;
+
+}
+
+.transactionPageCard .swipeIndicator span{
+
+    color:white;
+
+    font-size:18px;
+
+    opacity:.85;
+
+}
+
+.transactionPageCard .transactionMenu{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-left:0;
+
+}
+
+.transactionPageCard .transactionAmount{
+
+    min-width:auto;
+
+    font-size:22px;
+
+    white-space:nowrap;
+
+}
+
+.transactionPageCard .menuButton{
+
+    margin:0;
+
+}
+
+
+
 /* =====================================================
                 CSS END
 ===================================================== */
