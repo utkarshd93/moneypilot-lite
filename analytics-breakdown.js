@@ -207,11 +207,11 @@ function renderAnalyticsTransactions() {
 
         </div>
 
-        <div class="analyticsTxnAmount">
+        <div class="analyticsTxnAmount ${t.type}">
 
-            ₹${Number(t.amount).toLocaleString("en-IN")}
+    ₹${Number(t.amount).toLocaleString("en-IN")}
 
-        </div>
+</div>
 
     </div>
 
