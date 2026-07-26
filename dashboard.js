@@ -369,33 +369,51 @@ function openAnalytics(filter){
 
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-    document
-        .getElementById("incomeValue")
-        ?.closest(".summaryCard")
-        ?.addEventListener("click",()=>{
+    const incomeCard =
+        document.querySelector(".incomeCard");
+
+    const expenseCard =
+        document.querySelector(".expenseCard");
+
+    const investmentCard =
+        document.querySelector(".investmentCard");
+
+    if (incomeCard) {
+
+        incomeCard.style.cursor = "pointer";
+
+        incomeCard.addEventListener("click", () => {
 
             openAnalytics("income");
 
         });
 
-    document
-        .getElementById("expenseValue")
-        ?.closest(".summaryCard")
-        ?.addEventListener("click",()=>{
+    }
+
+    if (expenseCard) {
+
+        expenseCard.style.cursor = "pointer";
+
+        expenseCard.addEventListener("click", () => {
 
             openAnalytics("expense");
 
         });
 
-    document
-        .getElementById("investmentTotal")
-        ?.closest(".summaryCard")
-        ?.addEventListener("click",()=>{
+    }
+
+    if (investmentCard) {
+
+        investmentCard.style.cursor = "pointer";
+
+        investmentCard.addEventListener("click", () => {
 
             openAnalytics("investment");
 
         });
+
+    }
 
 });
