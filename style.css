@@ -3934,6 +3934,40 @@ font-weight:700;
 
 }
 
+/* ==========================================
+   Transactions Page Only
+========================================== */
+
+.transactionPageCard .transactionInfo{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.transactionPageCard .transactionFooter{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.transactionPageCard .swipeIndicator{
+
+    margin-left:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:2px;
+
+}
+
 .transactionFooter span:first-child{
 
     font-size:12px;
