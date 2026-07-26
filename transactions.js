@@ -542,7 +542,7 @@ function drawTransactionCard(container, transaction){
 
     container.innerHTML += `
 
-<div class="transactionRow">
+<div class="transactionRow transactionPageCard">
 
     <div class="transactionSwipeActions">
 
