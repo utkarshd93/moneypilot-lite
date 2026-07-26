@@ -3892,6 +3892,90 @@ font-weight:700;
     font-size:13px;
 
 }
+
+
+
+.transactionHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:14px;
+
+}
+
+.transactionDescription{
+
+    margin:10px 0;
+
+    color:#e6e6e6;
+
+    font-size:14px;
+
+    line-height:1.45;
+
+    word-break:break-word;
+
+    overflow-wrap:anywhere;
+
+    padding-left:58px;
+
+}
+
+.transactionFooter{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:#bdbdbd;
+
+    font-size:13px;
+
+    padding-left:58px;
+
+}
+
+.transactionAmount{
+
+    white-space:nowrap;
+
+    flex-shrink:0;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.transactionInfo{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.transactionInfo h3{
+
+    margin:0;
+
+}
+
+.menuButton{
+
+    position:absolute;
+
+    top:18px;
+
+    right:12px;
+
+}
 /* =====================================================
                 CSS END
 ===================================================== */
