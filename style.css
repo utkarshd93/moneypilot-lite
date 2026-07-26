@@ -805,13 +805,15 @@ align-items:center;
 
 .transactionAmount{
 
-    min-width:90px;
+    min-width:100px;
 
     text-align:right;
 
-    font-size:18px;
+    font-size:22px;
 
     font-weight:700;
+
+    margin-top:2px;
 
     white-space:nowrap;
 
@@ -2666,13 +2668,19 @@ display:block;
 
     align-items:flex-start;
 
-    gap:10px;
+    gap:14px;
+
+    margin-left:18px;
 
     flex-shrink:0;
 
 }
 
 .menuButton{
+
+margin-top:-2px;
+
+margin-left:6px;
 
 border:none;
 
