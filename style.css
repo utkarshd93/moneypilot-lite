@@ -4039,7 +4039,7 @@ display:none;
 
     display:flex;
 
-    align-items:center;
+    align-items:flex-start;
 
     justify-content:space-between;
 
@@ -4114,31 +4114,25 @@ display:none;
 
     align-items:center;
 
-    gap:6px;
+    gap:8px;
 
-    margin-left:auto;
+    margin-left:16px;
+
+    flex-shrink:0;
 
 }
 
 .transactionPageCard .transactionAmount{
 
-    min-width:auto;
-
-    width:auto;
+    min-width:72px;
 
     text-align:right;
+
+    white-space:nowrap;
 
     font-size:18px;
 
     font-weight:700;
-
-    white-space:nowrap;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:flex-end;
 
 }
 
