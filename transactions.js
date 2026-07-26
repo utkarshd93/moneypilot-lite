@@ -560,72 +560,71 @@ function drawTransactionCard(container, transaction){
 
     </div>
 
-    <div class="transactionItem"
-     data-id="${transaction.id}">
+    <div class="transactionItem" data-id="${transaction.id}">
 
-    <div class="transactionLeft">
+    <div class="transactionHeader">
 
-        <div class="transactionIcon">
+        <div class="transactionTitle">
 
-            ${icon}
+            <div class="transactionIcon">
 
-        </div>
+                ${icon}
 
-        <div class="transactionInfo">
+            </div>
 
-            <h3>
+            <span>
 
                 ${transaction.category}
 
-            </h3>
+            </span>
 
-            <p>
+        </div>
 
-                ${transaction.note || "-"}
+        <div class="transactionMenu">
 
-            </p>
+            <div class="transactionAmount ${amountClass}">
 
-            <div class="transactionFooter">
+                ${sign}₹${formatMoney(transaction.amount)}
 
-    <span>
+            </div>
 
-        ${formatDisplayDate(transaction.date)}
+            <button
+                class="menuButton"
+                onclick="openTransactionActions(${transaction.id})">
 
-    </span>
+                ⋮
 
-    <span class="swipeIndicator">
-
-        <span>‹</span>
-
-        <span>‹</span>
-
-    </span>
-
-</div>
+            </button>
 
         </div>
 
     </div>
 
-    <div class="transactionMenu">
+    <div class="transactionDescription">
 
-    <div class="transactionAmount ${amountClass}">
-
-        ${sign}₹${formatMoney(transaction.amount)}
+        ${transaction.note || "-"}
 
     </div>
 
-    <button
-        class="menuButton"
-        onclick="openTransactionActions(${transaction.id})">
+    <div class="transactionFooter">
 
-        ⋮
+        <span>
 
-    </button>
+            ${formatDisplayDate(transaction.date)}
+
+        </span>
+
+        <div class="swipeIndicator">
+
+            <span>‹</span>
+
+            <span>‹</span>
+
+        </div>
+
+    </div>
 
 </div>
-
-   </div>
 
 </div>
 
