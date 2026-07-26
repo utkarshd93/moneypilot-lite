@@ -349,9 +349,7 @@ function openAnalytics(filter){
         filter
     );
 
-    document
-        .getElementById("navAnalytics")
-        ?.click();
+    openPage("analytics");
 
 }
 
