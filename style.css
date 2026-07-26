@@ -4120,17 +4120,13 @@ display:none;
 
     margin-left:auto;
 
-    transform:translateX(-35px);
-
     flex-shrink:0;
 
 }
 
 .transactionPageCard .transactionAmount{
 
-    width:auto;
-
-    min-width:85px;
+    width:90px;
 
     text-align:right;
 
@@ -4139,6 +4135,8 @@ display:none;
     font-size:18px;
 
     font-weight:700;
+
+    margin-right:24px;   /* move amount left */
 
 }
 
