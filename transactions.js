@@ -545,101 +545,95 @@ container.innerHTML += `
 
 <div class="transactionRow">
 
-<div class="transactionSwipeActions">
+    <div class="transactionSwipeActions">
 
-<button
+        <button
+            class="swipeEdit"
+            onclick="editTransaction(${transaction.id})">
 
-class="swipeEdit"
+            ✏️
+            <span>Edit</span>
 
-onclick="editTransaction(${transaction.id})">
+        </button>
 
-✏️
+        <button
+            class="swipeDelete"
+            onclick="deleteTransaction(${transaction.id})">
 
-<span>Edit</span>
+            🗑️
+            <span>Delete</span>
 
-</button>
+        </button>
 
-<button
+    </div>
 
-class="swipeDelete"
+    <div
+        class="transactionItem"
+        data-id="${transaction.id}">
 
-onclick="deleteTransaction(${transaction.id})">
+        <div class="transactionHeader">
 
-🗑️
+            <div class="transactionLeft">
 
-<span>Delete</span>
+                <div class="transactionIcon">
 
-</button>
+                    ${icon}
 
-</div>
+                </div>
 
-<div
+                <div class="transactionInfo">
 
-class="transactionItem"
+                    <h3>${transaction.category}</h3>
 
-data-id="${transaction.id}">
+                </div>
 
-<div class="transactionTop">
+            </div>
 
-<div class="transactionLeft">
+            <div class="transactionAmount ${amountClass}">
 
-<div class="transactionIcon">
+                ${sign}₹${formatMoney(transaction.amount)}
 
-${icon}
+            </div>
 
-</div>
+        </div>
 
-<div class="transactionInfo">
+        ${
+            transaction.note
+            ?
+            `<div class="transactionDescription">
 
-<h3>
+                📝 ${transaction.note}
 
-${transaction.category}
+            </div>`
+            :
+            ""
+        }
 
-</h3>
+        <div class="transactionFooter">
 
-<small>
+            <span>
 
-${formatDisplayDate(transaction.date)}
+                📅 ${formatDisplayDate(transaction.date)}
 
-</small>
+            </span>
 
-</div>
+            <span>
 
-</div>
+                ${transaction.type.charAt(0).toUpperCase()+transaction.type.slice(1)}
 
-<div class="transactionAmount ${amountClass}">
+            </span>
 
-${sign}₹${formatMoney(transaction.amount)}
+        </div>
 
-</div>
+        <button
+            class="menuButton"
+            onclick="openTransactionActions(${transaction.id})">
 
-</div>
+            ⋮
 
-<div class="transactionBottom">
+        </button>
 
-<div class="transactionNote">
-
-${transaction.note || transaction.type}
-
-</div>
-
-<div class="transactionMenu">
-
-<button
-
-class="menuButton"
-
-onclick="openTransactionActions(${transaction.id})">
-
-⋮
-
-</button>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
