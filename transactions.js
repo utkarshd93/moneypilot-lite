@@ -597,29 +597,23 @@ function drawTransactionCard(container, transaction){
 
     <div class="transactionMenu">
 
-        <div class="transactionAmount ${amountClass}">
+    <div class="transactionAmount ${amountClass}">
 
-            ${sign}₹${formatMoney(transaction.amount)}
-
-        </div>
-
-        <button
-            class="menuButton"
-            onclick="openTransactionActions(${transaction.id})">
-
-            ⋮
-
-        </button>
+        ${sign}₹${formatMoney(transaction.amount)}
 
     </div>
 
-    <div class="swipeHint">
+    <button
+        class="menuButton"
+        onclick="openTransactionActions(${transaction.id})">
 
-    ← Swipe
+        ⋮
+
+    </button>
 
 </div>
 
-</div>
+   </div>
 
 </div>
 
