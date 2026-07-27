@@ -458,11 +458,6 @@ function openBenefitAnalytics(category){
         category
     );
 
-    sessionStorage.setItem(
-        "analyticsFilter",
-        "benefit"
-    );
-
     openPage("analytics");
 
 }
