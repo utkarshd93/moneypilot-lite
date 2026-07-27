@@ -37,20 +37,11 @@ function initAnalyticsBreakdown() {
     }
 
     const filter =
-    sessionStorage.getItem("analyticsFilter");
+sessionStorage.getItem("analyticsFilter");
 
-if (filter) {
+homeAnalyticsFilter = filter || null;
 
-    homeAnalyticsFilter = filter;
-
-    sessionStorage.removeItem("analyticsFilter");
-
-} else {
-
-    homeAnalyticsFilter = null;
-
-}
-
+sessionStorage.removeItem("analyticsFilter");
     renderAnalyticsTransactions();
 
 }
