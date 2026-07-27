@@ -229,3 +229,128 @@ function getBenefitSummary(
     };
 
 }
+
+/* =====================================================
+        Transaction Benefit Summary
+===================================================== */
+
+function renderBenefitTransactionSummary(){
+
+    const section =
+        document.getElementById(
+            "benefitTransactionSummary"
+        );
+
+    const container =
+        document.getElementById(
+            "benefitTransactionSummaryContent"
+        );
+
+    if(!section || !container){
+        return;
+    }
+
+    const category =
+        document.getElementById(
+            "categoryFilter"
+        )?.value;
+
+    if(
+        !category ||
+        !isBenefitCard(category)
+    ){
+
+        section.classList.add("hidden");
+        container.innerHTML = "";
+
+        return;
+    }
+
+    const month =
+        document.getElementById(
+            "monthFilter"
+        )?.value || "";
+
+    const summary =
+        getBenefitSummary(
+            category,
+            month
+        );
+
+    if(!summary){
+
+        section.classList.add("hidden");
+
+        return;
+
+    }
+
+    container.innerHTML = `
+
+<div class="benefitCard">
+
+<div class="benefitHeader">
+
+<div>
+
+<h3>${summary.category}</h3>
+
+<p>Available Balance</p>
+
+</div>
+
+<h2>
+
+₹${summary.remaining.toLocaleString("en-IN")}
+
+</h2>
+
+</div>
+
+<div class="benefitStats">
+
+<div>
+
+<span>Opening</span>
+
+<strong>
+
+₹${summary.initialBalance.toLocaleString("en-IN")}
+
+</strong>
+
+</div>
+
+<div>
+
+<span>Loaded</span>
+
+<strong>
+
+₹${summary.loaded.toLocaleString("en-IN")}
+
+</strong>
+
+</div>
+
+<div>
+
+<span>Spent</span>
+
+<strong>
+
+₹${summary.spent.toLocaleString("en-IN")}
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+    section.classList.remove("hidden");
+
+}
