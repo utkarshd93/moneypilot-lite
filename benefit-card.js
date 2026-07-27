@@ -29,9 +29,14 @@ function editBenefitBalance(category){
         .toLocaleString("en-IN");
 
     document
-        .getElementById("benefitOpeningBalance")
-        .value =
-        card.initialBalance || 0;
+    .getElementById("benefitCurrentOpeningBalance")
+    .textContent =
+    "₹" + Number(card.initialBalance)
+        .toLocaleString("en-IN");
+
+document
+    .getElementById("benefitOpeningBalance")
+    .value = "";
 
     document
         .getElementById("benefitBalancePopup")
@@ -42,22 +47,26 @@ function editBenefitBalance(category){
 function closeBenefitPopup(){
 
     document
-    .getElementById("benefitBalancePopup")
-    .classList.remove("show");
+        .getElementById("benefitBalancePopup")
+        .classList.remove("show");
 
     editingBenefitCard = null;
 
     document
-    .getElementById("benefitOpeningBalance")
-    .value = "";
+        .getElementById("benefitOpeningBalance")
+        .value = "";
 
     document
-    .getElementById("benefitPopupTitle")
-    .textContent = "";
+        .getElementById("benefitCurrentOpeningBalance")
+        .textContent = "₹0";
 
     document
-    .getElementById("benefitPopupBalance")
-    .textContent = "₹0";
+        .getElementById("benefitPopupTitle")
+        .textContent = "";
+
+    document
+        .getElementById("benefitPopupBalance")
+        .textContent = "₹0";
 
 }
 
@@ -69,17 +78,20 @@ function saveBenefitOpeningBalance(){
 
     }
 
-    const amount =
+    const input = document
+    .getElementById("benefitOpeningBalance")
+    .value
+    .trim();
 
-    Number(
+if(input === ""){
 
-        document
-        .getElementById(
-            "benefitOpeningBalance"
-        )
-        .value
+    closeBenefitPopup();
 
-    ) || 0;
+    return;
+
+}
+
+const amount = Number(input);
 
     updateBenefitInitialBalance(
 
