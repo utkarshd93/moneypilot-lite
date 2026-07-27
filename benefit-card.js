@@ -312,29 +312,101 @@ function getBenefitSummary(
 
     });
 
+    const lifetime =
+    getBenefitLifetimeSummary(category);
+
+return{
+
+    category,
+
+    initialBalance:
+        card.initialBalance,
+
+    monthlyLoaded:
+        income,
+
+    monthlySpent:
+        expense,
+
+    loaded:
+        income,
+
+    spent:
+        expense,
+
+    totalLoaded:
+        lifetime.totalLoaded,
+
+    totalSpent:
+        lifetime.totalSpent,
+
+    remaining:
+        lifetime.availableBalance
+
+};
+
+}
+
+
+/* =====================================================
+        Benefit Lifetime Summary
+===================================================== */
+
+function getBenefitLifetimeSummary(category){
+
+    const card = getBenefitCard(category);
+
+    if(!card){
+
+        return null;
+
+    }
+
+    let loaded = 0;
+
+    let spent = 0;
+
+    transactions.forEach(t=>{
+
+        if(t.category !== category){
+
+            return;
+
+        }
+
+        if(t.type === "income"){
+
+            loaded += Number(t.amount) || 0;
+
+        }
+
+        else if(t.type === "expense"){
+
+            spent += Number(t.amount) || 0;
+
+        }
+
+    });
+
     return{
 
         category,
 
-        initialBalance:
+        initialBalance: card.initialBalance,
 
-        card.initialBalance,
+        totalLoaded: loaded,
 
-        loaded:income,
+        totalSpent: spent,
 
-        spent:expense,
-
-        remaining:
-
-        card.initialBalance +
-
-        income -
-
-        expense
+        availableBalance:
+            card.initialBalance +
+            loaded -
+            spent
 
     };
 
 }
+
 
 /* =====================================================
         Transaction Benefit Summary
