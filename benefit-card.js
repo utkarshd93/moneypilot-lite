@@ -688,10 +688,17 @@ ${card.category}
 
     });
 
-    let selectedCategory =
-        sessionStorage.getItem(
-            "selectedBenefitCard"
-        );
+    const selectedCategory =
+    sessionStorage.getItem(
+        "selectedBenefitCard"
+    );
+
+if(!selectedCategory){
+
+    section.classList.add("hidden");
+
+    return;
+}
 
     if(
 
@@ -712,11 +719,9 @@ ${card.category}
 
     selector.value = selectedCategory;
 
-    renderBenefitAnalyticsContent(
+    renderBenefitAnalyticsContent(selectedCategory);
 
-        selectedCategory
-
-    );
+    sessionStorage.removeItem("selectedBenefitCard");
 
     selector.onchange = function(){
 
@@ -728,11 +733,7 @@ ${card.category}
 
         );
 
-        renderBenefitAnalyticsContent(
-
-            this.value
-
-        );
+        renderBenefitAnalyticsContent(this.value);
 
     };
 
