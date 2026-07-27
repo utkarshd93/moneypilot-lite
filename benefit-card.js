@@ -15,8 +15,9 @@ function editBenefitBalance(category){
         getBenefitCard(category);
 
     document
-    .getElementById("benefitPopupTitle")
-    .textContent = category;
+.getElementById("benefitPopupTitle")
+.textContent =
+"💳 " + category;
 
     document
     .getElementById("benefitOpeningBalance")
