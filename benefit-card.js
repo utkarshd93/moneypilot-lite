@@ -688,7 +688,12 @@ ${card.category}
 
     });
         
-if(homeAnalyticsFilter !== "benefit"){
+const selectedCategory =
+    sessionStorage.getItem(
+        "selectedBenefitCard"
+    );
+
+if(!selectedCategory){
 
     section.classList.add("hidden");
 
