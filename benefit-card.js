@@ -250,100 +250,12 @@ function scanBenefitCards(){
 
 }
 
-function getBenefitSummary(
+function getBenefitSummary(category, month){
 
-    category,
-
-    month
-
-){
-
-    const card =
-
-    getBenefitCard(category);
-
-    if(!card){
-
-        return null;
-
-    }
-
-    let income=0;
-
-    let expense=0;
-
-    getTransactionsByMonth(month)
-
-    .forEach(t=>{
-
-        if(
-
-            t.category!==category
-
-        ){
-
-            return;
-
-        }
-
-        if(
-
-            t.type==="income"
-
-        ){
-
-            income +=
-
-            Number(t.amount)||0;
-
-        }
-
-        else if(
-
-            t.type==="expense"
-
-        ){
-
-            expense +=
-
-            Number(t.amount)||0;
-
-        }
-
-    });
-
-    const lifetime =
-    getBenefitLifetimeSummary(category);
-
-return{
-
-    category,
-
-    initialBalance:
-        card.initialBalance,
-
-    monthlyLoaded:
-        income,
-
-    monthlySpent:
-        expense,
-
-    loaded:
-        income,
-
-    spent:
-        expense,
-
-    totalLoaded:
-        lifetime.totalLoaded,
-
-    totalSpent:
-        lifetime.totalSpent,
-
-    remaining:
-        lifetime.availableBalance
-
-};
+    return getBenefitBalanceTillMonth(
+        category,
+        month
+    );
 
 }
 
@@ -401,6 +313,97 @@ function getBenefitLifetimeSummary(category){
         availableBalance:
             card.initialBalance +
             loaded -
+            spent
+
+    };
+
+}
+
+
+/* =====================================================
+        Benefit Balance Till Selected Month
+===================================================== */
+
+function getBenefitBalanceTillMonth(category, month){
+
+    const card = getBenefitCard(category);
+
+    if(!card){
+
+        return null;
+
+    }
+
+    let loaded = 0;
+
+    let spent = 0;
+
+    let monthlyLoaded = 0;
+
+    let monthlySpent = 0;
+
+    transactions.forEach(t=>{
+
+        if(t.category !== category){
+
+            return;
+
+        }
+
+        const txnMonth = t.date.substring(0,7);
+
+        if(txnMonth > month){
+
+            return;
+
+        }
+
+        if(t.type === "income"){
+
+            loaded += Number(t.amount) || 0;
+
+            if(txnMonth === month){
+
+                monthlyLoaded += Number(t.amount) || 0;
+
+            }
+
+        }
+
+        else if(t.type === "expense"){
+
+            spent += Number(t.amount) || 0;
+
+            if(txnMonth === month){
+
+                monthlySpent += Number(t.amount) || 0;
+
+            }
+
+        }
+
+    });
+
+    return{
+
+        category,
+
+        initialBalance: card.initialBalance,
+
+        totalLoaded: loaded,
+
+        totalSpent: spent,
+
+        monthlyLoaded,
+
+        monthlySpent,
+
+        availableBalance:
+
+            card.initialBalance +
+
+            loaded -
+
             spent
 
     };
