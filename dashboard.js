@@ -377,7 +377,9 @@ function renderBenefitCards(){
 
         list.innerHTML += `
 
-<div class="benefitCard">
+<div
+class="benefitCard clickableBenefitCard"
+onclick="openBenefitAnalytics('${summary.category}')">
 
 <div class="benefitHeader">
 
@@ -446,6 +448,23 @@ onclick="editBenefitBalance('${summary.category}')">
 `;
 
     });
+
+}
+
+function openBenefitAnalytics(category){
+
+    sessionStorage.setItem(
+        "selectedBenefitCard",
+        category
+    );
+
+    openPage("analytics");
+
+    if(typeof renderBenefitAnalytics === "function"){
+
+        renderBenefitAnalytics();
+
+    }
 
 }
 
