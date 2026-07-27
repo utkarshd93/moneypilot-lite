@@ -688,17 +688,18 @@ ${card.category}
 
     });
 
-    const selectedCategory =
-    sessionStorage.getItem(
-        "selectedBenefitCard"
-    );
-
-if(!selectedCategory){
+    if(!window.openedFromBenefitCard){
 
     section.classList.add("hidden");
 
     return;
+
 }
+
+let selectedCategory =
+sessionStorage.getItem(
+    "selectedBenefitCard"
+);
 
     if(
 
