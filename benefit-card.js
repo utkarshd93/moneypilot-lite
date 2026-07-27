@@ -111,6 +111,13 @@ function updateBenefitInitialBalance(
 
 function scanBenefitCards(){
 
+    const registry = getBenefitRegistry();
+
+    // Cleanup old invalid entries
+    delete registry["Other"];
+
+    saveBenefitRegistry();
+
     const ignoreCategories = [
 
         "Other"
