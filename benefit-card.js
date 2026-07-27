@@ -11,22 +11,31 @@ function editBenefitBalance(category){
 
     editingBenefitCard = category;
 
-    const card =
-        getBenefitCard(category);
+    const card = getBenefitCard(category);
+
+    const summary = getBenefitSummary(
+        category,
+        document.getElementById("monthFilter")?.value || ""
+    );
 
     document
-.getElementById("benefitPopupTitle")
-.textContent =
-"💳 " + category;
+        .getElementById("benefitPopupTitle")
+        .textContent = "💳 " + category;
 
     document
-    .getElementById("benefitOpeningBalance")
-    .value =
+        .getElementById("benefitPopupBalance")
+        .textContent =
+        "₹" + Number(summary.remaining)
+        .toLocaleString("en-IN");
+
+    document
+        .getElementById("benefitOpeningBalance")
+        .value =
         card.initialBalance || 0;
 
     document
-    .getElementById("benefitBalancePopup")
-    .classList.add("show");
+        .getElementById("benefitBalancePopup")
+        .classList.add("show");
 
 }
 
