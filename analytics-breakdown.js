@@ -310,3 +310,84 @@ function getCategoryEmoji(category){
     return getCategoryIcon(category);
 
 }
+
+function toggleAnalyticsBreakdown(type){
+
+    const panel =
+    document.getElementById(
+        type + "Breakdown"
+    );
+
+    const arrow =
+    event.target;
+
+    if(!panel){
+
+        return;
+
+    }
+
+    panel.classList.toggle("show");
+
+    arrow.innerHTML =
+        panel.classList.contains("show")
+        ? "▲"
+        : "▼";
+
+    if(panel.classList.contains("show")){
+
+        renderAnalyticsBreakdown(type);
+
+    }
+
+}
+
+function renderAnalyticsBreakdown(type){
+
+    const panel =
+    document.getElementById(
+        type + "Breakdown"
+    );
+
+    const transactions =
+    getCurrentMonthTransactions();
+
+    const data = {};
+
+    transactions
+        .filter(t =>
+            t.type==="expense" &&
+            ((type==="fixed" && t.fixed) ||
+             (type==="variable" && !t.fixed))
+        )
+        .forEach(t=>{
+
+            data[t.category] =
+                (data[t.category]||0)+
+                Number(t.amount);
+
+        });
+
+    panel.innerHTML="";
+
+    Object.entries(data).forEach(([category,amount])=>{
+
+        panel.innerHTML += `
+
+<div class="analyticsBreakdownItem">
+
+<span>${category}</span>
+
+<strong>
+
+₹${amount.toLocaleString("en-IN")}
+
+</strong>
+
+</div>
+
+`;
+
+    });
+
+}
