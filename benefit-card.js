@@ -5,6 +5,78 @@
 
 const BENEFIT_VERSION = 1;
 
+let editingBenefitCard = null;
+
+function editBenefitBalance(category){
+
+    editingBenefitCard = category;
+
+    const card =
+        getBenefitCard(category);
+
+    document
+    .getElementById("benefitPopupTitle")
+    .textContent = category;
+
+    document
+    .getElementById("benefitOpeningBalance")
+    .value =
+        card.initialBalance || 0;
+
+    document
+    .getElementById("benefitBalancePopup")
+    .classList.add("show");
+
+}
+
+function closeBenefitPopup(){
+
+    document
+    .getElementById("benefitBalancePopup")
+    .classList.remove("show");
+
+    editingBenefitCard = null;
+
+}
+
+function saveBenefitOpeningBalance(){
+
+    if(!editingBenefitCard){
+
+        return;
+
+    }
+
+    const amount =
+
+    Number(
+
+        document
+        .getElementById(
+            "benefitOpeningBalance"
+        )
+        .value
+
+    ) || 0;
+
+    updateBenefitInitialBalance(
+
+        editingBenefitCard,
+
+        amount
+
+    );
+
+    closeBenefitPopup();
+
+    refreshDashboard();
+
+    renderBenefitTransactionSummary();
+
+}
+
+
+
 function getBenefitRegistry(){
 
     if(!settings.benefitRegistry){
@@ -370,3 +442,22 @@ onclick="editBenefitBalance('${summary.category}')">
     section.classList.remove("hidden");
 
 }
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    document
+    .getElementById("cancelBenefitPopup")
+    ?.addEventListener(
+        "click",
+        closeBenefitPopup
+    );
+
+    document
+    .getElementById("saveBenefitPopup")
+    ?.addEventListener(
+        "click",
+        saveBenefitOpeningBalance
+    );
+
+});
