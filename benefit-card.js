@@ -687,8 +687,8 @@ ${card.category}
 `;
 
     });
-
-    if(!window.openedFromBenefitCard){
+        
+if(homeAnalyticsFilter !== "benefit"){
 
     section.classList.add("hidden");
 
@@ -722,21 +722,13 @@ sessionStorage.getItem(
 
     renderBenefitAnalyticsContent(selectedCategory);
 
-    sessionStorage.removeItem("selectedBenefitCard");
+    
 
-    selector.onchange = function(){
+    selector.onchange=function(){
 
-        sessionStorage.setItem(
+    renderBenefitAnalyticsContent(this.value);
 
-            "selectedBenefitCard",
-
-            this.value
-
-        );
-
-        renderBenefitAnalyticsContent(this.value);
-
-    };
+};
 
 }
 
