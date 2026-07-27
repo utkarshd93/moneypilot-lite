@@ -55,6 +55,14 @@ function openPage(pageName){
 
 hideAllPages();
 
+ if(pageName !== "analytics"){
+
+    sessionStorage.removeItem(
+        "selectedBenefitCard"
+    );
+
+}
+
 if(pages[pageName]){
 
 pages[pageName].classList.add("active");
