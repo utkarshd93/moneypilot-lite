@@ -1090,38 +1090,60 @@ id="saveButton">
 id="benefitBalancePopup"
 class="popupOverlay">
 
-<div class="popupCard">
+<div class="popupCard benefitPopup">
 
-<h3 id="benefitPopupTitle">
+    <div class="benefitPopupIcon">
 
-Benefit Card
+        💳
 
-</h3>
+    </div>
 
-<input
-id="benefitOpeningBalance"
-type="number"
-placeholder="Opening Balance">
+    <h2 id="benefitPopupTitle">
 
-<div class="popupButtons">
+        Food Card
 
-<button
-id="cancelBenefitPopup"
-class="popupCancel">
+    </h2>
 
-Cancel
+    <p class="benefitPopupSubtitle">
 
-</button>
+        Set the opening balance available on this benefit card.
 
-<button
-id="saveBenefitPopup"
-class="popupSave">
+        This amount is added only once and future loads & expenses are
+        calculated on top of it.
 
-Save
+    </p>
 
-</button>
+    <label class="popupLabel">
 
-</div>
+        Opening Balance
+
+    </label>
+
+    <input
+        id="benefitOpeningBalance"
+        type="number"
+        inputmode="decimal"
+        placeholder="₹ 20,000">
+
+    <div class="popupButtons">
+
+        <button
+        id="cancelBenefitPopup"
+        class="popupCancel">
+
+            Cancel
+
+        </button>
+
+        <button
+        id="saveBenefitPopup"
+        class="popupSave">
+
+            💾 Save
+
+        </button>
+
+    </div>
 
 </div>
 
