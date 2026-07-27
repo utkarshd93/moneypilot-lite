@@ -26,9 +26,21 @@ function initializeApp() {
 
     }
 
+    if(typeof loadSettings==="function"){
+
+    loadSettings();
+
+    }
+
     if (typeof loadBills === "function") {
 
         loadBills();
+
+    }
+
+    if(typeof scanBenefitCards==="function"){
+
+    scanBenefitCards();
 
     }
 
