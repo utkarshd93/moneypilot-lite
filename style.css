@@ -4321,67 +4321,63 @@ display:none;
 
 .benefitPopup{
 
-    max-width:420px;
-
-    text-align:center;
-
-}
-
-.benefitPopupIcon{
-
-    font-size:46px;
-
-    margin-bottom:12px;
+    width:360px;
+    max-width:90%;
 
 }
 
 .benefitPopup h2{
 
-    margin:0;
-
-    font-size:24px;
-
-    font-weight:700;
+    margin:0 0 20px;
+    text-align:center;
 
 }
 
-.benefitPopupSubtitle{
+.benefitCurrentBalance{
 
-    margin:12px 0 22px;
+    background:#f7f7f7;
+    border-radius:14px;
+    padding:16px;
+    text-align:center;
+    margin-bottom:22px;
 
-    line-height:1.5;
+}
 
+.benefitCurrentBalance span{
+
+    font-size:13px;
     color:#777;
 
-    font-size:14px;
+}
+
+.benefitCurrentBalance h1{
+
+    margin:8px 0 0;
+    color:#17b85d;
+    font-size:30px;
 
 }
 
 .popupLabel{
 
     display:block;
-
-    text-align:left;
-
-    margin-bottom:8px;
-
     font-weight:600;
+    margin-bottom:8px;
 
 }
 
 #benefitOpeningBalance{
 
     width:100%;
-
-    font-size:20px;
-
-    padding:14px 16px;
-
     box-sizing:border-box;
-
-    margin-bottom:20px;
+    padding:14px;
+    font-size:18px;
+    margin-bottom:22px;
 
 }
+
+
+
 
 /* =====================================================
                 CSS END
