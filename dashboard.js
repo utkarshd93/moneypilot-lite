@@ -405,7 +405,7 @@ Available Balance
 
 <button
 class="benefitSettingsBtn"
-onclick="editBenefitBalance('${summary.category}')">
+onclick="event.stopPropagation(); editBenefitBalance('${summary.category}')">
 
 ⚙️
 
