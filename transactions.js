@@ -526,6 +526,19 @@ function drawTransactionCard(container, transaction){
     let amountClass = "expenseText";
     let sign = "-";
     let icon = getCategoryIcon(transaction.category);
+   let runningBalance = null;
+
+if(isBenefitCard(transaction.category)){
+
+    runningBalance = getBenefitRunningBalance(
+
+        transaction.category,
+
+        transaction.id
+
+    );
+
+}
 
     if(transaction.type==="income"){
 
@@ -583,9 +596,25 @@ function drawTransactionCard(container, transaction){
 
             <div class="transactionFooter">
 
-                <span>
-                    ${formatDisplayDate(transaction.date)}
-                </span>
+    <div>
+
+        <span>
+
+            ${formatDisplayDate(transaction.date)}
+
+        </span>
+
+        ${runningBalance !== null ? `
+
+            <div class="benefitRunningBalance">
+
+                Balance ₹${runningBalance.toLocaleString("en-IN")}
+
+            </div>
+
+        ` : ""}
+
+    </div>
 
                 <div class="swipeIndicator">
                     <span>‹</span>
