@@ -111,29 +111,25 @@ function updateBenefitInitialBalance(
 
 function scanBenefitCards(){
 
+    const ignoreCategories = [
+
+        "Other"
+
+    ];
+
     const expenseCategories =
 
-    getAllCategories("expense");
+        getAllCategories("expense")
+        .filter(c => !ignoreCategories.includes(c));
 
     transactions.forEach(t=>{
 
         if(
-
-            t.type==="income" &&
-
-            expenseCategories.includes(
-
-                t.category
-
-            )
-
+            t.type === "income" &&
+            expenseCategories.includes(t.category)
         ){
 
-            registerBenefitCard(
-
-                t.category
-
-            );
+            registerBenefitCard(t.category);
 
         }
 
