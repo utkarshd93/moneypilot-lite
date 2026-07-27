@@ -53,6 +53,12 @@ button.classList.remove("active");
 }
 function openPage(pageName){
 
+if(pageName !== "analytics"){
+
+    window.openedFromBenefitCard = false;
+
+}
+
 hideAllPages();
 
 if(pages[pageName]){
