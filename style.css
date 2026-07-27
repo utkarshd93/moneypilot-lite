@@ -4319,6 +4319,70 @@ display:none;
 
 }
 
+.benefitPopup{
+
+    max-width:420px;
+
+    text-align:center;
+
+}
+
+.benefitPopupIcon{
+
+    font-size:46px;
+
+    margin-bottom:12px;
+
+}
+
+.benefitPopup h2{
+
+    margin:0;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.benefitPopupSubtitle{
+
+    margin:12px 0 22px;
+
+    line-height:1.5;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.popupLabel{
+
+    display:block;
+
+    text-align:left;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+#benefitOpeningBalance{
+
+    width:100%;
+
+    font-size:20px;
+
+    padding:14px 16px;
+
+    box-sizing:border-box;
+
+    margin-bottom:20px;
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
