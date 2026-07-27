@@ -4459,6 +4459,63 @@ display:none;
 
 }
 
+.benefitAnalyticsBalance{
+
+    text-align:center;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    margin-bottom:18px;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+.balanceTitle{
+
+    font-size:14px;
+
+    opacity:.75;
+
+}
+
+.balanceValue{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-top:8px;
+
+}
+
+.benefitAnalyticsGrid{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.analyticsRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+
 /* =====================================================
                 CSS END
 ===================================================== */
