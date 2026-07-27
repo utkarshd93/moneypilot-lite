@@ -393,11 +393,23 @@ Available Balance
 
 </div>
 
+<div class="benefitActions">
+
 <h2>
 
 ₹${summary.remaining.toLocaleString("en-IN")}
 
 </h2>
+
+<button
+class="benefitSettingsBtn"
+onclick="editBenefitBalance('${summary.category}')">
+
+⚙️
+
+</button>
+
+</div>
 
 </div>
 
