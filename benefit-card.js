@@ -23,10 +23,11 @@ function editBenefitBalance(category){
         .textContent = "💳 " + category;
 
     document
-        .getElementById("benefitPopupBalance")
-        .textContent =
-        "₹" + Number(summary.remaining)
-        .toLocaleString("en-IN");
+    .getElementById("benefitPopupBalance")
+    .textContent =
+    "₹" +
+    Number(summary?.availableBalance ?? 0)
+    .toLocaleString("en-IN");
 
     document
     .getElementById("benefitCurrentOpeningBalance")
