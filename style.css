@@ -4328,25 +4328,41 @@ display:none;
 
 .benefitPopup h2{
 
-    margin:0 0 20px;
+    color:#1F2937;
+
+    font-size:24px;
+
+    font-weight:700;
+
     text-align:center;
+
+    margin:0 0 18px;
 
 }
 
 .benefitCurrentBalance{
 
-    background:#f7f7f7;
-    border-radius:14px;
-    padding:16px;
+    background:#F3F4F6;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    margin-bottom:24px;
+
     text-align:center;
-    margin-bottom:22px;
 
 }
 
 .benefitCurrentBalance span{
 
-    font-size:13px;
-    color:#777;
+    display:block;
+
+    color:#6B7280;
+
+    font-size:14px;
+
+    margin-bottom:8px;
 
 }
 
@@ -4361,7 +4377,13 @@ display:none;
 .popupLabel{
 
     display:block;
+
+    color:#374151;
+
+    font-size:15px;
+
     font-weight:600;
+
     margin-bottom:8px;
 
 }
@@ -4375,8 +4397,6 @@ display:none;
     margin-bottom:22px;
 
 }
-
-
 
 
 /* =====================================================
