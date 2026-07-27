@@ -688,7 +688,7 @@ ${card.category}
 
     });
         
-const selectedCategory =
+let selectedCategory =
     sessionStorage.getItem(
         "selectedBenefitCard"
     );
@@ -700,11 +700,6 @@ if(!selectedCategory){
     return;
 
 }
-
-let selectedCategory =
-sessionStorage.getItem(
-    "selectedBenefitCard"
-);
 
     if(
 
