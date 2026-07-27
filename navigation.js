@@ -79,9 +79,14 @@ if(pageName==="analytics"){
 
     trackEvent("analytics_opened");
 
-    /* If Analytics is opened from bottom navigation,
-       start with no filter selected */
-    if(!sessionStorage.getItem("analyticsFilter")){
+    const openedFromBenefit =
+
+        sessionStorage.getItem(
+            "selectedBenefitCard"
+        );
+
+    if(!sessionStorage.getItem("analyticsFilter") &&
+       !openedFromBenefit){
 
         analyticsMode = null;
 
@@ -102,7 +107,11 @@ navButtons.home.addEventListener(
 
 ()=>{
 
-openPage("home");
+    sessionStorage.removeItem(
+        "selectedBenefitCard"
+    );
+
+    openPage("home");
 
 }
 
@@ -580,8 +589,12 @@ if(backBtn){
 
     backBtn.addEventListener("click",function(){
 
-        openPage("home");
+    sessionStorage.removeItem(
+        "selectedBenefitCard"
+    );
 
-    });
+    openPage("home");
+
+});
 
 }
