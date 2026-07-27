@@ -1111,6 +1111,7 @@ function afterTransactionChanged(){
         fullRefresh();
 
     }
+        renderBenefitTransactionSummary();
 
 }
 /* =====================================================
@@ -1817,5 +1818,29 @@ function(){
     );
 
     refreshCategoryDropdown();
+
+
+        /* Benefit Card Summary Refresh */
+
+document
+.getElementById("categoryFilter")
+?.addEventListener(
+    "change",
+    renderBenefitTransactionSummary
+);
+
+document
+.getElementById("transactionTypeFilter")
+?.addEventListener(
+    "change",
+    renderBenefitTransactionSummary
+);
+
+document
+.getElementById("monthFilter")
+?.addEventListener(
+    "change",
+    renderBenefitTransactionSummary
+);
 
 });
