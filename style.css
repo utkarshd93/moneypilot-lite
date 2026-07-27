@@ -4257,7 +4257,31 @@ display:none;
 }
 
 
+.benefitActions{
 
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.benefitSettingsBtn{
+
+    width:34px;
+
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
 
 /* =====================================================
                 CSS END
