@@ -453,20 +453,17 @@ onclick="editBenefitBalance('${summary.category}')">
 
 function openBenefitAnalytics(category){
 
-    window.openedFromBenefitCard = true;
+    sessionStorage.setItem(
+        "selectedBenefitCard",
+        category
+    );
 
-sessionStorage.setItem(
-    "selectedBenefitCard",
-    category
-);
+    sessionStorage.setItem(
+        "analyticsFilter",
+        "benefit"
+    );
 
     openPage("analytics");
-
-    if(typeof renderBenefitAnalytics === "function"){
-
-        renderBenefitAnalytics();
-
-    }
 
 }
 
