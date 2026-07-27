@@ -488,7 +488,7 @@ Available Balance
 
 <h2>
 
-₹${summary.remaining.toLocaleString("en-IN")}
+₹${summary.availableBalance.toLocaleString("en-IN")}
 
 </h2>
 
@@ -524,7 +524,7 @@ onclick="editBenefitBalance('${summary.category}')">
 
 <strong>
 
-₹${summary.loaded.toLocaleString("en-IN")}
+₹${summary.monthlyLoaded.toLocaleString("en-IN")}
 
 </strong>
 
@@ -536,7 +536,7 @@ onclick="editBenefitBalance('${summary.category}')">
 
 <strong>
 
-₹${summary.spent.toLocaleString("en-IN")}
+₹${summary.monthlySpent.toLocaleString("en-IN")}
 
 </strong>
 
