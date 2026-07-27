@@ -4587,6 +4587,74 @@ display:none;
 
 }
 
+.analyticsBoxHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:8px;
+
+}
+
+.analyticsExpand{
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    transition:.25s;
+
+    color:#bbb;
+
+}
+
+.analyticsExpand:hover{
+
+    color:#fff;
+
+}
+
+.analyticsBreakdown{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    transition:max-height .35s ease;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    margin-top:10px;
+
+}
+
+.analyticsBreakdown.show{
+
+    max-height:260px;
+
+    padding-top:10px;
+
+}
+
+.analyticsBreakdownItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:8px 0;
+
+    font-size:14px;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
