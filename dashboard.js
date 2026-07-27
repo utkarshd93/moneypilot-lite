@@ -340,3 +340,64 @@ function(){
 
 }
 );
+
+
+function openAnalytics(filter){
+
+    sessionStorage.setItem(
+        "analyticsFilter",
+        filter
+    );
+
+    openPage("analytics");
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const incomeCard =
+        document.querySelector(".incomeCard");
+
+    const expenseCard =
+        document.querySelector(".expenseCard");
+
+    const investmentCard =
+        document.querySelector(".investmentCard");
+
+    if (incomeCard) {
+
+        incomeCard.style.cursor = "pointer";
+
+        incomeCard.addEventListener("click", () => {
+
+            openAnalytics("income");
+
+        });
+
+    }
+
+    if (expenseCard) {
+
+        expenseCard.style.cursor = "pointer";
+
+        expenseCard.addEventListener("click", () => {
+
+            openAnalytics("expense");
+
+        });
+
+    }
+
+    if (investmentCard) {
+
+        investmentCard.style.cursor = "pointer";
+
+        investmentCard.addEventListener("click", () => {
+
+            openAnalytics("investment");
+
+        });
+
+    }
+
+});

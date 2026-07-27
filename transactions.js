@@ -527,119 +527,90 @@ function drawTransactionCard(container, transaction){
     let sign = "-";
     let icon = getCategoryIcon(transaction.category);
 
-if(transaction.type==="income"){
+    if(transaction.type==="income"){
 
-    amountClass="incomeText";
-    sign="+";
+        amountClass="incomeText";
+        sign="+";
 
-}
+    }
+    else if(transaction.type==="investment"){
 
-else if(transaction.type==="investment"){
+        amountClass="investmentText";
+        sign="";
 
-    amountClass="investmentText";
-    sign="";
+    }
 
-}
-
-container.innerHTML += `
+    container.innerHTML += `
 
 <div class="transactionRow">
 
-<div class="transactionSwipeActions">
+    <div class="transactionSwipeActions">
 
-<button
+        <button class="swipeEdit"
+            onclick="editTransaction(${transaction.id})">
+            ✏️
+            <span>Edit</span>
+        </button>
 
-class="swipeEdit"
+        <button class="swipeDelete"
+            onclick="deleteTransaction(${transaction.id})">
+            🗑️
+            <span>Delete</span>
+        </button>
 
-onclick="editTransaction(${transaction.id})">
+    </div>
 
-✏️
+    <div class="transactionItem transactionPageCard"
+         data-id="${transaction.id}">
 
-<span>Edit</span>
+        <div class="transactionHeader">
 
-</button>
+    <div class="transactionTitle">
 
-<button
+        <div class="transactionIcon">
+            ${icon}
+        </div>
 
-class="swipeDelete"
+        <div class="transactionContent">
 
-onclick="deleteTransaction(${transaction.id})">
+            <span>${transaction.category}</span>
 
-🗑️
+            ${transaction.note ? `
+                <div class="transactionDescription">
+                    ${transaction.note}
+                </div>
+            ` : ""}
 
-<span>Delete</span>
+            <div class="transactionFooter">
 
-</button>
+                <span>
+                    ${formatDisplayDate(transaction.date)}
+                </span>
 
-</div>
+                <div class="swipeIndicator">
+                    <span>‹</span>
+                    <span>‹</span>
+                </div>
 
-<div
+            </div>
 
-class="transactionItem"
+        </div>
 
-data-id="${transaction.id}">
+    </div>
 
-<div class="transactionTop">
+    <div class="transactionMenu">
 
-<div class="transactionLeft">
+        <div class="transactionAmount ${amountClass}">
+            ${sign}₹${formatMoney(transaction.amount)}
+        </div>
 
-<div class="transactionIcon">
+        <button
+            class="menuButton"
+            onclick="openTransactionActions(${transaction.id})">
+            ⋮
+        </button>
 
-${icon}
-
-</div>
-
-<div class="transactionInfo">
-
-<h3>
-
-${transaction.category}
-
-</h3>
-
-<small>
-
-${formatDisplayDate(transaction.date)}
-
-</small>
-
-</div>
-
-</div>
-
-<div class="transactionAmount ${amountClass}">
-
-${sign}₹${formatMoney(transaction.amount)}
-
-</div>
-
-</div>
-
-<div class="transactionBottom">
-
-<div class="transactionNote">
-
-${transaction.note || transaction.type}
-
-</div>
-
-<div class="transactionMenu">
-
-<button
-
-class="menuButton"
-
-onclick="openTransactionActions(${transaction.id})">
-
-⋮
-
-</button>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
@@ -1161,6 +1132,47 @@ function initializeTransactions(){
         renderRecentTransactions();
 
     }
+
+showSwipeHintOnce();
+
+}
+
+function showSwipeHintOnce(){
+
+    if(localStorage.getItem("transactionSwipeHint")){
+
+        return;
+
+    }
+
+    setTimeout(()=>{
+
+        const cards = document.querySelectorAll(".transactionItem");
+
+        cards.forEach((card,index)=>{
+
+            setTimeout(()=>{
+
+                card.style.transition="transform .25s ease";
+
+                card.style.transform="translateX(-14px)";
+
+                setTimeout(()=>{
+
+                    card.style.transform="translateX(0px)";
+
+                },250);
+
+            },index*120);
+
+        });
+
+        localStorage.setItem(
+            "transactionSwipeHint",
+            "true"
+        );
+
+    },600);
 
 }
 /* =====================================================

@@ -5,19 +5,53 @@
 
 let analyticsMode = null;
 
+/* Home page temporary filter */
+let homeAnalyticsFilter = null;
+
 function initAnalyticsBreakdown() {
 
     const cards = document.querySelectorAll(".analyticsBox");
 
-    if (cards.length < 2) return;
+    cards.forEach(card =>
+        card.classList.remove("active")
+    );
 
-    cards[0].addEventListener("click", () => {
-        setAnalyticsMode("fixed");
-    });
+    if (cards.length >= 2) {
 
-    cards[1].addEventListener("click", () => {
-        setAnalyticsMode("variable");
-    });
+        cards[0].onclick = () => {
+
+            homeAnalyticsFilter = null;
+
+            setAnalyticsMode("fixed");
+
+        };
+
+        cards[1].onclick = () => {
+
+            homeAnalyticsFilter = null;
+
+            setAnalyticsMode("variable");
+
+        };
+
+    }
+
+    const filter =
+    sessionStorage.getItem("analyticsFilter");
+
+if (filter) {
+
+    homeAnalyticsFilter = filter;
+
+    sessionStorage.removeItem("analyticsFilter");
+
+} else {
+
+    homeAnalyticsFilter = null;
+
+}
+
+    renderAnalyticsTransactions();
 
 }
 
@@ -49,6 +83,43 @@ function setAnalyticsMode(mode) {
 
 function renderAnalyticsTransactions() {
 
+   const heading =
+    document.getElementById("analyticsHeading");
+
+const currentMode =
+    homeAnalyticsFilter || analyticsMode;
+
+if (heading) {
+
+    switch (currentMode) {
+
+        case "income":
+            heading.textContent = "Income Transactions";
+            break;
+
+        case "expense":
+            heading.textContent = "All Expense Transactions";
+            break;
+
+        case "investment":
+            heading.textContent = "Investment Transactions";
+            break;
+
+        case "fixed":
+            heading.textContent = "Fixed Expenses";
+            break;
+
+        case "variable":
+            heading.textContent = "Variable Expenses";
+            break;
+
+        default:
+            heading.textContent = "Expense Breakdown";
+
+    }
+
+}
+
     const container =
         document.getElementById("categorySummary");
 
@@ -57,47 +128,87 @@ function renderAnalyticsTransactions() {
     const transactions =
         getCurrentMonthTransactions();
 
-    let filtered = [];
+    let mode =
+    homeAnalyticsFilter || analyticsMode;
 
-    if (analyticsMode === "fixed") {
+let filtered = [];
 
-        filtered = transactions.filter(t =>
-            t.type === "expense" &&
-            t.fixed === true
-        );
+switch (mode) {
 
-    } else {
+        case "income":
 
-        filtered = transactions.filter(t =>
-            t.type === "expense" &&
-            t.fixed === false
-        );
+            filtered = transactions.filter(
+                t => t.type === "income"
+            );
+
+            break;
+
+        case "expense":
+
+            filtered = transactions.filter(
+                t => t.type === "expense"
+            );
+
+            break;
+
+        case "investment":
+
+            filtered = transactions.filter(
+                t => t.type === "investment"
+            );
+
+            break;
+
+        case "fixed":
+
+            filtered = transactions.filter(
+                t =>
+                    t.type === "expense" &&
+                    t.fixed === true
+            );
+
+            break;
+
+        case "variable":
+
+            filtered = transactions.filter(
+                t =>
+                    t.type === "expense" &&
+                    t.fixed === false
+            );
+
+            break;
+
+        default:
+
+            filtered = [];
 
     }
 
-  filtered.sort((a, b) => {
+    filtered.sort((a, b) => {
 
-    // Newest transaction date first
-    const dateDiff = new Date(b.date) - new Date(a.date);
+        const dateDiff =
+            new Date(b.date) -
+            new Date(a.date);
 
-    if (dateDiff !== 0) {
+        if (dateDiff !== 0)
+            return dateDiff;
 
-        return dateDiff;
+        return Number(b.id || 0)
+            - Number(a.id || 0);
 
-    }
+    });
 
-    // Same date -> newest added transaction first
-    return Number(b.id || 0) - Number(a.id || 0);
-
-});
-   
-
-    if (filtered.length === 0) {
+    if (!filtered.length) {
 
         container.innerHTML = `
+
             <div class="analyticsEmpty">
+
                 No Transactions
+
             </div>
+
         `;
 
         return;
@@ -108,97 +219,90 @@ function renderAnalyticsTransactions() {
 
     filtered.forEach(t => {
 
-    console.log(t);
+        const icon =
+            getCategoryEmoji(t.category);
 
-    const created = t.createdAt
+        const date =
+            new Date(t.date)
+                .toLocaleDateString(
+                    "en-GB",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    }
+                );
 
-    ? new Date(t.createdAt)
+        const created =
+            t.createdAt
+                ? new Date(t.createdAt)
+                : null;
 
-    : null;
+        const time =
+            created
+                ? created.toLocaleTimeString(
+                    "en-GB",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false
+                    }
+                )
+                : "";
 
-const shortDate = new Date(t.date)
+        html += `
 
-    .toLocaleDateString(
+<div class="analyticsTxnCard">
 
-        "en-GB",
+    <div class="analyticsTxnHeader">
 
-        {
+        <div class="analyticsTxnTitle">
 
-            day: "2-digit",
-
-            month: "short"
-
-        }
-
-    );
-
-const shortTime = created
-
-    ? created.toLocaleTimeString(
-
-        "en-GB",
-
-        {
-
-            hour: "2-digit",
-
-            minute: "2-digit",
-
-            hour12: false
-
-        }
-
-    )
-
-    : "";
-
-const icon = getCategoryEmoji(t.category);
-
-    html += `
-
-        <div class="analyticsItem">
-
-            <span class="analyticsIcon">
-
-                ${icon}
-
-            </span>
-
-           <span class="analyticsCategory">
-
-    ${t.category}
-
-</span>
-
-<span class="analyticsDate">
-
-    ${shortDate}
-
-    ${shortTime ? `<br><small>${shortTime}</small>` : ""}
-
-</span>
-
-<span class="analyticsAmount">
-
-    ₹${Number(t.amount).toLocaleString("en-IN")}
-
-</span>
+            ${icon} ${t.category}
 
         </div>
 
-    `;
+        <div class="analyticsTxnAmount ${t.type}">
 
-});
+    ₹${Number(t.amount).toLocaleString("en-IN")}
+
+</div>
+
+    </div>
+
+    ${(t.note || t.description) ? `
+
+<div class="analyticsTxnDescription">
+
+    📝 ${t.note || t.description}
+
+</div>
+
+` : ""}
+
+    <div class="analyticsTxnFooter">
+
+        <span>📅 ${date}</span>
+
+        ${time ? `<span>🕒 ${time}</span>` : ""}
+
+    </div>
+
+</div>
+
+`;
+
+    });
 
     container.style.opacity = "0";
 
-setTimeout(()=>{
+    setTimeout(() => {
 
-    container.innerHTML = html;
+        container.innerHTML = html;
 
-    container.style.opacity = "1";
+        container.style.opacity = "1";
 
-},120);
+    }, 120);
 
 }
 
