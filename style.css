@@ -4445,6 +4445,20 @@ display:none;
 
 }
 
+.clickableBenefitCard{
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.clickableBenefitCard:hover{
+
+    transform:translateY(-2px);
+
+}
+
 /* =====================================================
                 CSS END
 ===================================================== */
