@@ -192,19 +192,20 @@ switch (mode) {
 
     if (!filtered.length) {
 
-        container.innerHTML = `
+    container.innerHTML = `
 
-            <div class="analyticsEmpty">
+        <div class="analyticsEmpty">
 
-                No Transactions
+            No Transactions
 
-            </div>
+        </div>
 
-        `;
+    `;
 
-        return;
+    renderBenefitAnalytics();
 
-    }
+    return;
+}
 
     let html = "";
 
