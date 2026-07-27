@@ -295,15 +295,31 @@ function renderBenefitTransactionSummary(){
 
 <h3>${summary.category}</h3>
 
-<p>Available Balance</p>
+<p>
+
+Available Balance
+
+</p>
 
 </div>
+
+<div class="benefitActions">
 
 <h2>
 
 ₹${summary.remaining.toLocaleString("en-IN")}
 
 </h2>
+
+<button
+class="benefitSettingsBtn"
+onclick="editBenefitBalance('${summary.category}')">
+
+⚙️
+
+</button>
+
+</div>
 
 </div>
 
