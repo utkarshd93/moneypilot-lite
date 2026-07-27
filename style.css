@@ -4398,6 +4398,40 @@ display:none;
 
 }
 
+.currentOpeningBalance{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:0 0 14px;
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+    background:#F3F4F6;
+
+    color:#374151;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+.currentOpeningBalance strong{
+
+    color:#111827;
+
+    font-size:15px;
+
+    font-weight:700;
+
+}
+
 
 /* =====================================================
                 CSS END
