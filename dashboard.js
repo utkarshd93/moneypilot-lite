@@ -453,10 +453,12 @@ onclick="editBenefitBalance('${summary.category}')">
 
 function openBenefitAnalytics(category){
 
-    sessionStorage.setItem(
-        "selectedBenefitCard",
-        category
-    );
+    window.openedFromBenefitCard = true;
+
+sessionStorage.setItem(
+    "selectedBenefitCard",
+    category
+);
 
     openPage("analytics");
 
