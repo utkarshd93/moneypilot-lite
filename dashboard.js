@@ -3,7 +3,7 @@
         Dashboard
 ===================================================== */
 
-function calculateDashboard(){
+function calculateDashboard(){ 
 
     const month =
 
