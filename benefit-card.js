@@ -751,15 +751,153 @@ function renderBenefitAnalyticsContent(category){
 
     }
 
+    const month =
+        document.getElementById(
+            "monthFilter"
+        )?.value || "";
+
+    const summary =
+        getBenefitSummary(
+            category,
+            month
+        );
+
+    const card =
+        getBenefitCard(category);
+
+    const txnList =
+        transactions.filter(t=>
+
+            t.category===category
+
+        );
+
+    const totalTransactions =
+        txnList.length;
+
+    const expenseTxn =
+        txnList.filter(
+
+            t=>t.type==="expense"
+
+        );
+
+    const averageSpend =
+        expenseTxn.length
+
+        ? Math.round(
+
+            summary.totalSpent /
+
+            expenseTxn.length
+
+        )
+
+        : 0;
+
     container.innerHTML = `
 
-<div class="analyticsEmpty">
+<div class="benefitAnalyticsGrid">
 
-Selected Benefit Card
+<div class="benefitAnalyticsBalance">
 
-<br><br>
+    <div class="balanceTitle">
 
-<b>${category}</b>
+        Available Balance
+
+    </div>
+
+    <div class="balanceValue">
+
+        ₹${summary.availableBalance.toLocaleString("en-IN")}
+
+    </div>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>Opening Balance</span>
+
+    <strong>
+
+₹${card.initialBalance.toLocaleString("en-IN")}
+
+    </strong>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>This Month Loaded</span>
+
+    <strong>
+
+₹${summary.monthlyLoaded.toLocaleString("en-IN")}
+
+    </strong>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>This Month Spent</span>
+
+    <strong>
+
+₹${summary.monthlySpent.toLocaleString("en-IN")}
+
+    </strong>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>Lifetime Loaded</span>
+
+    <strong>
+
+₹${summary.totalLoaded.toLocaleString("en-IN")}
+
+    </strong>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>Lifetime Spent</span>
+
+    <strong>
+
+₹${summary.totalSpent.toLocaleString("en-IN")}
+
+    </strong>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>Total Transactions</span>
+
+    <strong>
+
+${totalTransactions}
+
+    </strong>
+
+</div>
+
+<div class="analyticsRow">
+
+    <span>Average Spend</span>
+
+    <strong>
+
+₹${averageSpend.toLocaleString("en-IN")}
+
+    </strong>
+
+</div>
 
 </div>
 
