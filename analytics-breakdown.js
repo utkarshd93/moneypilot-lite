@@ -104,14 +104,6 @@ if (heading) {
             heading.textContent = "Variable Expenses";
             break;
         
-       case "benefit":
-            heading.textContent = "Benefit Card";
-            break;
-
-       case "benefit":
-          filtered = [];
-          break;
-          
        default:
             heading.textContent = "Expense Breakdown";
 
