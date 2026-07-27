@@ -304,6 +304,8 @@ switch (mode) {
 
     }, 120);
 
+   renderBenefitAnalytics();
+
 }
 
 document.addEventListener(
