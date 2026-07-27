@@ -644,9 +644,126 @@ document.addEventListener("DOMContentLoaded", function(){
 
 function renderBenefitAnalytics(){
 
+    const section =
+        document.getElementById(
+            "benefitAnalyticsCard"
+        );
+
+    const selector =
+        document.getElementById(
+            "benefitAnalyticsSelector"
+        );
+
+    if(!section || !selector){
+
+        return;
+
+    }
+
+    const cards = getBenefitCards();
+
+    if(cards.length===0){
+
+        section.classList.add("hidden");
+
+        return;
+
+    }
+
+    section.classList.remove("hidden");
+
+    selector.innerHTML = "";
+
+    cards.forEach(card=>{
+
+        selector.innerHTML += `
+
+<option value="${card.category}">
+
+${card.category}
+
+</option>
+
+`;
+
+    });
+
+    let selectedCategory =
+        sessionStorage.getItem(
+            "selectedBenefitCard"
+        );
+
+    if(
+
+        !selectedCategory ||
+
+        !cards.some(
+
+            c=>c.category===selectedCategory
+
+        )
+
+    ){
+
+        selectedCategory =
+            cards[0].category;
+
+    }
+
+    selector.value = selectedCategory;
+
+    renderBenefitAnalyticsContent(
+
+        selectedCategory
+
+    );
+
+    selector.onchange = function(){
+
+        sessionStorage.setItem(
+
+            "selectedBenefitCard",
+
+            this.value
+
+        );
+
+        renderBenefitAnalyticsContent(
+
+            this.value
+
+        );
+
+    };
+
 }
 
 function renderBenefitAnalyticsContent(category){
+
+    const container =
+        document.getElementById(
+            "benefitAnalyticsContent"
+        );
+
+    if(!container){
+
+        return;
+
+    }
+
+    container.innerHTML = `
+
+<div class="analyticsEmpty">
+
+Selected Benefit Card
+
+<br><br>
+
+<b>${category}</b>
+
+</div>
+
+`;
 
 }
 
