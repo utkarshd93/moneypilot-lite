@@ -4161,6 +4161,105 @@ display:none;
 
 
 /* =====================================================
+        Benefit Cards
+===================================================== */
+
+.benefitCard{
+
+    padding:18px;
+
+    margin-bottom:16px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+.benefitHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.benefitHeader h3{
+
+    margin:0;
+
+    font-size:18px;
+
+}
+
+.benefitHeader p{
+
+    margin-top:4px;
+
+    color:rgba(255,255,255,.70);
+
+    font-size:13px;
+
+}
+
+.benefitHeader h2{
+
+    margin:0;
+
+    color:#22C55E;
+
+}
+
+.benefitStats{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+}
+
+.benefitStats div{
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:14px;
+
+    padding:12px;
+
+    text-align:center;
+
+}
+
+.benefitStats span{
+
+    display:block;
+
+    font-size:12px;
+
+    color:rgba(255,255,255,.65);
+
+    margin-bottom:6px;
+
+}
+
+.benefitStats strong{
+
+    font-size:17px;
+
+}
+
+
+
+
+/* =====================================================
                 CSS END
 ===================================================== */
 
