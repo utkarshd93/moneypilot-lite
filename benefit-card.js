@@ -47,6 +47,18 @@ function closeBenefitPopup(){
 
     editingBenefitCard = null;
 
+    document
+    .getElementById("benefitOpeningBalance")
+    .value = "";
+
+    document
+    .getElementById("benefitPopupTitle")
+    .textContent = "";
+
+    document
+    .getElementById("benefitPopupBalance")
+    .textContent = "₹0";
+
 }
 
 function saveBenefitOpeningBalance(){
