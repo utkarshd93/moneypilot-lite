@@ -412,6 +412,72 @@ function getBenefitBalanceTillMonth(category, month){
 }
 
 
+
+/* =====================================================
+        Running Balance
+===================================================== */
+
+function getBenefitRunningBalance(category, transactionId){
+
+    const card = getBenefitCard(category);
+
+    if(!card){
+
+        return 0;
+
+    }
+
+    let balance = Number(card.initialBalance) || 0;
+
+    const list = [...transactions]
+        .sort((a,b)=>{
+
+            const dateCompare =
+                new Date(a.date) - new Date(b.date);
+
+            if(dateCompare !== 0){
+
+                return dateCompare;
+
+            }
+
+            return Number(a.id) - Number(b.id);
+
+        });
+
+    for(const txn of list){
+
+        if(txn.category !== category){
+
+            continue;
+
+        }
+
+        if(txn.type === "income"){
+
+            balance += Number(txn.amount) || 0;
+
+        }
+
+        else if(txn.type === "expense"){
+
+            balance -= Number(txn.amount) || 0;
+
+        }
+
+        if(txn.id === transactionId){
+
+            return balance;
+
+        }
+
+    }
+
+    return balance;
+
+}
+
+
 /* =====================================================
         Transaction Benefit Summary
 ===================================================== */
