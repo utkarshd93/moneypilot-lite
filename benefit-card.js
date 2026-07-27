@@ -637,3 +637,17 @@ document.addEventListener("DOMContentLoaded", function(){
     );
 
 });
+
+/* =====================================================
+        Benefit Analytics
+===================================================== */
+
+function renderBenefitAnalytics(){
+
+}
+
+function renderBenefitAnalyticsContent(category){
+
+}
+
+
