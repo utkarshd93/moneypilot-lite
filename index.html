@@ -1092,26 +1092,23 @@ class="popupOverlay">
 
 <div class="popupCard benefitPopup">
 
-    <div class="benefitPopupIcon">
-
-        💳
-
-    </div>
-
     <h2 id="benefitPopupTitle">
 
         Food Card
 
     </h2>
 
-    <p class="benefitPopupSubtitle">
+    <div class="benefitCurrentBalance">
 
-        Set the opening balance available on this benefit card.
+        <span>Available Balance</span>
 
-        This amount is added only once and future loads & expenses are
-        calculated on top of it.
+        <h1 id="benefitPopupBalance">
 
-    </p>
+            ₹0
+
+        </h1>
+
+    </div>
 
     <label class="popupLabel">
 
@@ -1123,7 +1120,7 @@ class="popupOverlay">
         id="benefitOpeningBalance"
         type="number"
         inputmode="decimal"
-        placeholder="₹ 20,000">
+        placeholder="0">
 
     <div class="popupButtons">
 
