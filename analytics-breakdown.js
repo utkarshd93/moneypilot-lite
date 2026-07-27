@@ -37,20 +37,11 @@ function initAnalyticsBreakdown() {
     }
 
     const filter =
-    sessionStorage.getItem("analyticsFilter");
+sessionStorage.getItem("analyticsFilter");
 
-if (filter) {
+homeAnalyticsFilter = filter || null;
 
-    homeAnalyticsFilter = filter;
-
-    sessionStorage.removeItem("analyticsFilter");
-
-} else {
-
-    homeAnalyticsFilter = null;
-
-}
-
+sessionStorage.removeItem("analyticsFilter");
     renderAnalyticsTransactions();
 
 }
@@ -112,8 +103,8 @@ if (heading) {
         case "variable":
             heading.textContent = "Variable Expenses";
             break;
-
-        default:
+        
+       default:
             heading.textContent = "Expense Breakdown";
 
     }
@@ -201,19 +192,20 @@ switch (mode) {
 
     if (!filtered.length) {
 
-        container.innerHTML = `
+    container.innerHTML = `
 
-            <div class="analyticsEmpty">
+        <div class="analyticsEmpty">
 
-                No Transactions
+            No Transactions
 
-            </div>
+        </div>
 
-        `;
+    `;
 
-        return;
+    renderBenefitAnalytics();
 
-    }
+    return;
+}
 
     let html = "";
 
@@ -303,6 +295,8 @@ switch (mode) {
         container.style.opacity = "1";
 
     }, 120);
+
+   renderBenefitAnalytics();
 
 }
 

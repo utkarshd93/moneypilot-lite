@@ -4161,6 +4161,433 @@ display:none;
 
 
 /* =====================================================
+        Benefit Cards
+===================================================== */
+
+.benefitCard{
+
+    padding:18px;
+
+    margin-bottom:16px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+.benefitHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.benefitHeader h3{
+
+    margin:0;
+
+    font-size:18px;
+
+}
+
+.benefitHeader p{
+
+    margin-top:4px;
+
+    color:rgba(255,255,255,.70);
+
+    font-size:13px;
+
+}
+
+.benefitHeader h2{
+
+    margin:0;
+
+    color:#22C55E;
+
+}
+
+.benefitStats{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+}
+
+.benefitStats div{
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:14px;
+
+    padding:12px;
+
+    text-align:center;
+
+}
+
+.benefitStats span{
+
+    display:block;
+
+    font-size:12px;
+
+    color:rgba(255,255,255,.65);
+
+    margin-bottom:6px;
+
+}
+
+.benefitStats strong{
+
+    font-size:17px;
+
+}
+
+
+.benefitActions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.benefitSettingsBtn{
+
+    width:34px;
+
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+
+.benefitActions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.benefitSettingsBtn{
+
+    width:34px;
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+}
+
+.benefitSettingsBtn:hover{
+
+    background:rgba(255,255,255,.16);
+
+}
+
+.benefitPopup{
+
+    width:360px;
+    max-width:90%;
+
+}
+
+.benefitPopup h2{
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#1F2937;
+
+    margin:0 0 18px;
+
+    text-align:center;
+
+}
+
+.benefitCurrentBalance{
+
+    background:#F3F4F6;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    margin-bottom:24px;
+
+    text-align:center;
+
+}
+
+.benefitCurrentBalance span{
+
+    display:block;
+
+    color:#6B7280;
+
+    font-size:14px;
+
+    margin-bottom:8px;
+
+}
+
+.benefitCurrentBalance h1{
+
+    margin:8px 0 0;
+    color:#17b85d;
+    font-size:30px;
+
+}
+
+.popupLabel{
+
+    display:block;
+
+    color:#374151;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+#benefitOpeningBalance{
+
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    font-size:18px;
+    margin-bottom:22px;
+
+}
+
+.currentOpeningBalance{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:0 0 14px;
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+    background:#F3F4F6;
+
+    color:#374151;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+.currentOpeningBalance strong{
+
+    color:#111827;
+
+    font-size:15px;
+
+    font-weight:700;
+
+}
+
+
+.benefitRunningBalance{
+
+    margin-top:4px;
+
+    font-size:12px;
+
+    color:#16A34A;
+
+    font-weight:600;
+
+}
+
+.clickableBenefitCard{
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.clickableBenefitCard:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.benefitAnalyticsBalance{
+
+    text-align:center;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    margin-bottom:18px;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+.balanceTitle{
+
+    font-size:14px;
+
+    opacity:.75;
+
+}
+
+.balanceValue{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-top:8px;
+
+}
+
+.benefitAnalyticsGrid{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.analyticsRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.benefitAnalyticsHeader{
+
+    margin: 18px 0 24px;
+
+}
+
+#benefitAnalyticsSelector{
+
+    width: 100%;
+
+    height: 54px;
+
+    padding: 0 18px;
+
+    font-size: 17px;
+
+    font-weight: 500;
+
+    color: #fff;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    border-radius: 14px;
+
+    outline: none;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+}
+
+#benefitAnalyticsSelector:focus{
+
+    border-color: #6fa8ff;
+
+    box-shadow: 0 0 0 3px rgba(111,168,255,.18);
+
+}
+
+.benefitAnalyticsHeader{
+
+    position: relative;
+
+}
+
+.benefitAnalyticsHeader::after{
+
+    content: "⌄";
+
+    position: absolute;
+
+    right: 18px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 22px;
+
+    color: rgba(255,255,255,.75);
+
+    pointer-events: none;
+
+}
+
+/* =====================================================
                 CSS END
 ===================================================== */
 

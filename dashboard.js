@@ -3,7 +3,7 @@
         Dashboard
 ===================================================== */
 
-function calculateDashboard(){
+function calculateDashboard(){ 
 
     const month =
 
@@ -217,7 +217,9 @@ function refreshDashboard(){
 
     calculateDashboard();
 
-    updateGreeting();
+renderBenefitCards();
+
+updateGreeting();
 
 }
 /* =====================================================
@@ -311,6 +313,156 @@ function getDashboardSummary(){
     };
 
 }
+
+
+/* =====================================================
+        Benefit Cards Dashboard
+===================================================== */
+
+function renderBenefitCards(){
+
+    const section =
+    document.getElementById(
+        "benefitCardSection"
+    );
+
+    const list =
+    document.getElementById(
+        "benefitCardList"
+    );
+
+    if(!section || !list){
+
+        return;
+
+    }
+
+    const cards =
+    getBenefitCards();
+
+    if(cards.length===0){
+
+        section.classList.add("hidden");
+
+        list.innerHTML="";
+
+        return;
+
+    }
+
+    const month =
+    document.getElementById(
+        "monthFilter"
+    )?.value || "";
+
+    section.classList.remove(
+        "hidden"
+    );
+
+    list.innerHTML="";
+
+    cards.forEach(card=>{
+
+        const summary =
+        getBenefitSummary(
+            card.category,
+            month
+        );
+
+        if(!summary){
+
+            return;
+
+        }
+
+        list.innerHTML += `
+
+<div
+class="benefitCard clickableBenefitCard"
+onclick="openBenefitAnalytics('${summary.category}')">
+
+<div class="benefitHeader">
+
+<div>
+
+<h3>${summary.category}</h3>
+
+<p>
+
+Available Balance
+
+</p>
+
+</div>
+
+<div class="benefitActions">
+
+<h2>
+
+₹${summary.availableBalance.toLocaleString("en-IN")}
+
+</h2>
+
+<button
+class="benefitSettingsBtn"
+onclick="event.stopPropagation(); editBenefitBalance('${summary.category}')">
+
+⚙️
+
+</button>
+
+</div>
+
+</div>
+
+<div class="benefitStats">
+
+<div>
+
+<span>Loaded</span>
+
+<strong>
+
+₹${summary.monthlyLoaded.toLocaleString("en-IN")}
+
+</strong>
+
+</div>
+
+<div>
+
+<span>Spent</span>
+
+<strong>
+
+₹${summary.monthlySpent.toLocaleString("en-IN")}
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+    });
+
+}
+
+function openBenefitAnalytics(category){
+
+    sessionStorage.setItem(
+        "selectedBenefitCard",
+        category
+    );
+
+    openPage("analytics");
+
+}
+
+
 /* =====================================================
         Dashboard Auto Refresh
 ===================================================== */

@@ -468,6 +468,35 @@ class="monthButton">
     </div>
 
 </section>
+
+
+<!-- =======================================
+        BENEFIT CARDS
+======================================= -->
+
+<section
+id="benefitCardSection"
+class="recentCard hidden">
+
+<div class="cardHeader">
+
+<h2>
+
+💳 Benefit Cards
+
+</h2>
+
+</div>
+
+<div id="benefitCardList">
+
+</div>
+
+</section>
+    
+    
+
+    
 <!-- =======================================
         RECENT TRANSACTIONS
 ======================================= -->
@@ -554,27 +583,19 @@ placeholder="Search transaction...">
 <select id="transactionTypeFilter">
 
 <option value="">
-
 All Types
-
 </option>
 
 <option value="income">
-
 Income
-
 </option>
 
 <option value="expense">
-
 Expense
-
 </option>
 
 <option value="investment">
-
 Investment
-
 </option>
 
 </select>
@@ -588,6 +609,20 @@ All Categories
 </select>
 
 </div>
+
+<!-- =======================================
+        BENEFIT CARD SUMMARY
+======================================= -->
+
+<section
+id="benefitTransactionSummary"
+class="recentCard hidden">
+
+<div id="benefitTransactionSummaryContent">
+
+</div>
+
+</section>
 
 <div
 
@@ -667,6 +702,36 @@ id="categorySummary">
 </div>
 
 </div>
+
+
+    <!-- =======================================
+        BENEFIT CARD ANALYTICS
+======================================= -->
+
+<div
+id="benefitAnalyticsCard"
+class="analyticsCard hidden">
+
+<h3>
+
+💳 Benefit Card Analytics
+
+</h3>
+
+<div class="benefitAnalyticsHeader">
+
+<select id="benefitAnalyticsSelector">
+
+</select>
+
+</div>
+
+<div id="benefitAnalyticsContent">
+
+</div>
+
+</div>
+    
 
 </section>
 
@@ -1044,6 +1109,79 @@ id="saveButton">
     </div>
 
 </div>
+
+
+
+<!-- ==========================================
+        BENEFIT BALANCE POPUP
+========================================== -->
+
+<div
+id="benefitBalancePopup"
+class="popupOverlay">
+
+<div class="popupCard benefitPopup">
+
+    <h2 id="benefitPopupTitle">
+
+        Food Card
+
+    </h2>
+
+    <div class="benefitCurrentBalance">
+
+        <span>Available Balance</span>
+
+        <h1 id="benefitPopupBalance">
+
+            ₹0
+
+        </h1>
+
+    </div>
+
+    <label class="popupLabel">
+
+    Opening Balance
+
+</label>
+
+<div class="currentOpeningBalance">
+
+    Current: <strong id="benefitCurrentOpeningBalance">₹0</strong>
+
+</div>
+
+<input
+    id="benefitOpeningBalance"
+    type="number"
+    inputmode="decimal"
+    placeholder="Enter new amount">
+
+    <div class="popupButtons">
+
+        <button
+        id="cancelBenefitPopup"
+        class="popupCancel">
+
+            Cancel
+
+        </button>
+
+        <button
+        id="saveBenefitPopup"
+        class="popupSave">
+
+            💾 Save
+
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+    
 
     <!-- =======================================
         NET WORTH ACTION SHEET
@@ -1448,6 +1586,8 @@ MoneyPilot Lite V3
 ======================================= -->
 
 <script src="storage.js"></script>
+
+<script src="benefit-card.js"></script>
 
 <script src="transactions.js"></script>
 
